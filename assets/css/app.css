@@ -14,7 +14,6 @@ body {
 
 canvas { 
     image-rendering: pixelated;
-    background-image: url("./../img/QuestBackground.png");
     background-position: center;
     background-size: cover;
 }

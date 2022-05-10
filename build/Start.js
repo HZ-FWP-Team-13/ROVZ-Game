@@ -1,7 +1,7 @@
 import Game from './Game.js';
 import KeyListener from './KeyListener.js';
+import Level from './Level.js';
 import Scene from './Scene.js';
-import Story from './Story.js';
 export default class Start extends Scene {
     shouldStart;
     keyboard;
@@ -18,7 +18,7 @@ export default class Start extends Scene {
     }
     update() {
         if (this.shouldStart) {
-            return new Story(this.game);
+            return new Level(this.game);
         }
         return null;
     }
