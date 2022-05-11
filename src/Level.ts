@@ -4,7 +4,6 @@ import Player from './Player.js';
 import KeyCommands from './KeyCommands.js';
 import Controls from './Controls.js';
 
-
 export default class Level extends Scene {
   // Player
   private player: Player;
@@ -62,7 +61,6 @@ export default class Level extends Scene {
    *   current scene, just return `null`
    */
   public update(): Scene {
-
     return null;
   }
 

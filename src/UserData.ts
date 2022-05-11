@@ -18,8 +18,7 @@ export default class UserData {
   public constructor(health: number, attack: number, defense: number) {
     /**
      * TODO
-     * If we want to increase the game difficulty we can use 'level' to increase the monster's
-     * stats in Monster.ts file
+     * If we want to increase the game difficulty we can use 'level' to increase the games levels
      */
     this.level = 1;
 

@@ -35,7 +35,7 @@ export default class Player extends GameItem {
    * @param canvas the canvas to move over, for max x and y positions
    */
   public move(canvas: HTMLCanvasElement): void {
-    // Set the limit values
+    // Set the minimum and maximum values using the screen
     const minX = 0;
     const maxX = canvas.width - this.img.width;
     const minY = 0;
@@ -93,6 +93,7 @@ export default class Player extends GameItem {
   }
 
   /**
+   * Function to check if a character collides with another GameItem
    *
    * @param other the other GameItem
    * @returns true if this object collides with the specified other object
@@ -105,7 +106,7 @@ export default class Player extends GameItem {
   }
 
   /**
-   * Increases the speed
+   * Increases the speed of the character when moving
    *
    * @param size the amount of speed to add
    */
@@ -115,7 +116,7 @@ export default class Player extends GameItem {
   }
 
   /**
-   * Get the keyboard and key command details
+   * Gets the keycommands from the set Keycommands
    *
    * @returns the keyboard and key command interactions
    */
