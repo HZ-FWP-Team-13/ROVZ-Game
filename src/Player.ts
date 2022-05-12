@@ -29,6 +29,15 @@ export default class Player extends GameItem {
   }
 
   /**
+   * Draws the player to the screen
+   *
+   * @param ctx the rendering context to draw on
+   */
+  public draw(ctx: CanvasRenderingContext2D): void {
+    this.getSprite().drawSprite(ctx, this);
+  }
+
+  /**
    * Moves the player depending on which arrow key is pressed. Player is bound
    * to the canvas and cannot move outside of it
    *

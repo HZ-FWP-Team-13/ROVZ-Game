@@ -47,14 +47,7 @@ export default abstract class GameItem {
 
   public abstract move(canvas: HTMLCanvasElement): void;
 
-  /**
-   * Draw
-   *
-   * @param ctx the rendering context to draw on
-   */
-  public draw(ctx: CanvasRenderingContext2D): void {
-    ctx.drawImage(this.img, this.xPos, this.yPos);
-  }
+  public abstract draw(ctx: CanvasRenderingContext2D): void;
 
   /**
    * getImageWidth

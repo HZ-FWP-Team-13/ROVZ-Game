@@ -12,6 +12,9 @@ export default class Player extends GameItem {
         this.currentAnimation = 'idle-down';
         this.keyCommands = new KeyCommands();
     }
+    draw(ctx) {
+        this.getSprite().drawSprite(ctx, this);
+    }
     move(canvas) {
         const minX = 0;
         const maxX = canvas.width - this.img.width;
