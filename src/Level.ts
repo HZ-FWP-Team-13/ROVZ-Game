@@ -2,14 +2,10 @@ import Game from './Game.js';
 import Scene from './Scene.js';
 import Player from './Player.js';
 import KeyCommands from './KeyCommands.js';
-import Controls from './Controls.js';
 
 export default class Level extends Scene {
   // Player
   private player: Player;
-
-  private controls: Controls;
-
   private keyCommands: KeyCommands;
 
   /**
@@ -20,13 +16,6 @@ export default class Level extends Scene {
   public constructor(game: Game) {
     super(game);
 
-    // Create new controls
-    this.controls = new Controls(
-      game,
-      this.game.canvas.width / 2 - 500, // xPosition
-      (this.game.canvas.height / 8) * 0.5,
-    );
-
     // Create player
     this.player = new Player(
       game.canvas.width / 2,
@@ -34,8 +23,6 @@ export default class Level extends Scene {
     );
 
     this.keyCommands = this.player.getKeyboard();
-
-    this.controls.setDisplay(true);
   }
 
   /**
@@ -70,7 +57,7 @@ export default class Level extends Scene {
   public render(): void {
     // Clear the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-    this.player.getSprite().drawSprite(this.game.ctx, this.player);
+    this.player.draw(this.game.ctx);
   }
 
   /**

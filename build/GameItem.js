@@ -11,8 +11,6 @@ export default class GameItem {
     sprite;
     canvas;
     currentAnimation;
-    yesOrNoOption;
-    questDialogue;
     constructor(widthCut, heightCut, imageSrc, maxX, maxY, currentAnimationFrameLimit, sizeSprite) {
         this.img = Game.loadNewImage(imageSrc);
         this.xPos = maxX;
@@ -22,9 +20,6 @@ export default class GameItem {
         this.currentAnimationFrameLimit = currentAnimationFrameLimit;
         this.sizeSprite = sizeSprite;
         this.sprite = new Sprite(this);
-    }
-    draw(ctx) {
-        ctx.drawImage(this.img, this.xPos, this.yPos);
     }
     getImage() {
         return this.img;
@@ -58,12 +53,6 @@ export default class GameItem {
     }
     getSprite() {
         return this.sprite;
-    }
-    getYesorNoText() {
-        return this.yesOrNoOption;
-    }
-    getQuestDialogue() {
-        return this.questDialogue;
     }
 }
 //# sourceMappingURL=GameItem.js.map
