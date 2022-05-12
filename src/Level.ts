@@ -3,7 +3,8 @@ import Scene from './Scene.js';
 import Player from './Player.js';
 import KeyCommands from './KeyCommands.js';
 import Controls from './Controls.js';
-
+import KeyListener from './KeyListener.js';
+import GameLost from './GameLost.js';
 
 export default class Level extends Scene {
   // Player
@@ -13,6 +14,10 @@ export default class Level extends Scene {
 
   private keyCommands: KeyCommands;
 
+  private keyboard: KeyListener;
+
+  private shouldStart: boolean;
+
   /**
    * Creates a new instance of this class
    *
@@ -20,6 +25,8 @@ export default class Level extends Scene {
    */
   public constructor(game: Game) {
     super(game);
+    this.keyboard = new KeyListener();
+    this.shouldStart = false;
 
     // Create new controls
     this.controls = new Controls(
@@ -45,6 +52,11 @@ export default class Level extends Scene {
   public processInput(): void {
     // Move the player
     this.player.move(this.game.canvas);
+    // if statement which progresses the game
+    if (this.keyboard.isKeyDown(KeyListener.KEY_R)) {
+      this.shouldStart = true;
+      console.log(this.shouldStart);
+    }
   }
 
   /**
@@ -62,7 +74,9 @@ export default class Level extends Scene {
    *   current scene, just return `null`
    */
   public update(): Scene {
-
+    if (this.shouldStart) {
+      return new GameLost(this.game);
+    }
     return null;
   }
 
