@@ -22,10 +22,6 @@ export default abstract class GameItem {
 
   protected currentAnimation: string;
 
-  protected yesOrNoOption: HTMLImageElement;
-
-  protected questDialogue: HTMLImageElement;
-
   /**
    * Creates a new GameItem on a random position
    *
@@ -49,8 +45,10 @@ export default abstract class GameItem {
     this.sprite = new Sprite(this);
   }
 
+  public abstract move(canvas: HTMLCanvasElement): void;
+
   /**
-   * draw
+   * Draw
    *
    * @param ctx the rendering context to draw on
    */
@@ -155,23 +153,5 @@ export default abstract class GameItem {
    */
   public getSprite() : Sprite {
     return this.sprite;
-  }
-
-  /**
-   * A getter for the Yes or No question
-   *
-   * @returns the text of the Question that is in the constructor
-   */
-  public getYesorNoText(): HTMLImageElement {
-    return this.yesOrNoOption;
-  }
-
-  /**
-   * Gets the progression of the NPC
-   *
-   * @returns Progression of the child
-   */
-  public getQuestDialogue(): HTMLImageElement {
-    return this.questDialogue;
   }
 }
