@@ -1,12 +1,18 @@
 import Scene from './Scene.js';
 import Player from './Player.js';
 import Controls from './Controls.js';
+import KeyListener from './KeyListener.js';
+import GameLost from './GameLost.js';
 export default class Level extends Scene {
     player;
     controls;
     keyCommands;
+    keyboard;
+    shouldStart;
     constructor(game) {
         super(game);
+        this.keyboard = new KeyListener();
+        this.shouldStart = false;
         this.controls = new Controls(game, this.game.canvas.width / 2 - 500, (this.game.canvas.height / 8) * 0.5);
         this.player = new Player(game.canvas.width / 2, game.canvas.height / 2);
         this.keyCommands = this.player.getKeyboard();
@@ -14,8 +20,15 @@ export default class Level extends Scene {
     }
     processInput() {
         this.player.move(this.game.canvas);
+        if (this.keyboard.isKeyDown(KeyListener.KEY_R)) {
+            this.shouldStart = true;
+            console.log(this.shouldStart);
+        }
     }
     update() {
+        if (this.shouldStart) {
+            return new GameLost(this.game);
+        }
         return null;
     }
     render() {
