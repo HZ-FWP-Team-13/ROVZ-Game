@@ -2,10 +2,15 @@ import Game from './Game.js';
 import Scene from './Scene.js';
 import Player from './Player.js';
 import KeyCommands from './KeyCommands.js';
+import FovOverlay from './FovOverlay.js';
+
 
 export default class Level extends Scene {
   // Player
   private player: Player;
+  // Fov
+  private fov: FovOverlay;
+
   private keyCommands: KeyCommands;
 
   /**
@@ -18,6 +23,12 @@ export default class Level extends Scene {
 
     // Create player
     this.player = new Player(
+      game.canvas.width / 2,
+      game.canvas.height / 2,
+    );
+
+    // Create fov
+    this.fov = new FovOverlay(
       game.canvas.width / 2,
       game.canvas.height / 2,
     );
@@ -58,6 +69,9 @@ export default class Level extends Scene {
     // Clear the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
     this.player.draw(this.game.ctx);
+    this.fov.setXPos(this.player.getXPos());
+    this.fov.setYPos(this.player.getYPos());
+    this.fov.draw(this.game.ctx);
   }
 
   /**
