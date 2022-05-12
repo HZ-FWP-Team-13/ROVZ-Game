@@ -3,6 +3,8 @@ import Scene from './Scene.js';
 import Player from './Player.js';
 import KeyCommands from './KeyCommands.js';
 import Controls from './Controls.js';
+import Car from './Car.js';
+import StateTrigger from './StateTrigger.js';
 
 
 export default class Level extends Scene {
@@ -12,6 +14,10 @@ export default class Level extends Scene {
   private controls: Controls;
 
   private keyCommands: KeyCommands;
+
+  private car : Car;
+
+  private trigger: StateTrigger
 
   /**
    * Creates a new instance of this class
@@ -34,9 +40,18 @@ export default class Level extends Scene {
       game.canvas.height / 2,
     );
 
+    // Create car
+    this.car = new Car(300, 300, 'UP');
+
+    // Create trigger
+    this.trigger = new StateTrigger(300, 300, 50 , 50, 'UP');
+
     this.keyCommands = this.player.getKeyboard();
 
     this.controls.setDisplay(true);
+
+    console.log(this.car.getLeftBound(), this.car.getRightBound(), this.car.getTopBound(), this.car.getBottomBound());
+    console.log(this.trigger.getLeftBound(), this.trigger.getRightBound(), this.trigger.getTopBound(), this.trigger.getBottomBound());
   }
 
   /**
@@ -62,6 +77,9 @@ export default class Level extends Scene {
    *   current scene, just return `null`
    */
   public update(): Scene {
+    this.car.move();
+
+    this.car.collidesWithTrigger(this.trigger);
 
     return null;
   }
@@ -70,9 +88,13 @@ export default class Level extends Scene {
    * Draw the game so the player can see what happened
    */
   public render(): void {
+    let ctx = this.game.ctx;
+    let canvas = this.game.canvas;
     // Clear the screen
-    this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-    this.player.getSprite().drawSprite(this.game.ctx, this.player);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.trigger.draw(ctx);
+    this.player.getSprite().drawSprite(ctx, this.player);
+    this.car.draw(ctx);
   }
 
   /**
