@@ -134,7 +134,7 @@ export default class Car {
    * @returns top bound
    */
   public getTopBound(): number {
-    return this.yPos - this.image.height;
+    return this.yPos - this.image.height / 2;
   }
 
 
@@ -142,7 +142,7 @@ export default class Car {
    * @returns bottom bound
    */
    public getBottomBound(): number {
-    return this.yPos + this.image.height;
+    return this.yPos + this.image.height / 2;
   }
 
   /**

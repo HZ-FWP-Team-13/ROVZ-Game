@@ -71,10 +71,10 @@ export default class Car {
         return this.image.height;
     }
     getTopBound() {
-        return this.yPos - this.image.height;
+        return this.yPos - this.image.height / 2;
     }
     getBottomBound() {
-        return this.yPos + this.image.height;
+        return this.yPos + this.image.height / 2;
     }
     getLeftBound() {
         return this.xPos - this.image.width / 2;

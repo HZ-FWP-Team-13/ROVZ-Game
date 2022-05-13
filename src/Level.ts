@@ -17,7 +17,7 @@ export default class Level extends Scene {
 
   private car : Car;
 
-  private trigger: StateTrigger
+  private triggers: StateTrigger[];
 
   /**
    * Creates a new instance of this class
@@ -40,18 +40,21 @@ export default class Level extends Scene {
       game.canvas.height / 2,
     );
 
+
     // Create car
     this.car = new Car(300, 300, 'UP');
 
-    // Create trigger
-    this.trigger = new StateTrigger(300, 300, 50 , 50, 'RIGHT');
+    // Create triggers
+    this.triggers = [];
+
+    this.triggers.push(this.createStateTrigger(300, 300, 50, 50, 'UP'));
+    this.triggers.push(this.createStateTrigger(300, 0, 50, 50, 'RIGHT'));
+    this.triggers.push(this.createStateTrigger(1000, 0, 50, 50, 'DOWN'));
+    this.triggers.push(this.createStateTrigger(1000, 300, 50, 50, 'LEFT'));
 
     this.keyCommands = this.player.getKeyboard();
 
     this.controls.setDisplay(true);
-
-    console.log(this.car.getLeftBound(), this.car.getRightBound(), this.car.getTopBound(), this.car.getBottomBound());
-    console.log(this.trigger.getLeftBound(), this.trigger.getRightBound(), this.trigger.getTopBound(), this.trigger.getBottomBound());
   }
 
   /**
@@ -79,7 +82,9 @@ export default class Level extends Scene {
   public update(): Scene {
     this.car.move();
 
-    this.car.collidesWithTrigger(this.trigger);
+    this.triggers.forEach(trigger => {
+      this.car.collidesWithTrigger(trigger);
+    });
 
     return null;
   }
@@ -92,7 +97,11 @@ export default class Level extends Scene {
     let canvas = this.game.canvas;
     // Clear the screen
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    this.trigger.draw(ctx);
+
+    this.triggers.forEach(trigger => {
+      trigger.draw(ctx);
+    });
+
     this.player.getSprite().drawSprite(ctx, this.player);
     this.car.draw(ctx);
   }
@@ -105,4 +114,10 @@ export default class Level extends Scene {
   public getPlayer(): Player {
     return this.player;
   }
+
+
+  public createStateTrigger(x : number, y : number, width : number, height: number, direction : string) : StateTrigger{
+    return new StateTrigger(x, y, width, height, direction);
+  }
+
 }
