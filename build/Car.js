@@ -74,7 +74,7 @@ export default class Car {
         return this.yPos - this.image.height;
     }
     getBottomBound() {
-        return this.yPos - this.image.height;
+        return this.yPos + this.image.height;
     }
     getLeftBound() {
         return this.xPos - this.image.width / 2;

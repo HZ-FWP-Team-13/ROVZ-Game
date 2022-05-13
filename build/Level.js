@@ -14,7 +14,7 @@ export default class Level extends Scene {
         this.controls = new Controls(game, this.game.canvas.width / 2 - 500, (this.game.canvas.height / 8) * 0.5);
         this.player = new Player(game.canvas.width / 2, game.canvas.height / 2);
         this.car = new Car(300, 300, 'UP');
-        this.trigger = new StateTrigger(300, 300, 50, 50, 'UP');
+        this.trigger = new StateTrigger(300, 300, 50, 50, 'RIGHT');
         this.keyCommands = this.player.getKeyboard();
         this.controls.setDisplay(true);
         console.log(this.car.getLeftBound(), this.car.getRightBound(), this.car.getTopBound(), this.car.getBottomBound());

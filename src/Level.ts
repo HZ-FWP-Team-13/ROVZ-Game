@@ -44,7 +44,7 @@ export default class Level extends Scene {
     this.car = new Car(300, 300, 'UP');
 
     // Create trigger
-    this.trigger = new StateTrigger(300, 300, 50 , 50, 'UP');
+    this.trigger = new StateTrigger(300, 300, 50 , 50, 'RIGHT');
 
     this.keyCommands = this.player.getKeyboard();
 
