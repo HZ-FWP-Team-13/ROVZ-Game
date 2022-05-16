@@ -20,7 +20,7 @@ export default class Player extends GameItem {
     xPos: number,
     yPos: number,
   ) {
-    super(32, 32, './assets/img/testplayer.png', xPos, yPos, 5, 128);
+    super(32, 32, './assets/img/testplayer-old.png', xPos, yPos, 5, 128);
 
     this.xVel = 3;
     this.yVel = 3;

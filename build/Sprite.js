@@ -51,7 +51,7 @@ export default class Sprite {
         const heightcut = gameitem.getHeightCut();
         const sizeSprite = gameitem.getSizeSprite();
         const [frameX, frameY] = this.getFrame();
-        ctx.drawImage(this.image, frameX * widthcut, frameY * heightcut, widthcut, heightcut, xP, yP, sizeSprite, sizeSprite);
+        ctx.drawImage(this.image, frameX * widthcut, frameY * heightcut, widthcut, heightcut, xP - widthcut / 2, yP - heightcut / 2, sizeSprite, sizeSprite);
         this.updateAnimationProgress();
     }
 }
