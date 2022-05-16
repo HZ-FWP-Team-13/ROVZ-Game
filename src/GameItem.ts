@@ -63,7 +63,7 @@ export default abstract class GameItem {
 
     this.ctx = ctx;
     this.imgSourcePath = imgSourcePath;
-    this.imgSource = Graphics.loadNewImage(imgSourcePath);
+    this.setImgSource(imgSourcePath);
 
     this.xPos = xPos;
     this.yPos = yPos;
@@ -247,6 +247,15 @@ export default abstract class GameItem {
    */
   public getAnimationState(): number {
     return this.animationState;
+  }
+
+  /**
+   * Set the source image of this GameItem appearance
+   *
+   * @param imgSourcePath The path to the source image of this GameItem appearance
+   */
+  public setImgSource(imgSourcePath: string): void {
+    this.imgSource = Graphics.loadNewImage(imgSourcePath);
   }
 
   /**
