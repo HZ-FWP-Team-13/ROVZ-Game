@@ -3,11 +3,15 @@ import Player from './Player.js';
 import Controls from './Controls.js';
 import KeyListener from './KeyListener.js';
 import GameLost from './GameLost.js';
+import Vehicle from './Vehicle.js';
+import FinishLine from './FinishLine.js';
 export default class Level extends Scene {
     player;
     controls;
     keyCommands;
     keyboard;
+    car;
+    finishLine;
     shouldStart;
     constructor(game) {
         super(game);
@@ -15,6 +19,8 @@ export default class Level extends Scene {
         this.shouldStart = false;
         this.controls = new Controls(game, this.game.canvas.width / 2 - 500, (this.game.canvas.height / 8) * 0.5);
         this.player = new Player(game.canvas.width / 2, game.canvas.height / 2);
+        this.car = new Vehicle(game.canvas.width / 2, game.canvas.height / 2);
+        this.finishLine = new FinishLine(game.canvas.width / 2, game.canvas.height / 2);
         this.keyCommands = this.player.getKeyboard();
         this.controls.setDisplay(true);
     }
@@ -34,6 +40,8 @@ export default class Level extends Scene {
     render() {
         this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
         this.player.getSprite().drawSprite(this.game.ctx, this.player);
+        this.car.draw(this.game.ctx);
+        this.finishLine.draw(this.game.ctx);
     }
     getPlayer() {
         return this.player;

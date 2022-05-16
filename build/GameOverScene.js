@@ -13,6 +13,10 @@ export default class GameOverScene extends Scene {
         if (this.keyboard.isKeyDown(KeyListener.KEY_R)) {
             this.shouldStart = true;
         }
+        if (this.keyboard.isKeyDown(KeyListener.KEY_SPACE)) {
+            this.shouldStart = true;
+            console.log(this.shouldStart);
+        }
     }
     update() {
         if (this.shouldStart) {

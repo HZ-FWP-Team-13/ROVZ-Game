@@ -1,3 +1,4 @@
+import BikeRide from './BikeRide.js';
 import Game from './Game.js';
 import KeyListener from './KeyListener.js';
 import Level from './Level.js';
@@ -45,7 +46,7 @@ export default class Start extends Scene {
    */
   public update(): Scene {
     if (this.shouldStart) {
-      return new Level(this.game);
+      return new BikeRide(this.game);
     }
     return null;
   }

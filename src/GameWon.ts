@@ -1,4 +1,5 @@
 import Game from './Game.js';
+
 import GameOverScene from './GameOverScene.js';
 
 export default class GameWon extends GameOverScene {

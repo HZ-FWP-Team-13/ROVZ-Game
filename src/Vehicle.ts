@@ -1,4 +1,4 @@
-import GameItem from './GameItem';
+import GameItem from './GameItem.js';
 
 export default class Vehicle extends GameItem {
   /**
@@ -7,6 +7,6 @@ export default class Vehicle extends GameItem {
    * @param maxY Maximum y
    */
   public constructor(maxX: number, maxY: number) {
-    super(512, 512, './assets/img/car.png', 50, 50, 1, 512);
+    super(50, 50, './assets/img/car.png', maxX, maxY, null, 50);
   }
 }
