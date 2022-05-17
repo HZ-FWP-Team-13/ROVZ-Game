@@ -89,9 +89,7 @@ export default abstract class GameItem {
   public moveAbsolute(dXAbs: number, dYAbs: number, dR: number = 0): void {
     this.xPos += dXAbs;
     this.yPos += dYAbs;
-    if (dR != 0) {
-      this.rotate(dR);
-    }
+    this.rotate(dR);
   }
 
   /**

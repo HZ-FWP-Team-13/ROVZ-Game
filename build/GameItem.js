@@ -27,9 +27,7 @@ export default class GameItem {
     moveAbsolute(dXAbs, dYAbs, dR = 0) {
         this.xPos += dXAbs;
         this.yPos += dYAbs;
-        if (dR != 0) {
-            this.rotate(dR);
-        }
+        this.rotate(dR);
     }
     rotate(dR) {
         this.rotation += dR;
