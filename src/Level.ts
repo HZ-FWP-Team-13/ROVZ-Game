@@ -18,7 +18,7 @@ export default class Level extends Scene {
   public constructor(game: Game) {
     super(game);
 
-    // Create Player
+    // Spawning the Player
     this.player = new Player(
       // The Game Canvas rendering context, the path to the source image of the Player appearance
       this.game.ctx, './assets/img/testplayer-old.png',
@@ -33,7 +33,7 @@ export default class Level extends Scene {
       // The current state of the Player animation cycle
       0);
 
-    // Create FovOverlay
+    // Spawning the FovOverlay
     this.fov = new FovOverlay(
       // The Game Canvas rendering context, the path to the source image of the Fov appearance
       this.game.ctx, './assets/img/fov.png',
