@@ -16,7 +16,7 @@ export default class Car {
         ctx.save();
         ctx.translate(this.xPos, this.yPos);
         ctx.rotate(this.rotation * Math.PI / 180);
-        ctx.drawImage(this.image, 0 - this.image.width / 2, 0 - this.image.height / 2);
+        ctx.drawImage(this.image, -this.image.width / 2, -this.image.height / 2);
         ctx.restore();
     }
     move() {

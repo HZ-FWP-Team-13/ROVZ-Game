@@ -34,8 +34,8 @@ export default class Car {
 
     ctx.drawImage(
       this.image,
-      0 - this.image.width / 2,
-      0 - this.image.height / 2,
+      -this.image.width / 2,
+      -this.image.height / 2,
     );
 
     ctx.restore();
