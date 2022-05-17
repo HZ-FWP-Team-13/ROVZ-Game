@@ -6,7 +6,7 @@ export default class FovOverlay extends GameItem {
     constructor(imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight) {
         super(imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, frameWidth, frameHeight, 0);
         this.input = new Input();
-        this.rotationSpeed = 10;
+        this.rotationSpeed = 1;
     }
     control() {
         this.rotate(this.input.readRotationInput() * this.rotationSpeed);

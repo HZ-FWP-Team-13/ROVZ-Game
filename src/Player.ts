@@ -11,6 +11,8 @@ export default class Player extends GameItem {
   // The speed of the Player character rotation measured in degrees per second
   private rotationSpeed: number;
 
+  private previousFrameRotation: number;
+
   /**
    * Create a new Player instance
    *
@@ -47,19 +49,26 @@ export default class Player extends GameItem {
     );
 
     this.input = new Input();
-    this.movementSpeed = 10;
-    this.rotationSpeed = 10;
+    this.movementSpeed = 1;
+    this.rotationSpeed = 1;
   }
 
   /**
    * Move this Player across the Game Canvas in response to the Player Input
    */
   public control(): void {
+    this.input.readVerticalInput();
     // Traction
-    this.moveRelative(0, this.input.readVerticalInput() * this.movementSpeed);
+    if (this.input.getVerticalAxis() != 0) {
+      this.moveRelative(0, this.input.getVerticalAxis() * this.movementSpeed);
+    }
     // Steering
     this.rotate(
-      this.input.readHorizontalInput() * this.rotationSpeed * -this.input.getVerticalAxis(),
-    );
+      this.previousFrameRotation =
+      this.input.readHorizontalInput() * this.rotationSpeed * this.input.getVerticalAxis());
+  }
+
+  public getPreviousFrameRotation(): number {
+    return this.previousFrameRotation;
   }
 }

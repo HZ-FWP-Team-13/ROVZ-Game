@@ -43,8 +43,8 @@ export default class Level extends Scene {
       // The rotation of the FovOverlay measured in degrees
       0,
       // The dimensions of the FovOverlay appearance
-      32,
-      32,
+      6000,
+      6000,
     );
   }
 
@@ -64,7 +64,9 @@ export default class Level extends Scene {
    */
   public update(): Scene {
     this.player.control();
+    this.fov.rotate(this.player.getPreviousFrameRotation());
     this.fov.control();
+
 
     return null;
   }
@@ -75,20 +77,10 @@ export default class Level extends Scene {
   public render(): void {
     // Clear the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-    console.log(this.player.draw(this.game.ctx));
     this.player.draw(this.game.ctx);
 
     this.fov.setXPos(this.player.getXPos());
     this.fov.setYPos(this.player.getYPos());
     this.fov.draw(this.game.ctx);
-  }
-
-  /**
-   * Get the player details
-   *
-   * @returns the player details
-   */
-  public getPlayer(): Player {
-    return this.player;
   }
 }

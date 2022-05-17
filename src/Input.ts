@@ -45,7 +45,6 @@ export default class Input {
   }
 
   public readStartInput(): boolean {
-    console.log('Key is pressed sir!');
     return this.startKey = this.keyListener.isKeyTyped(KeyListener.KEY_S);
   }
 

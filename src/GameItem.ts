@@ -100,7 +100,8 @@ export default abstract class GameItem {
    */
   public moveRelative(dXRel: number, dYRel: number): void {
     // Distance to the movement destination
-    const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2);
+    const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) *
+      (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
 
     // Slope of the movement vector in the relative coordinate system
     const moveSlopeRel = Math.atan(dXRel / dYRel);
@@ -112,8 +113,10 @@ export default abstract class GameItem {
     // Deviation of the Y coordinate in the absolute coordinate system
     const dYAbs = dist * Math.cos(moveSlopeAbs);
 
+    console.log(Math.atan(dXRel / dYRel));
+
     // Moving this GameItem across the Game Canvas within the absolute coordinate system
-    this.moveAbsolute(dXAbs, dYAbs * -1);
+    this.moveAbsolute(dXAbs, -dYAbs);
   }
 
   /**

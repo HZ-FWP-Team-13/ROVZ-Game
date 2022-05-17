@@ -37,7 +37,7 @@ export default class FovOverlay extends GameItem {
     );
 
     this.input = new Input();
-    this.rotationSpeed = 10;
+    this.rotationSpeed = 1;
   }
 
   /**
@@ -47,4 +47,5 @@ export default class FovOverlay extends GameItem {
     // Looking around
     this.rotate(this.input.readRotationInput() * this.rotationSpeed);
   }
+
 }
