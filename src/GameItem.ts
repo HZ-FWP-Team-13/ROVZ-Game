@@ -150,6 +150,9 @@ export default abstract class GameItem {
     this.ctx.restore();
   }
 
+  /**
+   * Process the Player Input to modify this GameItem
+   */
   public abstract control(): void;
 
   /**
