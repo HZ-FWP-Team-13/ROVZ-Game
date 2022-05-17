@@ -72,7 +72,7 @@ export default abstract class GameItem {
 
     this.frameWidth = frameWidth;
     this.frameHeight = frameHeight;
-    // [TODO]
+
     this.colliderWidth = colliderWidth;
     this.colliderHeight = colliderHeight;
 
@@ -114,7 +114,7 @@ export default abstract class GameItem {
     let dist = Math.sqrt(dXRel**2 + dYRel**2);
 
     // Slope of the movement vector in the relative coordinate system
-    let moveSlopeRel= Math.atan(dXRel/dYRel);
+    let moveSlopeRel = Math.atan(dXRel/dYRel);
     // Slope of the movement vector in the absolute coordinate system
     let moveSlopeAbs = moveSlopeRel + this.getRotationInRadians();
 
@@ -123,6 +123,7 @@ export default abstract class GameItem {
     // Deviation of the Y coordinate in the absolute coordinate system
     let dYAbs = dist * Math.cos(moveSlopeAbs);
 
+    // Moving this GameItem across the Game Canvas within the absolute coordinate system
     this.moveAbsolute(dXAbs, dYAbs);
   }
 
@@ -131,7 +132,7 @@ export default abstract class GameItem {
    * based on rotation and current state of the animation cycle
    */
   public draw(): void {
-    // Creation of a backup of the Game Canvas rendering context in the absolute coordinate system
+    // Creating a backup of the Game Canvas rendering context in the absolute coordinate system
     this.ctx.save();
 
     // Switching the Game Canvas rendering context to the relative coordinate system
@@ -146,7 +147,7 @@ export default abstract class GameItem {
       -this.frameWidth / 2, -this.frameHeight / 2,
       this.frameWidth, this.frameHeight);
 
-    // Return of the Game Canvas rendering context to the absolute coordinate system
+    // Returning the Game Canvas rendering context to the absolute coordinate system
     this.ctx.restore();
   }
 

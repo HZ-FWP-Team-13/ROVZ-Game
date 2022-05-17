@@ -1,135 +1,68 @@
 import GameItem from './GameItem.js';
-import KeyListener from './KeyListener.js';
-import KeyCommands from './KeyCommands.js';
+import Input from './Input.js';
 
 export default class Player extends GameItem {
-  private xVel: number;
+  // Input to read the Player controls
+  private input: Input;
 
-  private yVel: number;
+  // The speed of the Player character movement measured in pixels per second
+  private movementSpeed: number;
 
-  // KeyboardListener so the player can move
-  private keyCommands: KeyCommands;
+  // The speed of the Player character rotation measured in degrees per second
+  private rotationSpeed: number;
 
   /**
-   * Initialize Player
+   * Create a new Player instance
    *
-   * @param xPos xPosition of the player
-   * @param yPos yPostition of the player
+   * @param ctx The Game Canvas rendering context
+   * @param imgSourcePath The path to the source image of the Player appearance
+   *
+   * @param xPos The X coordinate of the Player on the game canvas
+   * @param yPos The Y coordinate of the Player on the game canvas
+   *
+   * @param rotation The rotation of the Player measured in degrees
+   *
+   * @param frameWidth The width of the Player appearance
+   * @param frameHeight The height of the Player appearance
+   *
+   * @param colliderWidth The width of the Player collider
+   * @param colliderHeight The height of the Player collider
+   *
+   * @param animationState The current state of the Player animation cycle
    */
   public constructor(
-    xPos: number,
-    yPos: number,
-  ) {
-    super(32, 32, './assets/img/testplayer-old.png', xPos, yPos, 5, 128);
+    ctx: CanvasRenderingContext2D, imgSourcePath: string,
+    xPos: number, yPos: number,
+    rotation: number,
+    frameWidth: number, frameHeight: number,
+    colliderWidth: number = frameWidth, colliderHeight: number = frameHeight,
+    animationState: number = 0) {
 
-    this.xVel = 3;
-    this.yVel = 3;
-    this.currentAnimation = 'idle-down';
-    this.keyCommands = new KeyCommands();
+    super(
+      ctx, imgSourcePath,
+      xPos, yPos,
+      rotation,
+      frameWidth,
+      frameHeight, colliderWidth,
+      colliderHeight, animationState);
+
+    this.input = new Input();
+    this.movementSpeed = 10;
+    this.rotationSpeed = 10;
   }
 
   /**
-   * Draws the player to the screen
-   *
-   * @param ctx the rendering context to draw on
+   * Move this Player across the Game Canvas in response to the Player Input
    */
-  public draw(ctx: CanvasRenderingContext2D): void {
-    this.getSprite().drawSprite(ctx, this);
-  }
+  public playerMovement(): void {
 
-  /**
-   * Moves the player depending on which arrow key is pressed. Player is bound
-   * to the canvas and cannot move outside of it
-   *
-   * @param canvas the canvas to move over, for max x and y positions
-   */
-  public move(canvas: HTMLCanvasElement): void {
-    // Set the minimum and maximum values using the screen
-    const minX = 0;
-    const maxX = canvas.width - this.img.width;
-    const minY = 0;
-    const maxY = canvas.height - this.img.height;
-
-    // Moving right
-    if (this.keyCommands.getKeys().isKeyDown(KeyListener.KEY_RIGHT) && this.xPos < maxX) {
-      this.xPos += this.xVel;
-      this.getSprite().setAnimation('walk-right');
-      // Limit to the max value
-      if (this.xPos > maxX) {
-        this.xPos = maxX;
-      }
-    } else if (this.keyCommands.getKeys().isKeyTyped(KeyListener.KEY_RIGHT)
-      && !this.keyCommands.getKeys().isKeyDown(KeyListener.KEY_RIGHT)) {
-      this.getSprite().setAnimation('idle-right');
+    // Reading the Player Input
+    this.input.processMovementInput();
+    //
+    this.moveRelative(0, this.input.getVerticalAxis() * this.movementSpeed);
+    //
+    if (this.input.getVerticalAxis() != 0) {
+      this.rotate(this.input.getHorizontalAxis() * this.rotationSpeed);
     }
-
-    // Moving left
-    if (this.keyCommands.getKeys().isKeyDown(KeyListener.KEY_LEFT) && this.xPos > minX) {
-      this.xPos -= this.xVel;
-      this.getSprite().setAnimation('walk-left');
-      // Limit to the max value
-      if (this.xPos < minX) {
-        this.xPos = minX;
-      }
-    } else if (this.keyCommands.getKeys().isKeyTyped(KeyListener.KEY_LEFT)
-      && !this.keyCommands.getKeys().isKeyDown(KeyListener.KEY_LEFT)) {
-      this.getSprite().setAnimation('idle-left');
-    }
-
-    // Moving up
-    if (this.keyCommands.getKeys().isKeyDown(KeyListener.KEY_UP) && this.yPos > minY) {
-      this.yPos -= this.yVel;
-      this.getSprite().setAnimation('walk-up');
-      if (this.yPos < minY) {
-        this.yPos = minY;
-      }
-    } else if (this.keyCommands.getKeys().isKeyTyped(KeyListener.KEY_UP)
-      && !this.keyCommands.getKeys().isKeyDown(KeyListener.KEY_UP)) {
-      this.getSprite().setAnimation('idle-up');
-    }
-
-    // Moving down
-    if (this.keyCommands.getKeys().isKeyDown(KeyListener.KEY_DOWN) && this.yPos < maxY) {
-      this.yPos += this.yVel;
-      this.getSprite().setAnimation('walk-down');
-      if (this.yPos > maxY) {
-        this.yPos = maxY;
-      }
-    } else if (this.keyCommands.getKeys().isKeyTyped(KeyListener.KEY_DOWN)
-      && !this.keyCommands.getKeys().isKeyDown(KeyListener.KEY_DOWN)) {
-      this.getSprite().setAnimation('idle-down');
-    }
-  }
-
-  /**
-   * Function to check if a character collides with another GameItem
-   *
-   * @param other the other GameItem
-   * @returns true if this object collides with the specified other object
-   */
-  public collidesWith(other: GameItem): boolean {
-    return this.xPos < other.getXPos() + other.getImage().width
-      && this.xPos + this.img.width > other.getXPos()
-      && this.yPos < other.getYPos() + other.getImage().height
-      && this.yPos + this.img.height > other.getYPos();
-  }
-
-  /**
-   * Increases the speed of the character when moving
-   *
-   * @param size the amount of speed to add
-   */
-  public increaseSpeed(size: number): void {
-    this.xVel += size;
-    this.yVel += size;
-  }
-
-  /**
-   * Gets the keycommands from the set Keycommands
-   *
-   * @returns the keyboard and key command interactions
-   */
-  public getKeyboard(): KeyCommands {
-    return this.keyCommands;
   }
 }

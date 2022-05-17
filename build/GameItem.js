@@ -1,58 +1,113 @@
-import Game from './Game.js';
-import Sprite from './Sprite.js';
+import Graphics from './Graphics.js';
 export default class GameItem {
-    img;
+    ctx;
+    imgSourcePath;
+    imgSource;
     xPos;
     yPos;
-    widthCut;
-    heightCut;
-    currentAnimationFrameLimit;
-    sizeSprite;
-    sprite;
-    canvas;
-    currentAnimation;
-    constructor(widthCut, heightCut, imageSrc, maxX, maxY, currentAnimationFrameLimit, sizeSprite) {
-        this.img = Game.loadNewImage(imageSrc);
-        this.xPos = maxX;
-        this.yPos = maxY;
-        this.widthCut = widthCut;
-        this.heightCut = heightCut;
-        this.currentAnimationFrameLimit = currentAnimationFrameLimit;
-        this.sizeSprite = sizeSprite;
-        this.sprite = new Sprite(this);
+    rotation;
+    frameWidth;
+    frameHeight;
+    colliderWidth;
+    colliderHeight;
+    animationState;
+    constructor(ctx, imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, colliderWidth = frameWidth, colliderHeight = frameHeight, animationState = 0) {
+        this.ctx = ctx;
+        this.imgSourcePath = imgSourcePath;
+        this.setImgSource(imgSourcePath);
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.rotation = rotation;
+        this.frameWidth = frameWidth;
+        this.frameHeight = frameHeight;
+        this.colliderWidth = colliderWidth;
+        this.colliderHeight = colliderHeight;
+        this.animationState = animationState;
     }
-    getImage() {
-        return this.img;
+    moveAbsolute(dXAbs, dYAbs, dR = 0) {
+        this.xPos += dXAbs;
+        this.yPos += dYAbs;
+        if (dR != 0) {
+            this.rotate(dR);
+        }
+    }
+    rotate(dR) {
+        this.rotation += dR;
+    }
+    moveRelative(dXRel, dYRel) {
+        let dist = Math.sqrt(dXRel ** 2 + dYRel ** 2);
+        let moveSlopeRel = Math.atan(dXRel / dYRel);
+        let moveSlopeAbs = moveSlopeRel + this.getRotationInRadians();
+        let dXAbs = dist * Math.sin(moveSlopeAbs);
+        let dYAbs = dist * Math.cos(moveSlopeAbs);
+        this.moveAbsolute(dXAbs, dYAbs);
+    }
+    draw() {
+        this.ctx.save();
+        this.ctx.translate(this.xPos, this.yPos);
+        this.ctx.rotate(this.getRotationInRadians());
+        this.ctx.drawImage(this.imgSource, this.frameWidth * this.animationState, this.frameHeight, this.frameWidth, this.frameHeight, -this.frameWidth / 2, -this.frameHeight / 2, this.frameWidth, this.frameHeight);
+        this.ctx.restore();
+    }
+    getImgSourcePath() {
+        return this.imgSourcePath;
+    }
+    getImgSource() {
+        return this.imgSource;
     }
     getXPos() {
         return this.xPos;
     }
-    setXPos(xPosition) {
-        this.xPos = xPosition;
-    }
     getYPos() {
         return this.yPos;
     }
-    setYPos(yPosition) {
-        this.yPos = yPosition;
+    getRotation() {
+        return this.rotation;
     }
-    getWidthCut() {
-        return this.widthCut;
+    getRotationInRadians() {
+        return this.rotation / 180 * Math.PI;
     }
-    getHeightCut() {
-        return this.heightCut;
+    getFrameWidth() {
+        return this.frameWidth;
     }
-    getCurrentAnimationFrameLimit() {
-        return this.currentAnimationFrameLimit;
+    getFrameHeight() {
+        return this.frameHeight;
     }
-    getSizeSprite() {
-        return this.sizeSprite;
+    getColliderWidth() {
+        return this.colliderWidth;
     }
-    getCurrentAnimation() {
-        return this.currentAnimation;
+    getColliderHeight() {
+        return this.colliderHeight;
     }
-    getSprite() {
-        return this.sprite;
+    getAnimationState() {
+        return this.animationState;
+    }
+    setImgSource(imgSourcePath) {
+        this.imgSource = Graphics.loadNewImage(imgSourcePath);
+    }
+    setXPos(xPos) {
+        this.xPos = xPos;
+    }
+    setYPos(yPos) {
+        this.yPos = yPos;
+    }
+    setRotation(rotation) {
+        this.rotation = rotation;
+    }
+    setFrameWidth(frameWidth) {
+        this.frameWidth = frameWidth;
+    }
+    setFrameHeight(frameHeight) {
+        this.frameHeight = frameHeight;
+    }
+    setColiderWidth(colliderWidth) {
+        this.colliderWidth = colliderWidth;
+    }
+    setColiderHeight(colliderHeight) {
+        this.colliderHeight = colliderHeight;
+    }
+    setAnimationState(animationState) {
+        this.animationState = animationState;
     }
 }
 //# sourceMappingURL=GameItem.js.map

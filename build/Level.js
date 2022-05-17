@@ -4,25 +4,20 @@ import FovOverlay from './FovOverlay.js';
 export default class Level extends Scene {
     player;
     fov;
-    keyCommands;
     constructor(game) {
         super(game);
-        this.player = new Player(game.canvas.width / 2, game.canvas.height / 2);
-        this.fov = new FovOverlay(game.canvas.width / 2, game.canvas.height / 2);
-        this.keyCommands = this.player.getKeyboard();
-    }
-    processInput() {
-        this.player.move(this.game.canvas);
+        this.player = new Player(this.game.ctx, './assets/img/testplayer-old.png', game.canvas.width / 2, game.canvas.height / 2, 0, 32, 32, 32, 32, 0);
+        this.fov = new FovOverlay(this.game.ctx, './assets/img/fov.png', game.canvas.width / 2, game.canvas.height / 2, 0, 32, 32);
     }
     update() {
         return null;
     }
     render() {
         this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-        this.player.draw(this.game.ctx);
+        this.player.draw();
         this.fov.setXPos(this.player.getXPos());
         this.fov.setYPos(this.player.getYPos());
-        this.fov.draw(this.game.ctx);
+        this.fov.draw();
     }
     getPlayer() {
         return this.player;

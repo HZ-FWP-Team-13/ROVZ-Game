@@ -177,8 +177,6 @@ export default class GameLoop {
       this.state = GameLoop.STATE_RUNNING;
     }
 
-    this.currentScene.processInput();
-
     // Let the game update itself
     let nextScene: Scene = null;
     if (this.mode === GameLoop.PLAY_CATCH_UP) {

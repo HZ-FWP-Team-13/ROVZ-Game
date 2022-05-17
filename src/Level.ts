@@ -1,17 +1,14 @@
 import Game from './Game.js';
 import Scene from './Scene.js';
 import Player from './Player.js';
-import KeyCommands from './KeyCommands.js';
 import FovOverlay from './FovOverlay.js';
 
 
 export default class Level extends Scene {
   // Player
   private player: Player;
-  // Fov
+  // FovOverlay
   private fov: FovOverlay;
-
-  private keyCommands: KeyCommands;
 
   /**
    * Creates a new instance of this class
@@ -21,27 +18,31 @@ export default class Level extends Scene {
   public constructor(game: Game) {
     super(game);
 
-    // Create player
+    // Create Player
     this.player = new Player(
-      game.canvas.width / 2,
-      game.canvas.height / 2,
-    );
+      // The Game Canvas rendering context, the path to the source image of the Player appearance
+      this.game.ctx, './assets/img/testplayer-old.png',
+      // The coordinates of the Player on the game canvas
+      game.canvas.width / 2, game.canvas.height / 2,
+      // The rotation of the Player measured in degrees
+      0,
+      // The dimensions of the Player appearance
+      32, 32,
+      // The dimensions of the Player collider
+      32, 32,
+      // The current state of the Player animation cycle
+      0);
 
-    // Create fov
+    // Create FovOverlay
     this.fov = new FovOverlay(
-      game.canvas.width / 2,
-      game.canvas.height / 2,
-    );
-
-    this.keyCommands = this.player.getKeyboard();
-  }
-
-  /**
-   * Handles any user input that has happened since the last call
-   */
-  public processInput(): void {
-    // Move the player
-    this.player.move(this.game.canvas);
+      // The Game Canvas rendering context, the path to the source image of the Fov appearance
+      this.game.ctx, './assets/img/fov.png',
+      // The coordinates of the FovOverlay on the game canvas
+      game.canvas.width / 2, game.canvas.height / 2,
+      // The rotation of the FovOverlay measured in degrees
+      0,
+      // The dimensions of the FovOverlay appearance
+      32, 32);
   }
 
   /**
@@ -68,10 +69,10 @@ export default class Level extends Scene {
   public render(): void {
     // Clear the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-    this.player.draw(this.game.ctx);
+    this.player.draw();
     this.fov.setXPos(this.player.getXPos());
     this.fov.setYPos(this.player.getYPos());
-    this.fov.draw(this.game.ctx);
+    this.fov.draw();
   }
 
   /**

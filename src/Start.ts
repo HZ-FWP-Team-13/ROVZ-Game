@@ -1,12 +1,13 @@
 import Game from './Game.js';
-import KeyListener from './KeyListener.js';
+import Input from './Input.js';
 import Level from './Level.js';
 import Scene from './Scene.js';
 
 export default class Start extends Scene {
   private shouldStart: boolean;
 
-  private keyboard: KeyListener;
+  // Input to read the Player controls
+  private input: Input;
 
   /**
    * Creates a new instance of this class
@@ -16,17 +17,7 @@ export default class Start extends Scene {
   public constructor(game: Game) {
     super(game);
     game.reset();
-    this.keyboard = new KeyListener();
-    this.shouldStart = false;
-  }
-
-  /**
-   * Handles any user input that has happened since the last call
-   */
-  public processInput(): void {
-    if (this.keyboard.isKeyDown(KeyListener.KEY_S)) {
-      this.shouldStart = true;
-    }
+    this.input = new Input();
   }
 
   /**
@@ -44,7 +35,7 @@ export default class Start extends Scene {
    *   current scene, just return `null`
    */
   public update(): Scene {
-    if (this.shouldStart) {
+    if (this.input.getStartKey()) {
       return new Level(this.game);
     }
     return null;

@@ -22,11 +22,6 @@ export default abstract class Scene {
   }
 
   /**
-   * Handles any user input that has happened since the last call
-   */
-  public abstract processInput(): void;
-
-  /**
    * Advances the game simulation one step. It may run AI and physics (usually
    * in that order). The return value of this method determines what the `GameLoop`
    * that is animating this object will do next. If `null` is returned, the

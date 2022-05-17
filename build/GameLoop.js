@@ -53,7 +53,6 @@ export default class GameLoop {
         if (this.isInState(GameLoop.STATE_STARTING)) {
             this.state = GameLoop.STATE_RUNNING;
         }
-        this.currentScene.processInput();
         let nextScene = null;
         if (this.mode === GameLoop.PLAY_CATCH_UP) {
             const step = 1;

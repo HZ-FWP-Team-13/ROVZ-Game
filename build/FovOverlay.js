@@ -1,11 +1,16 @@
 import GameItem from './GameItem.js';
+import Input from './Input.js';
 export default class FovOverlay extends GameItem {
-    constructor(xPos, yPos) {
-        super(6000, 6000, './assets/img/fov.png', 0, 0, 0, 6000);
+    input;
+    rotationSpeed;
+    constructor(ctx, imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight) {
+        super(ctx, imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, frameWidth, frameHeight, 0);
+        this.input = new Input();
+        this.rotationSpeed = 10;
     }
-    draw(ctx) {
-        ctx.drawImage(this.img, this.xPos - this.img.width / 2, this.yPos - this.img.height / 2);
+    fovRotation() {
+        this.input.processRotationInput();
+        this.rotate(this.input.getRotationAxis() * this.rotationSpeed);
     }
-    move(canvas) { }
 }
 //# sourceMappingURL=FovOverlay.js.map

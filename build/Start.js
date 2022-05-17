@@ -1,23 +1,17 @@
 import Game from './Game.js';
-import KeyListener from './KeyListener.js';
+import Input from './Input.js';
 import Level from './Level.js';
 import Scene from './Scene.js';
 export default class Start extends Scene {
     shouldStart;
-    keyboard;
+    input;
     constructor(game) {
         super(game);
         game.reset();
-        this.keyboard = new KeyListener();
-        this.shouldStart = false;
-    }
-    processInput() {
-        if (this.keyboard.isKeyDown(KeyListener.KEY_S)) {
-            this.shouldStart = true;
-        }
+        this.input = new Input();
     }
     update() {
-        if (this.shouldStart) {
+        if (this.input.getStartKey()) {
             return new Level(this.game);
         }
         return null;
