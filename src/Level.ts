@@ -2,13 +2,21 @@ import Game from './Game.js';
 import Scene from './Scene.js';
 import Player from './Player.js';
 import FovOverlay from './FovOverlay.js';
+import Car from './Car.js';
 
 export default class Level extends Scene {
   // Player Character
   private player: Player;
 
+  // Cars
+  private cars: Car[];
+
+
   // FovOverlay
   private fov: FovOverlay;
+
+  // DEBUG STUFF
+  private isFovVisible: boolean = true;
 
   /**
    * Create a new Level Scene instance
@@ -33,6 +41,13 @@ export default class Level extends Scene {
       // The current state of the Player Character animation cycle
       0,
     );
+
+
+    // Car array
+    this.cars = [];
+
+    this.cars.push(this.createNewCar(200, 200, 'RIGHT'));
+    this.cars.push(this.createNewCar(400, 400, 'DOWN'));
 
     // Spawning the FovOverlay
     this.fov = new FovOverlay(
@@ -74,6 +89,12 @@ export default class Level extends Scene {
     // Preserving the rotation of the FovOverlay relative to the Player Character
     this.fov.rotate(this.player.getPreviousFrameRotation());
 
+
+    // Moving the cars
+    this.cars.forEach(car => {
+      car.move();
+    });
+
     return null;
   }
 
@@ -81,12 +102,26 @@ export default class Level extends Scene {
    * Render this Level Scene to the Game Canvas
    */
   public render(): void {
+    let ctx = this.game.ctx;
     // Clearing the screen
-    this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
+    ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
+
+    this.cars.forEach(car => {
+      car.draw(ctx);
+    });
 
     // Drawing the Player Character on the Game Canvas
-    this.player.draw(this.game.ctx);
+    this.player.draw(ctx);
+
+
     // Drawing the FovOverlay on the Game Canvas
-    this.fov.draw(this.game.ctx);
+
+    if(this.isFovVisible) {
+      this.fov.draw(ctx);
+    }
+  }
+
+  public createNewCar(xPos: number, yPos: number, state: string) {
+    return new Car(xPos, yPos, state);
   }
 }
