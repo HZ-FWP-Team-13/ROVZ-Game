@@ -1,4 +1,3 @@
-
 import KeyListener from './KeyListener.js';
 
 export default class Input {
@@ -15,10 +14,18 @@ export default class Input {
 
   private startKey: boolean;
 
+  /**
+   * Constructor of the Input class
+   */
   public constructor() {
     this.keyListener = new KeyListener();
   }
 
+  /**
+   * Method to read the Horizontal Input
+   *
+   * @returns
+   */
   public readHorizontalInput(): number {
     return this.horizontalAxis =
       (this.keyListener.isKeyDown(KeyListener.KEY_D) ? 1 : 0) -
@@ -38,6 +45,7 @@ export default class Input {
   }
 
   public readStartInput(): boolean {
+    console.log('Key is pressed sir!');
     return this.startKey = this.keyListener.isKeyTyped(KeyListener.KEY_S);
   }
 

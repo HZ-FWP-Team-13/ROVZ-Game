@@ -14,7 +14,6 @@ export default class Player extends GameItem {
   /**
    * Create a new Player instance
    *
-   * @param ctx The Game Canvas rendering context
    * @param imgSourcePath The path to the source image of the Player appearance
    *
    * @param xPos The X coordinate of the Player on the game canvas
@@ -31,20 +30,21 @@ export default class Player extends GameItem {
    * @param animationState The current state of the Player animation cycle
    */
   public constructor(
-    ctx: CanvasRenderingContext2D, imgSourcePath: string,
+    imgSourcePath: string,
     xPos: number, yPos: number,
     rotation: number,
     frameWidth: number, frameHeight: number,
     colliderWidth: number = frameWidth, colliderHeight: number = frameHeight,
-    animationState: number = 0) {
-
+    animationState: number = 0,
+  ) {
     super(
-      ctx, imgSourcePath,
+      imgSourcePath,
       xPos, yPos,
       rotation,
       frameWidth,
       frameHeight, colliderWidth,
-      colliderHeight, animationState);
+      colliderHeight, animationState,
+    );
 
     this.input = new Input();
     this.movementSpeed = 10;
@@ -58,6 +58,8 @@ export default class Player extends GameItem {
     // Traction
     this.moveRelative(0, this.input.readVerticalInput() * this.movementSpeed);
     // Steering
-    this.rotate(this.input.readHorizontalInput() * this.rotationSpeed * -this.input.getVerticalAxis());
+    this.rotate(
+      this.input.readHorizontalInput() * this.rotationSpeed * -this.input.getVerticalAxis(),
+    );
   }
 }

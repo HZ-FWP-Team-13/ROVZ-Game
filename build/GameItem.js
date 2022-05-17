@@ -1,6 +1,5 @@
 import Graphics from './Graphics.js';
 export default class GameItem {
-    ctx;
     imgSourcePath;
     imgSource;
     xPos;
@@ -11,8 +10,7 @@ export default class GameItem {
     colliderWidth;
     colliderHeight;
     animationState;
-    constructor(ctx, imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, colliderWidth = frameWidth, colliderHeight = frameHeight, animationState = 0) {
-        this.ctx = ctx;
+    constructor(imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, colliderWidth = frameWidth, colliderHeight = frameHeight, animationState = 0) {
         this.imgSourcePath = imgSourcePath;
         this.setImgSource(imgSourcePath);
         this.xPos = xPos;
@@ -33,19 +31,19 @@ export default class GameItem {
         this.rotation += dR;
     }
     moveRelative(dXRel, dYRel) {
-        let dist = Math.sqrt(dXRel ** 2 + dYRel ** 2);
-        let moveSlopeRel = Math.atan(dXRel / dYRel);
-        let moveSlopeAbs = moveSlopeRel + this.getRotationInRadians();
-        let dXAbs = dist * Math.sin(moveSlopeAbs);
-        let dYAbs = dist * Math.cos(moveSlopeAbs);
+        const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2);
+        const moveSlopeRel = Math.atan(dXRel / dYRel);
+        const moveSlopeAbs = moveSlopeRel + this.getRotationInRadians();
+        const dXAbs = dist * Math.sin(moveSlopeAbs);
+        const dYAbs = dist * Math.cos(moveSlopeAbs);
         this.moveAbsolute(dXAbs, dYAbs);
     }
-    draw() {
-        this.ctx.save();
-        this.ctx.translate(this.xPos, this.yPos);
-        this.ctx.rotate(this.getRotationInRadians());
-        this.ctx.drawImage(this.imgSource, this.frameWidth * this.animationState, this.frameHeight, this.frameWidth, this.frameHeight, -this.frameWidth / 2, -this.frameHeight / 2, this.frameWidth, this.frameHeight);
-        this.ctx.restore();
+    draw(ctx) {
+        ctx.save();
+        ctx.translate(this.xPos, this.yPos);
+        ctx.rotate(this.getRotationInRadians());
+        ctx.drawImage(this.imgSource, this.frameWidth * this.animationState, 0, this.frameWidth, this.frameHeight, -this.frameWidth / 2, -this.frameHeight / 2, this.frameWidth, this.frameHeight);
+        ctx.restore();
     }
     getImgSourcePath() {
         return this.imgSourcePath;
@@ -63,7 +61,7 @@ export default class GameItem {
         return this.rotation;
     }
     getRotationInRadians() {
-        return this.rotation / 180 * Math.PI;
+        return (this.rotation / 180) * Math.PI;
     }
     getFrameWidth() {
         return this.frameWidth;

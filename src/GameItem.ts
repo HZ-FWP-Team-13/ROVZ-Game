@@ -1,9 +1,6 @@
 import Graphics from './Graphics.js';
 
 export default abstract class GameItem {
-  // The Game Canvas rendering context
-  protected ctx: CanvasRenderingContext2D;
-
   // The path to the source image of the GameItem appearance
   protected imgSourcePath: string;
 
@@ -39,29 +36,23 @@ export default abstract class GameItem {
    *
    * @param ctx The Game Canvas rendering context
    * @param imgSourcePath The path to the source image of the GameItem appearance
-   *
    * @param xPos The X coordinate of the GameItem on the game canvas
    * @param yPos The Y coordinate of the GameItem on the game canvas
-   *
    * @param rotation The rotation of the GameItem measured in degrees
-   *
    * @param frameWidth The width of the GameItem appearance
    * @param frameHeight The height of the GameItem appearance
-   *
    * @param colliderWidth The width of the GameItem collider
    * @param colliderHeight The height of the GameItem collider
-   *
    * @param animationState The current state of the GameItem animation cycle
    */
   public constructor(
-    ctx: CanvasRenderingContext2D, imgSourcePath: string,
+    imgSourcePath: string,
     xPos: number, yPos: number,
     rotation: number,
     frameWidth: number, frameHeight: number,
     colliderWidth: number = frameWidth, colliderHeight: number = frameHeight,
-    animationState: number = 0) {
-
-    this.ctx = ctx;
+    animationState: number = 0,
+  ) {
     this.imgSourcePath = imgSourcePath;
     this.setImgSource(imgSourcePath);
 
@@ -109,17 +100,17 @@ export default abstract class GameItem {
    */
   public moveRelative(dXRel: number, dYRel: number): void {
     // Distance to the movement destination
-    let dist = Math.sqrt(dXRel**2 + dYRel**2);
+    const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2);
 
     // Slope of the movement vector in the relative coordinate system
-    let moveSlopeRel = Math.atan(dXRel/dYRel);
+    const moveSlopeRel = Math.atan(dXRel / dYRel);
     // Slope of the movement vector in the absolute coordinate system
-    let moveSlopeAbs = moveSlopeRel + this.getRotationInRadians();
+    const moveSlopeAbs = moveSlopeRel + this.getRotationInRadians();
 
     // Deviation of the X coordinate in the absolute coordinate system
-    let dXAbs = dist * Math.sin(moveSlopeAbs);
+    const dXAbs = dist * Math.sin(moveSlopeAbs);
     // Deviation of the Y coordinate in the absolute coordinate system
-    let dYAbs = dist * Math.cos(moveSlopeAbs);
+    const dYAbs = dist * Math.cos(moveSlopeAbs);
 
     // Moving this GameItem across the Game Canvas within the absolute coordinate system
     this.moveAbsolute(dXAbs, dYAbs);
@@ -128,26 +119,28 @@ export default abstract class GameItem {
   /**
    * Draw this GameItem appearance on the Game Canvas
    * based on rotation and current state of the animation cycle
+   *
+   * @param ctx the Canvas that needs to be drawn upon each cycle
    */
-  public draw(): void {
+  public draw(ctx: CanvasRenderingContext2D): void {
     // Creating a backup of the Game Canvas rendering context in the absolute coordinate system
-    this.ctx.save();
+    ctx.save();
 
     // Switching the Game Canvas rendering context to the relative coordinate system
     // Moving the origin of the coordinate system to the center of the future GameItem appearance
-    this.ctx.translate(this.xPos, this.yPos);
+    ctx.translate(this.xPos, this.yPos);
     // Rotating coordinate system to correspond with this GameItem rotation
-    this.ctx.rotate(this.getRotationInRadians());
+    ctx.rotate(this.getRotationInRadians());
 
     //
-    this.ctx.drawImage(this.imgSource,
-      this.frameWidth * this.animationState, this.frameHeight,
+    ctx.drawImage(this.imgSource,
+      this.frameWidth * this.animationState, 0,
       this.frameWidth, this.frameHeight,
       -this.frameWidth / 2, -this.frameHeight / 2,
       this.frameWidth, this.frameHeight);
 
     // Returning the Game Canvas rendering context to the absolute coordinate system
-    this.ctx.restore();
+    ctx.restore();
   }
 
   /**
@@ -205,8 +198,8 @@ export default abstract class GameItem {
    *
    * @returns The rotation of this GameItem measured in radians
    */
-   public getRotationInRadians(): number {
-    return this.rotation / 180 * Math.PI;
+  public getRotationInRadians(): number {
+    return (this.rotation / 180) * Math.PI;
   }
 
   /**
@@ -232,7 +225,7 @@ export default abstract class GameItem {
    *
    * @returns The width of the GameItem collider
    */
-   public getColliderWidth(): number {
+  public getColliderWidth(): number {
     return this.colliderWidth;
   }
 
@@ -275,7 +268,7 @@ export default abstract class GameItem {
   /**
    * Set the Y coordinate of this GameItem
    *
-   * @param yPosition The Y coordinate of this GameItem
+   * @param yPos The Y coordinate of this GameItem
    */
   public setYPos(yPos: number): void {
     this.yPos = yPos;
@@ -313,7 +306,7 @@ export default abstract class GameItem {
    *
    * @param colliderWidth The width of the GameItem collider
    */
-   public setColiderWidth(colliderWidth: number): void {
+  public setColiderWidth(colliderWidth: number): void {
     this.colliderWidth = colliderWidth;
   }
 

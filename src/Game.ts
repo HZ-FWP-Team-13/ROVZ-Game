@@ -72,18 +72,6 @@ export default class Game {
   }
 
   /**
-   * Method to load an image
-   *
-   * @param source the source
-   * @returns HTMLImageElement - returns an image
-   */
-  public static loadNewImage(source: string): HTMLImageElement {
-    const img = new Image();
-    img.src = source;
-    return img;
-  }
-
-  /**
    * Returns a random number between min and max
    *
    * @param min - lower boundary

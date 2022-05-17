@@ -11,7 +11,6 @@ export default class FovOverlay extends GameItem {
   /**
    * Create a new FovOverlay instance
    *
-   * @param ctx The Game Canvas rendering context
    * @param imgSourcePath The path to the source image of the FovOverlay appearance
    *
    * @param xPos The X coordinate of the FovOverlay on the game canvas
@@ -22,19 +21,20 @@ export default class FovOverlay extends GameItem {
    * @param frameWidth The width of the FovOverlay appearance
    * @param frameHeight The height of the FovOverlay appearance
    */
-   public constructor(
-    ctx: CanvasRenderingContext2D, imgSourcePath: string,
+  public constructor(
+    imgSourcePath: string,
     xPos: number, yPos: number,
     rotation: number,
-    frameWidth: number, frameHeight: number) {
-
+    frameWidth: number, frameHeight: number,
+  ) {
     super(
-      ctx, imgSourcePath,
+      imgSourcePath,
       xPos, yPos,
       rotation,
       frameWidth, frameHeight,
       frameWidth, frameHeight,
-      0);
+      0,
+    );
 
     this.input = new Input();
     this.rotationSpeed = 10;
@@ -43,7 +43,7 @@ export default class FovOverlay extends GameItem {
   /**
    * Rotate this FovOverlay in response to the Player Input
    */
-   public control(): void {
+  public control(): void {
     // Looking around
     this.rotate(this.input.readRotationInput() * this.rotationSpeed);
   }

@@ -4,8 +4,8 @@ export default class Player extends GameItem {
     input;
     movementSpeed;
     rotationSpeed;
-    constructor(ctx, imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, colliderWidth = frameWidth, colliderHeight = frameHeight, animationState = 0) {
-        super(ctx, imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, colliderWidth, colliderHeight, animationState);
+    constructor(imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, colliderWidth = frameWidth, colliderHeight = frameHeight, animationState = 0) {
+        super(imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, colliderWidth, colliderHeight, animationState);
         this.input = new Input();
         this.movementSpeed = 10;
         this.rotationSpeed = 10;

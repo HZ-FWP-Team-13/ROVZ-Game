@@ -1,4 +1,5 @@
 import Game from './Game.js';
+import Graphics from './Graphics.js';
 import Input from './Input.js';
 import Level from './Level.js';
 import Scene from './Scene.js';
@@ -35,7 +36,7 @@ export default class Start extends Scene {
    *   current scene, just return `null`
    */
   public update(): Scene {
-    if (this.input.getStartKey()) {
+    if (this.input.readStartInput()) {
       return new Level(this.game);
     }
     return null;
@@ -48,6 +49,6 @@ export default class Start extends Scene {
     // Clear the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
     // Show score
-    this.game.ctx.drawImage(Game.loadNewImage('./assets/img/startscreen.png'), 0, 0, this.game.canvas.width, this.game.canvas.height);
+    this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/startscreen.png'), 0, 0, this.game.canvas.width, this.game.canvas.height);
   }
 }

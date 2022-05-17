@@ -3,10 +3,10 @@ import Scene from './Scene.js';
 import Player from './Player.js';
 import FovOverlay from './FovOverlay.js';
 
-
 export default class Level extends Scene {
   // Player
   private player: Player;
+
   // FovOverlay
   private fov: FovOverlay;
 
@@ -20,8 +20,8 @@ export default class Level extends Scene {
 
     // Spawning the Player
     this.player = new Player(
-      // The Game Canvas rendering context, the path to the source image of the Player appearance
-      this.game.ctx, './assets/img/testplayer-old.png',
+      // The path to the source image of the Player appearance
+      './assets/img/testplayer-old.png',
       // The coordinates of the Player on the game canvas
       game.canvas.width / 2, game.canvas.height / 2,
       // The rotation of the Player measured in degrees
@@ -31,18 +31,21 @@ export default class Level extends Scene {
       // The dimensions of the Player collider
       32, 32,
       // The current state of the Player animation cycle
-      0);
+      0,
+    );
 
     // Spawning the FovOverlay
     this.fov = new FovOverlay(
-      // The Game Canvas rendering context, the path to the source image of the Fov appearance
-      this.game.ctx, './assets/img/fov.png',
+      // The path to the source image of the Fov appearance
+      './assets/img/fov.png',
       // The coordinates of the FovOverlay on the game canvas
       game.canvas.width / 2, game.canvas.height / 2,
       // The rotation of the FovOverlay measured in degrees
       0,
       // The dimensions of the FovOverlay appearance
-      32, 32);
+      32,
+      32,
+    );
   }
 
   /**
@@ -69,13 +72,15 @@ export default class Level extends Scene {
   public render(): void {
     // Clear the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-    this.player.draw();
+    console.log(this.player.draw(this.game.ctx));
+    this.player.draw(this.game.ctx);
+
     this.fov.setXPos(this.player.getXPos());
     this.fov.setYPos(this.player.getYPos());
-    this.fov.draw();
+    this.fov.draw(this.game.ctx);
 
-    this.player.control();
-    this.fov.control();
+    // this.player.control();
+    // this.fov.control();
   }
 
   /**

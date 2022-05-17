@@ -24,6 +24,7 @@ export default class Input {
                 (this.keyListener.isKeyDown(KeyListener.KEY_LEFT) ? 1 : 0);
     }
     readStartInput() {
+        console.log('Key is pressed sir!');
         return this.startKey = this.keyListener.isKeyTyped(KeyListener.KEY_S);
     }
     getHorizontalAxis() {
