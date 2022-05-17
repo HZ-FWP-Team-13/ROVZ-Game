@@ -43,11 +43,8 @@ export default class FovOverlay extends GameItem {
   /**
    * Rotate this FovOverlay in response to the Player Input
    */
-   public fovRotation(): void {
-
-    // Reading the Player Input
-    this.input.processRotationInput();
-    //
-    this.rotate(this.input.getRotationAxis() * this.rotationSpeed);
+   public control(): void {
+    // Looking around
+    this.rotate(this.input.readRotationInput() * this.rotationSpeed);
   }
 }

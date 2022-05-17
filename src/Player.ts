@@ -54,15 +54,10 @@ export default class Player extends GameItem {
   /**
    * Move this Player across the Game Canvas in response to the Player Input
    */
-  public playerMovement(): void {
-
-    // Reading the Player Input
-    this.input.processMovementInput();
-    //
-    this.moveRelative(0, this.input.getVerticalAxis() * this.movementSpeed);
-    //
-    if (this.input.getVerticalAxis() != 0) {
-      this.rotate(this.input.getHorizontalAxis() * this.rotationSpeed);
-    }
+  public control(): void {
+    // Traction
+    this.moveRelative(0, this.input.readVerticalInput() * this.movementSpeed);
+    // Steering
+    this.rotate(this.input.readHorizontalInput() * this.rotationSpeed * -this.input.getVerticalAxis());
   }
 }

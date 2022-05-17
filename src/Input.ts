@@ -19,24 +19,26 @@ export default class Input {
     this.keyListener = new KeyListener();
   }
 
-  public processMovementInput(): void {
-    this.horizontalAxis =
+  public readHorizontalInput(): number {
+    return this.horizontalAxis =
       (this.keyListener.isKeyDown(KeyListener.KEY_D) ? 1 : 0) -
       (this.keyListener.isKeyDown(KeyListener.KEY_A) ? 1 : 0);
+  }
 
-    this.verticalAxis =
+  public readVerticalInput(): number {
+    return this.verticalAxis =
       (this.keyListener.isKeyDown(KeyListener.KEY_W) ? 1 : 0) -
       (this.keyListener.isKeyDown(KeyListener.KEY_S) ? 1 : 0);
   }
 
-  public processRotationInput(): void {
-    this.rotationAxis =
+  public readRotationInput(): number {
+    return this.rotationAxis =
       (this.keyListener.isKeyDown(KeyListener.KEY_RIGHT) ? 1 : 0) -
       (this.keyListener.isKeyDown(KeyListener.KEY_LEFT) ? 1 : 0);
   }
 
-  public processStartInput(): void {
-    this.startKey = this.keyListener.isKeyDown(KeyListener.KEY_S);
+  public readStartInput(): boolean {
+    return this.startKey = this.keyListener.isKeyTyped(KeyListener.KEY_S);
   }
 
   public getHorizontalAxis(): number {

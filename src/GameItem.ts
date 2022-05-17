@@ -151,6 +151,8 @@ export default abstract class GameItem {
     this.ctx.restore();
   }
 
+  public abstract control(): void;
+
   /**
    * Get the path to the source image of this GameItem appearance
    *

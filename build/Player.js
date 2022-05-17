@@ -10,12 +10,9 @@ export default class Player extends GameItem {
         this.movementSpeed = 10;
         this.rotationSpeed = 10;
     }
-    playerMovement() {
-        this.input.processMovementInput();
-        this.moveRelative(0, this.input.getVerticalAxis() * this.movementSpeed);
-        if (this.input.getVerticalAxis() != 0) {
-            this.rotate(this.input.getHorizontalAxis() * this.rotationSpeed);
-        }
+    control() {
+        this.moveRelative(0, this.input.readVerticalInput() * this.movementSpeed);
+        this.rotate(this.input.readHorizontalInput() * this.rotationSpeed * -this.input.getVerticalAxis());
     }
 }
 //# sourceMappingURL=Player.js.map

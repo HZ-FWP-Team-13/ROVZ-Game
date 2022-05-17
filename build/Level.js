@@ -18,6 +18,8 @@ export default class Level extends Scene {
         this.fov.setXPos(this.player.getXPos());
         this.fov.setYPos(this.player.getYPos());
         this.fov.draw();
+        this.player.control();
+        this.fov.control();
     }
     getPlayer() {
         return this.player;
