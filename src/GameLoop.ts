@@ -99,7 +99,7 @@ export default class GameLoop {
   public load: number;
 
   /**
-   * Construct a new instance of this class.
+   * Create a new GameLoop instance
    *
    * @param mode OPTIONAL, the mode of the gameloop. It defaults to
    *   GameLoop.NORMAL_MODE, which is fine for simple games
@@ -110,9 +110,9 @@ export default class GameLoop {
   }
 
   /**
-   * Start the game loop.
+   * Start this GameLoop
    *
-   * @param scene the game to start animating
+   * @param scene The first Scene for this GameLoop to run
    */
   public start(scene: Scene): void {
     if (this.state === GameLoop.STATE_IDLE) {
@@ -146,10 +146,10 @@ export default class GameLoop {
     return this.state === state;
   }
 
-  /*
-   * Sets the next scene to animate
+  /**
+   * Set the next Scene to animate
    *
-   * @param next the next scene to animate
+   * @param next The next scene to animate
    */
   private setNextScene(next: Scene) {
     if (next === null) {

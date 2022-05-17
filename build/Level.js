@@ -11,15 +11,15 @@ export default class Level extends Scene {
     }
     update() {
         this.player.control();
-        this.fov.rotate(this.player.getPreviousFrameRotation());
         this.fov.control();
+        this.fov.setXPos(this.player.getXPos());
+        this.fov.setYPos(this.player.getYPos());
+        this.fov.rotate(this.player.getPreviousFrameRotation());
         return null;
     }
     render() {
         this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
         this.player.draw(this.game.ctx);
-        this.fov.setXPos(this.player.getXPos());
-        this.fov.setYPos(this.player.getYPos());
         this.fov.draw(this.game.ctx);
     }
 }

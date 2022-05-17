@@ -4,47 +4,46 @@ import Player from './Player.js';
 import FovOverlay from './FovOverlay.js';
 
 export default class Level extends Scene {
-  // Player
+  // Player Character
   private player: Player;
 
   // FovOverlay
   private fov: FovOverlay;
 
   /**
-   * Creates a new instance of this class
+   * Create a new Level Scene instance
    *
-   * @param game the game object where this scene will be a part of
+   * @param game The Game namespace
    */
   public constructor(game: Game) {
     super(game);
 
-    // Spawning the Player
+    // Spawning the Player Character
     this.player = new Player(
-      // The path to the source image of the Player appearance
+      // The path to the Source Image of the Player Character appearance
       './assets/img/testplayer-old.png',
-      // The coordinates of the Player on the game canvas
+      // The coordinates of the Player Character on the game canvas
       game.canvas.width / 2, game.canvas.height / 2,
-      // The rotation of the Player measured in degrees
+      // The rotation of the Player Character measured in degrees
       0,
-      // The dimensions of the Player appearance
+      // The dimensions of the Player Character appearance
       32, 32,
-      // The dimensions of the Player collider
+      // The dimensions of the Player Character collider
       32, 32,
-      // The current state of the Player animation cycle
+      // The current state of the Player Character animation cycle
       0,
     );
 
     // Spawning the FovOverlay
     this.fov = new FovOverlay(
-      // The path to the source image of the Fov appearance
+      // The path to the Source Image of the Fov appearance
       './assets/img/fov.png',
       // The coordinates of the FovOverlay on the game canvas
       game.canvas.width / 2, game.canvas.height / 2,
       // The rotation of the FovOverlay measured in degrees
       0,
       // The dimensions of the FovOverlay appearance
-      6000,
-      6000,
+      6000, 6000,
     );
   }
 
@@ -63,24 +62,31 @@ export default class Level extends Scene {
    *   current scene, just return `null`
    */
   public update(): Scene {
+    // Providing Player Control over the Player Character
     this.player.control();
-    this.fov.rotate(this.player.getPreviousFrameRotation());
+    // Providing Player Control over the FovOverlay
     this.fov.control();
 
+    // Preserving the position of the FovOverlay relative to the Player Character
+    this.fov.setXPos(this.player.getXPos());
+    this.fov.setYPos(this.player.getYPos());
+
+    // Preserving the rotation of the FovOverlay relative to the Player Character
+    this.fov.rotate(this.player.getPreviousFrameRotation());
 
     return null;
   }
 
   /**
-   * Draw the game so the player can see what happened
+   * Render this Level Scene to the Game Canvas
    */
   public render(): void {
-    // Clear the screen
+    // Clearing the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-    this.player.draw(this.game.ctx);
 
-    this.fov.setXPos(this.player.getXPos());
-    this.fov.setYPos(this.player.getYPos());
+    // Drawing the Player Character on the Game Canvas
+    this.player.draw(this.game.ctx);
+    // Drawing the FovOverlay on the Game Canvas
     this.fov.draw(this.game.ctx);
   }
 }

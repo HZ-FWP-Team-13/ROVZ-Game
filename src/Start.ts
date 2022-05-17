@@ -9,9 +9,9 @@ export default class Start extends Scene {
   private input: Input;
 
   /**
-   * Creates a new instance of this class
+   * Create a new Start Scene instance
    *
-   * @param game the game object where this scene will be a part of
+   * @param game The Game namespace
    */
   public constructor(game: Game) {
     super(game);
@@ -41,12 +41,13 @@ export default class Start extends Scene {
   }
 
   /**
-   * Draw the game so the player can see what happened
+   * Render this Start Scene to the Game Canvas
    */
   public render(): void {
-    // Clear the screen
+    // Clearing the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-    // Show score
-    this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/startscreen.png'), 0, 0, this.game.canvas.width, this.game.canvas.height);
+    // Showing the score
+    this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/startscreen.png'),
+      0, 0, this.game.canvas.width, this.game.canvas.height);
   }
 }

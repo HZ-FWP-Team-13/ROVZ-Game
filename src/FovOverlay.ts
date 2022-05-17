@@ -2,7 +2,7 @@ import GameItem from './GameItem.js';
 import Input from './Input.js';
 
 export default class FovOverlay extends GameItem {
-  // Input to read the Player controls
+  // Input to read the Player Controls
   private input: Input;
 
   // The speed of the FovOverlay rotation measured in degrees per second
@@ -11,7 +11,7 @@ export default class FovOverlay extends GameItem {
   /**
    * Create a new FovOverlay instance
    *
-   * @param imgSourcePath The path to the source image of the FovOverlay appearance
+   * @param imgSourcePath The path to the Source Image of the FovOverlay appearance
    *
    * @param xPos The X coordinate of the FovOverlay on the game canvas
    * @param yPos The Y coordinate of the FovOverlay on the game canvas

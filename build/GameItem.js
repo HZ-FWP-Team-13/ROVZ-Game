@@ -31,8 +31,7 @@ export default class GameItem {
         this.rotation += dR;
     }
     moveRelative(dXRel, dYRel) {
-        const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) *
-            (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
+        const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) * (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
         const moveSlopeRel = Math.atan(dXRel / dYRel);
         const moveSlopeAbs = moveSlopeRel + this.getRotationInRadians();
         const dXAbs = dist * Math.sin(moveSlopeAbs);

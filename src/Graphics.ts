@@ -1,9 +1,9 @@
 export default abstract class Graphics {
   /**
-   * Load a source image from the given path
+   * Load a Source Image from the given path
    *
-   * @param imgSourcePath The path to the source image
-   * @returns The source image
+   * @param imgSourcePath The path to the Source Image
+   * @returns The Source Image
    */
   public static loadNewImage(imgSourcePath: string): HTMLImageElement {
     const img = new Image();

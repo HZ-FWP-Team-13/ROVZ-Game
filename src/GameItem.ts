@@ -1,10 +1,10 @@
 import Graphics from './Graphics.js';
 
 export default abstract class GameItem {
-  // The path to the source image of the GameItem appearance
+  // The path to the Source Image of the GameItem appearance
   protected imgSourcePath: string;
 
-  // The source image of the GameItem appearance
+  // The Source Image of the GameItem appearance
   protected imgSource: HTMLImageElement;
 
   // The X coordinate of the GameItem on the game canvas
@@ -34,7 +34,7 @@ export default abstract class GameItem {
   /**
    * Create a new GameItem instance
    *
-   * @param imgSourcePath The path to the source image of the GameItem appearance
+   * @param imgSourcePath The path to the Source Image of the GameItem appearance
    * @param xPos The X coordinate of the GameItem on the game canvas
    * @param yPos The Y coordinate of the GameItem on the game canvas
    * @param rotation The rotation of the GameItem measured in degrees
@@ -150,18 +150,18 @@ export default abstract class GameItem {
   public abstract control(): void;
 
   /**
-   * Get the path to the source image of this GameItem appearance
+   * Get the path to the Source Image of this GameItem appearance
    *
-   * @returns The path to the source image of this GameItem appearance
+   * @returns The path to the Source Image of this GameItem appearance
    */
   public getImgSourcePath(): string {
     return this.imgSourcePath;
   }
 
   /**
-   * Get the source image of this GameItem appearance
+   * Get the Source Image of this GameItem appearance
    *
-   * @returns The source image of this GameItem appearance
+   * @returns The Source Image of this GameItem appearance
    */
   public getImgSource(): HTMLImageElement {
     return this.imgSource;
@@ -249,9 +249,9 @@ export default abstract class GameItem {
   }
 
   /**
-   * Set the source image of this GameItem appearance
+   * Set the Source Image of this GameItem appearance
    *
-   * @param imgSourcePath The path to the source image of this GameItem appearance
+   * @param imgSourcePath The path to the Source Image of this GameItem appearance
    */
   public setImgSource(imgSourcePath: string): void {
     this.imgSource = Graphics.loadNewImage(imgSourcePath);

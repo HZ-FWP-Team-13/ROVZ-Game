@@ -13,9 +13,9 @@ export default abstract class Scene {
   protected readonly game: Game;
 
   /**
-   * Creates a new instance of this class
+   * Create a new Scene instance
    *
-   * @param game the game object where this scene will be a part of
+   * @param game The Game namespace
    */
   public constructor(game: Game) {
     this.game = game;
@@ -40,7 +40,7 @@ export default abstract class Scene {
   public abstract update(elapsed: number): Scene;
 
   /**
-   * Draw the game so the player can see what happened
+   * Render this Scene to the Game Canvas
    */
   public abstract render(): void;
 }
