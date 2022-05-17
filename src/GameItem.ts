@@ -136,9 +136,10 @@ export default abstract class GameItem {
     // Switching the Game Canvas rendering context to the relative coordinate system
     // Moving the origin of the coordinate system to the center of the future GameItem appearance
     this.ctx.translate(this.xPos, this.yPos);
-    // Rotating coordinate system to correspond with this GameItem appearance rotation
+    // Rotating coordinate system to correspond with this GameItem rotation
     this.ctx.rotate(this.getRotationInRadians());
 
+    //
     this.ctx.drawImage(this.imgSource,
       this.frameWidth * this.animationState, this.frameHeight,
       this.frameWidth, this.frameHeight,
