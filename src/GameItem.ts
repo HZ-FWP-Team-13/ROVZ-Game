@@ -34,7 +34,6 @@ export default abstract class GameItem {
   /**
    * Create a new GameItem instance
    *
-   * @param ctx The Game Canvas rendering context
    * @param imgSourcePath The path to the source image of the GameItem appearance
    * @param xPos The X coordinate of the GameItem on the game canvas
    * @param yPos The Y coordinate of the GameItem on the game canvas
@@ -100,8 +99,7 @@ export default abstract class GameItem {
    */
   public moveRelative(dXRel: number, dYRel: number): void {
     // Distance to the movement destination
-    const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) *
-      (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
+    const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) * (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
 
     // Slope of the movement vector in the relative coordinate system
     const moveSlopeRel = Math.atan(dXRel / dYRel);
@@ -140,8 +138,7 @@ export default abstract class GameItem {
       this.frameWidth * this.animationState, 0,
       this.frameWidth, this.frameHeight,
       -this.frameWidth / 2, -this.frameHeight / 2,
-      this.frameWidth, this.frameHeight,
-    );
+      this.frameWidth, this.frameHeight);
 
     // Returning the Game Canvas rendering context to the absolute coordinate system
     ctx.restore();
