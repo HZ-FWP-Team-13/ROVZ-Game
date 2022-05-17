@@ -113,7 +113,7 @@ export default abstract class GameItem {
     const dYAbs = dist * Math.cos(moveSlopeAbs);
 
     // Moving this GameItem across the Game Canvas within the absolute coordinate system
-    this.moveAbsolute(dXAbs, dYAbs);
+    this.moveAbsolute(dXAbs, dYAbs * -1);
   }
 
   /**
@@ -137,7 +137,8 @@ export default abstract class GameItem {
       this.frameWidth * this.animationState, 0,
       this.frameWidth, this.frameHeight,
       -this.frameWidth / 2, -this.frameHeight / 2,
-      this.frameWidth, this.frameHeight);
+      this.frameWidth, this.frameHeight,
+    );
 
     // Returning the Game Canvas rendering context to the absolute coordinate system
     ctx.restore();

@@ -63,6 +63,9 @@ export default class Level extends Scene {
    *   current scene, just return `null`
    */
   public update(): Scene {
+    this.player.control();
+    this.fov.control();
+
     return null;
   }
 
@@ -78,9 +81,6 @@ export default class Level extends Scene {
     this.fov.setXPos(this.player.getXPos());
     this.fov.setYPos(this.player.getYPos());
     this.fov.draw(this.game.ctx);
-
-    // this.player.control();
-    // this.fov.control();
   }
 
   /**

@@ -5,8 +5,6 @@ import Level from './Level.js';
 import Scene from './Scene.js';
 
 export default class Start extends Scene {
-  private shouldStart: boolean;
-
   // Input to read the Player controls
   private input: Input;
 

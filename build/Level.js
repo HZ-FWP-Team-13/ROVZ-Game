@@ -10,6 +10,8 @@ export default class Level extends Scene {
         this.fov = new FovOverlay('./assets/img/fov.png', game.canvas.width / 2, game.canvas.height / 2, 0, 32, 32);
     }
     update() {
+        this.player.control();
+        this.fov.control();
         return null;
     }
     render() {

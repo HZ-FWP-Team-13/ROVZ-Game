@@ -36,13 +36,13 @@ export default class GameItem {
         const moveSlopeAbs = moveSlopeRel + this.getRotationInRadians();
         const dXAbs = dist * Math.sin(moveSlopeAbs);
         const dYAbs = dist * Math.cos(moveSlopeAbs);
-        this.moveAbsolute(dXAbs, dYAbs);
+        this.moveAbsolute(dXAbs, dYAbs * -1);
     }
     draw(ctx) {
         ctx.save();
         ctx.translate(this.xPos, this.yPos);
         ctx.rotate(this.getRotationInRadians());
-        ctx.drawImage(this.imgSource, this.frameWidth * this.animationState, 0, this.frameWidth, this.frameHeight, -this.frameWidth / 2, -this.frameHeight / 2, this.frameWidth, this.frameHeight);
+        ctx.drawImage(this.imgSource, this.frameWidth * this.animationState, 0, this.frameWidth, this.frameHeight, -(this.xPos - (this.frameWidth / 2)), -(this.yPos - (this.frameHeight / 2)), this.frameWidth, this.frameHeight);
         ctx.restore();
     }
     getImgSourcePath() {
