@@ -2,6 +2,7 @@ import Game from '../../../engine/Game.js';
 import Scene from '../../../engine/Scene.js';
 import Player from '../../gameItems/Player.js';
 import FovOverlay from '../../gameItems/FovOverlay.js';
+import Car from '../../gameItems/Car.js';
 
 export default class Level extends Scene {
   // Player Character
@@ -9,6 +10,9 @@ export default class Level extends Scene {
 
   // FovOverlay
   private fov: FovOverlay;
+
+  // Cars
+  private cars: Car[];
 
   /**
    * Create a new Level Scene instance
@@ -45,6 +49,12 @@ export default class Level extends Scene {
       // The dimensions of the FovOverlay appearance
       6000, 6000,
     );
+
+    // Spawning the cars
+    this.cars = [];
+    this.cars.push(new Car(100, 100, 0));
+    this.cars.push(new Car(300, 200, 90));
+    this.cars.push(new Car(700, 1000, 143));
   }
 
   /**
@@ -74,6 +84,9 @@ export default class Level extends Scene {
     // Preserving the rotation of the FovOverlay relative to the Player Character
     this.fov.rotate(this.player.getPreviousFrameRotation());
 
+    // Handle collisions on every update
+    this.handleCollisions();
+
     return null;
   }
 
@@ -88,5 +101,16 @@ export default class Level extends Scene {
     this.player.draw(this.game.ctx);
     // Drawing the FovOverlay on the Game Canvas
     this.fov.draw(this.game.ctx);
+    // Drawing the car
+    this.cars.forEach(car => {
+      car.draw(this.game.ctx);
+    });
+  }
+
+  public handleCollisions() : void {
+
+    this.cars.forEach(car => {
+      this.player.collidesWith(car);
+    });
   }
 }
