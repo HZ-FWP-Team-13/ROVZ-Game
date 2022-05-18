@@ -328,4 +328,42 @@ export default abstract class GameItem {
   public setAnimationState(animationState: number): void {
     this.animationState = animationState;
   }
+
+
+  /**
+   * Calculates the new position of a given vertex
+   * @param vx
+   * @param vy
+   */
+  public workOutNewPoints(vx: number, vy: number) {
+    let rotatedAngle = this.getRotationInRadians();
+    let cx = this.xPos;
+    let cy = this.yPos;
+
+    let dx = vx - cx;
+    let dy = vy - cy;
+    let distance = Math.sqrt(dx*dx + dy * dy);
+    let originalAngle = Math.atan2(dy,dx);
+
+    let rotatedX = cx + distance * Math.cos(originalAngle + rotatedAngle);
+    let rotatedY = cy + distance * Math.cos(originalAngle + rotatedAngle);
+
+    return {
+      x: rotatedX,
+      y: rotatedY
+    }
+  }
+
+  public getRotatedCoordinates() {
+    let cx = this.xPos;
+    let cy = this.yPos;
+    let cw = this.colliderWidth;
+    let ch = this.colliderHeight;
+
+    let topLeft = this.workOutNewPoints(cx - cw / 2, cy - ch / 2);
+    let topRight = this.workOutNewPoints(cx + cw / 2, cy - ch / 2);
+    let bottomLeft = this.workOutNewPoints(cx - cw / 2, cy - ch / 2);
+    let bottomRight = this.workOutNewPoints(cx + cw / 2, cy - ch / 2);
+
+  }
 }
