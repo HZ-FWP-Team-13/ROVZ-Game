@@ -1,7 +1,7 @@
-import Game from './Game.js';
-import Scene from './Scene.js';
-import Player from './Player.js';
-import FovOverlay from './FovOverlay.js';
+import Game from '../../../engine/Game.js';
+import Scene from '../../../engine/Scene.js';
+import Player from '../../gameItems/Player.js';
+import FovOverlay from '../../gameItems/FovOverlay.js';
 
 export default class Level extends Scene {
   // Player Character

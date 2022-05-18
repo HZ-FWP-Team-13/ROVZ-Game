@@ -1,8 +1,8 @@
-import Game from './Game.js';
-import Graphics from './Graphics.js';
-import Input from './Input.js';
-import Level from './Level.js';
-import Scene from './Scene.js';
+import Game from '../../engine/Game.js';
+import Graphics from '../../engine/Graphics.js';
+import Input from '../../engine/Input.js';
+import Level from './levels/Level.js';
+import Scene from '../../engine/Scene.js';
 
 export default class Start extends Scene {
   // Input to read the Player controls

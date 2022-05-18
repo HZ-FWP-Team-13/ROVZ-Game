@@ -1,6 +1,6 @@
 import GameLoop from './GameLoop.js';
-import Start from './Start.js';
-import UserData from './UserData.js';
+import Start from '../game/scenes/Start.js';
+import UserData from '../UserData.js';
 export default class Game {
     canvas;
     ctx;

@@ -1,1 +1,1 @@
-{"version":3,"file":"Position.js","sourceRoot":"","sources":["../../src/experimenting/Position.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,OAAO,QAAQ;IAEnB,CAAC,CAAS;IAEV,CAAC,CAAS;CACnB"}
+{"version":3,"file":"Position.js","sourceRoot":"","sources":["../../src/experimenting/Position.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,OAAO,QAAQ;IAEnB,CAAC,CAAS;IAEV,CAAC,CAAS;IAElB,YAAmB,IAAY,CAAC,EAAE,IAAY,CAAC;QAC7C,IAAI,CAAC,CAAC,GAAG,CAAC,CAAC;QACX,IAAI,CAAC,CAAC,GAAG,CAAC,CAAC;IACb,CAAC;CACF"}

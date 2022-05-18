@@ -1,5 +1,5 @@
-import GameItem from './GameItem.js';
-import Input from './Input.js';
+import GameItem from '../../engine/GameItem.js';
+import Input from '../../engine/Input.js';
 
 export default class Player extends GameItem {
   // Input to read the Player Controls
