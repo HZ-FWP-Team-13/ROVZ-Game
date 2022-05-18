@@ -1,4 +1,6 @@
 import Graphics from './Graphics.js';
+import Polygon from './Polygon.js';
+import XY from './XY.js';
 
 export default abstract class GameItem {
   // The path to the Source Image of the GameItem appearance
@@ -30,6 +32,8 @@ export default abstract class GameItem {
 
   // The current state of the GameItem animation cycle
   protected animationState: number;
+
+  //
 
   /**
    * Create a new GameItem instance
@@ -329,6 +333,10 @@ export default abstract class GameItem {
     this.animationState = animationState;
   }
 
+/*==================================================
+||   COLLISIONS USING SEPARATION AXIS THEOREM     ||
+===================================================*/
+
 
   /**
    * Calculates the new position of a given vertex
@@ -354,7 +362,7 @@ export default abstract class GameItem {
     }
   }
 
-  public getRotatedCoordinates() {
+  public getRotatedRectangleCoordinates() {
     let cx = this.xPos;
     let cy = this.yPos;
     let cw = this.colliderWidth;
@@ -362,8 +370,93 @@ export default abstract class GameItem {
 
     let topLeft = this.workOutNewPoints(cx - cw / 2, cy - ch / 2);
     let topRight = this.workOutNewPoints(cx + cw / 2, cy - ch / 2);
-    let bottomLeft = this.workOutNewPoints(cx - cw / 2, cy - ch / 2);
-    let bottomRight = this.workOutNewPoints(cx + cw / 2, cy - ch / 2);
+    let bottomLeft = this.workOutNewPoints(cx - cw / 2, cy + ch / 2);
+    let bottomRight = this.workOutNewPoints(cx + cw / 2, cy + ch / 2);
 
+    return {
+      tl: topLeft,
+      tr: topRight,
+      bl: bottomLeft,
+      br: bottomRight
+    }
+  }
+
+
+  public detectCollision(other: GameItem) {
+    let tRR = this.getRotatedRectangleCoordinates();
+    let oRR = other.getRotatedRectangleCoordinates();
+
+    let thisVertices = [
+      new XY(tRR.tr.x, tRR.tr.y),
+      new XY(tRR.br.x, tRR.br.y),
+      new XY(tRR.bl.x, tRR.bl.y),
+      new XY(tRR.tl.x, tRR.tl.y)
+    ];
+
+    let thisEdges = [
+      new XY(tRR.br.x - tRR.tr.x, tRR.br.y - tRR.tr.y),
+      new XY(tRR.bl.x - tRR.br.x, tRR.bl.y - tRR.br.y),
+      new XY(tRR.tl.x - tRR.bl.x, tRR.tl.y - tRR.bl.y),
+      new XY(tRR.tr.x - tRR.tl.x, tRR.tr.y - tRR.tl.y),
+    ];
+
+    let otherVertices = [
+      new XY(oRR.tr.x, oRR.tr.y),
+      new XY(oRR.br.x, oRR.br.y),
+      new XY(oRR.bl.x, oRR.bl.y),
+      new XY(oRR.tl.x, oRR.tl.y)
+    ];
+
+    let otherEdges = [
+      new XY(oRR.br.x - oRR.tr.x, oRR.br.y - oRR.tr.y),
+      new XY(oRR.bl.x - oRR.br.x, oRR.bl.y - oRR.br.y),
+      new XY(oRR.tl.x - oRR.bl.x, oRR.tl.y - oRR.bl.y),
+      new XY(oRR.tr.x - oRR.tl.x, oRR.tr.y - oRR.tl.y),
+    ];
+
+    let thisRectPolygon = new Polygon(thisVertices, thisEdges);
+    let otherRectPolygon = new Polygon(otherVertices, otherEdges);
+  }
+
+  public sat(polygonA: Polygon, polygonB: Polygon) {
+    var perpendicularLine = null;
+    var dot=0;
+    var perpendicularStack = []; // An array of all the perpendicular edges
+    var amin = null;
+    var amax = null;
+    var bmin = null;
+    var bmax = null;
+
+
+    // Work out all perpendicular edges on polygon A
+    for(var i = 0; i < 4; i++) {
+      perpendicularLine = new XY(-polygonA.edges[i].y, polygonA.edges[i].x);
+      perpendicularStack.push(perpendicularLine);
+    }
+
+    // Work out all perpendicular edges on polygon B
+    for(var i = 0; i < 4; i++) {
+      perpendicularLine = new XY(-polygonB.edges[i].y, polygonB.edges[i].x);
+      perpendicularStack.push(perpendicularLine);
+    }
+
+    // Loop through the perpendicular vectors for both polygons
+    for(var i = 0; i < perpendicularStack.length; i++) {
+      // These dot products will return different values each time
+      amin = null;
+      amax = null;
+      bmin = null;
+      bmax = null;
+      // Work out all the dot products for all the vertices in polygon A against the perpendicular vector that is currently being looped through
+      for (var j = 0; j < polygonA.vertices.length; j++) {
+        dot = polygonA.vertices[j].x *
+              perpendicularStack[i].x +
+              polygonA.vertices[j].y *
+              perpendicularStack[i].y
+
+        // Then find the dot products with the highest and lowest values from polygon A
+
+      }
+    }
   }
 }
