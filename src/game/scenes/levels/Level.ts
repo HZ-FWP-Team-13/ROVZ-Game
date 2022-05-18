@@ -52,9 +52,9 @@ export default class Level extends Scene {
 
     // Spawning the cars
     this.cars = [];
-    this.cars.push(new Car(100, 100, 0));
-    this.cars.push(new Car(300, 200, 90));
-    this.cars.push(new Car(700, 1000, 143));
+    this.cars.push(new Car(1000, 100, 0));
+    this.cars.push(new Car(1000, 200, 90));
+    this.cars.push(new Car(1000, 1000, 143));
   }
 
   /**
@@ -108,9 +108,11 @@ export default class Level extends Scene {
   }
 
   public handleCollisions() : void {
-
     this.cars.forEach(car => {
-      this.player.collidesWith(car);
+      if (this.player.collidesWith(car)) {
+        console.log ('COLLIDED');
+      }
+
     });
   }
 }

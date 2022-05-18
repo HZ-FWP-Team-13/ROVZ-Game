@@ -64,6 +64,7 @@ export default class Player extends GameItem {
       this.moveRelative(0, this.input.getVerticalAxis() * this.movementSpeed);
     }
     // Steering
+    console.log(this.rotation);
     this.rotate(
       this.previousFrameRotation =
       this.input.readHorizontalInput() * this.rotationSpeed * this.input.getVerticalAxis());

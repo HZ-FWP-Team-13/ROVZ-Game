@@ -146,6 +146,18 @@ export default abstract class GameItem {
 
     // Returning the Game Canvas rendering context to the absolute coordinate system
     ctx.restore();
+
+
+    // DEBUG STUFF
+    ctx.fillStyle = '#ff0000';
+    ctx.beginPath();
+    ctx.moveTo(this.getRotatedRectangleCoordinates().tl.x, this.getRotatedRectangleCoordinates().tl.y);
+    ctx.lineTo(this.getRotatedRectangleCoordinates().tr.x, this.getRotatedRectangleCoordinates().tr.y);
+    ctx.lineTo(this.getRotatedRectangleCoordinates().br.x, this.getRotatedRectangleCoordinates().br.y);
+    ctx.lineTo(this.getRotatedRectangleCoordinates().bl.x, this.getRotatedRectangleCoordinates().bl.y);
+    ctx.lineTo(this.getRotatedRectangleCoordinates().tl.x, this.getRotatedRectangleCoordinates().tl.y);
+    ctx.closePath();
+    ctx.fill;
   }
 
   /**
@@ -333,9 +345,9 @@ export default abstract class GameItem {
     this.animationState = animationState;
   }
 
-/*==================================================
-||   COLLISIONS USING SEPARATION AXIS THEOREM     ||
-===================================================*/
+  /*==================================================
+  ||   COLLISIONS USING SEPARATION AXIS THEOREM     ||
+  ===================================================*/
 
 
   /**
@@ -350,11 +362,11 @@ export default abstract class GameItem {
 
     let dx = vx - cx;
     let dy = vy - cy;
-    let distance = Math.sqrt(dx*dx + dy * dy);
-    let originalAngle = Math.atan2(dy,dx);
+    let distance = Math.sqrt(dx * dx + dy * dy);
+    let originalAngle = Math.atan2(dy, dx);
 
     let rotatedX = cx + distance * Math.cos(originalAngle + rotatedAngle);
-    let rotatedY = cy + distance * Math.cos(originalAngle + rotatedAngle);
+    let rotatedY = cy + distance * Math.sin(originalAngle + rotatedAngle);
 
     return {
       x: rotatedX,
@@ -382,9 +394,11 @@ export default abstract class GameItem {
   }
 
 
-  public collidesWith(other: GameItem) {
+  public collidesWith(other: GameItem): boolean {
     let tRR = this.getRotatedRectangleCoordinates();
     let oRR = other.getRotatedRectangleCoordinates();
+
+    // console.log(tRR);
 
     let thisVertices = [
       new XY(tRR.tr.x, tRR.tr.y),
@@ -417,28 +431,31 @@ export default abstract class GameItem {
     let thisRectPolygon = new Polygon(thisVertices, thisEdges);
     let otherRectPolygon = new Polygon(otherVertices, otherEdges);
 
-    if(this.sat(thisRectPolygon, otherRectPolygon)) {
-      console.log ('TRUE');
+    if (this.sat(thisRectPolygon, otherRectPolygon)) {
+      console.log('TRUE');
       return true;
     }
-    else {
-      if(this.rotation === 0 && other.getRotation() === 0) {
-        if(!(
-          this.xPos - this.colliderWidth > other.getXPos() + other.getColliderWidth() ||
-          this.xPos + this.colliderWidth < other.getXPos() - other.getColliderWidth() ||
-          this.yPos - this.colliderHeight > other.getYPos() + other.getColliderHeight() ||
-          this.yPos + this.colliderHeight < other.getYPos() - other.getColliderHeight()
-        )) {
+
+    else if
+    (this.rotation === 0 && other.getRotation() === 0 &&
+      !(
+      this.xPos - this.colliderWidth > other.getXPos() + other.getColliderWidth() ||
+      this.xPos + this.colliderWidth < other.getXPos() - other.getColliderWidth() ||
+      this.yPos - this.colliderHeight > other.getYPos() + other.getColliderHeight() ||
+      this.yPos + this.colliderHeight < other.getYPos() - other.getColliderHeight()
+      ))
+      {
           console.log("TRUE");
           return true;
-        }
+      }
+      else {
+        return false;
       }
     }
-  }
 
   public sat(polygonA: Polygon, polygonB: Polygon) {
     var perpendicularLine = null;
-    var dot=0;
+    var dot = 0;
     var perpendicularStack = []; // An array of all the perpendicular edges
     var amin = null;
     var amax = null;
@@ -447,19 +464,19 @@ export default abstract class GameItem {
 
 
     // Work out all perpendicular edges on polygon A
-    for(var i = 0; i < 4; i++) {
+    for (var i = 0; i < 4; i++) {
       perpendicularLine = new XY(-polygonA.edges[i].y, polygonA.edges[i].x);
       perpendicularStack.push(perpendicularLine);
     }
 
     // Work out all perpendicular edges on polygon B
-    for(var i = 0; i < 4; i++) {
+    for (var i = 0; i < 4; i++) {
       perpendicularLine = new XY(-polygonB.edges[i].y, polygonB.edges[i].x);
       perpendicularStack.push(perpendicularLine);
     }
 
     // Loop through the perpendicular vectors for both polygons
-    for(var i = 0; i < perpendicularStack.length; i++) {
+    for (var i = 0; i < perpendicularStack.length; i++) {
       // These dot products will return different values each time
       amin = null;
       amax = null;
@@ -468,15 +485,15 @@ export default abstract class GameItem {
       // Work out all the dot products for all the vertices in polygon A against the perpendicular vector that is currently being looped through
       for (var j = 0; j < polygonA.vertices.length; j++) {
         dot = polygonA.vertices[j].x *
-              perpendicularStack[i].x +
-              polygonA.vertices[j].y *
-              perpendicularStack[i].y
+          perpendicularStack[i].x +
+          polygonA.vertices[j].y *
+          perpendicularStack[i].y
 
         // Then find the dot products with the highest and lowest values from polygon A
-        if(amax === null || dot > amax) {
+        if (amax === null || dot > amax) {
           amax = dot;
         }
-        if(amin === null || dot > amin) {
+        if (amin === null || dot > amin) {
           amin = dot;
         }
       }
@@ -485,15 +502,15 @@ export default abstract class GameItem {
       // Work out all the dot products for all the vertices in polygon B against the perpendicular vector that is currently being looped through
       for (var j = 0; j < polygonB.vertices.length; j++) {
         dot = polygonB.vertices[j].x *
-              perpendicularStack[i].x +
-              polygonB.vertices[j].y *
-              perpendicularStack[i].y
+          perpendicularStack[i].x +
+          polygonB.vertices[j].y *
+          perpendicularStack[i].y
 
         // Then find the dot products with the highest and lowest values from polygon B
-        if(bmax === null || dot > bmax) {
+        if (bmax === null || dot > bmax) {
           bmax = dot;
         }
-        if(bmin === null || dot > bmin) {
+        if (bmin === null || dot > bmin) {
           bmin = dot;
         }
       }
