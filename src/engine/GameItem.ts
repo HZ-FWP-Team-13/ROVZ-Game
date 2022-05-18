@@ -382,7 +382,7 @@ export default abstract class GameItem {
   }
 
 
-  public detectCollision(other: GameItem) {
+  public collidesWith(other: GameItem) {
     let tRR = this.getRotatedRectangleCoordinates();
     let oRR = other.getRotatedRectangleCoordinates();
 
@@ -416,6 +416,24 @@ export default abstract class GameItem {
 
     let thisRectPolygon = new Polygon(thisVertices, thisEdges);
     let otherRectPolygon = new Polygon(otherVertices, otherEdges);
+
+    if(this.sat(thisRectPolygon, otherRectPolygon)) {
+      console.log ('TRUE');
+      return true;
+    }
+    else {
+      if(this.rotation === 0 && other.getRotation() === 0) {
+        if(!(
+          this.xPos - this.colliderWidth > other.getXPos() + other.getColliderWidth() ||
+          this.xPos + this.colliderWidth < other.getXPos() - other.getColliderWidth() ||
+          this.yPos - this.colliderHeight > other.getYPos() + other.getColliderHeight() ||
+          this.yPos + this.colliderHeight < other.getYPos() - other.getColliderHeight()
+        )) {
+          console.log("TRUE");
+          return true;
+        }
+      }
+    }
   }
 
   public sat(polygonA: Polygon, polygonB: Polygon) {
@@ -455,8 +473,41 @@ export default abstract class GameItem {
               perpendicularStack[i].y
 
         // Then find the dot products with the highest and lowest values from polygon A
+        if(amax === null || dot > amax) {
+          amax = dot;
+        }
+        if(amin === null || dot > amin) {
+          amin = dot;
+        }
+      }
 
+
+      // Work out all the dot products for all the vertices in polygon B against the perpendicular vector that is currently being looped through
+      for (var j = 0; j < polygonB.vertices.length; j++) {
+        dot = polygonB.vertices[j].x *
+              perpendicularStack[i].x +
+              polygonB.vertices[j].y *
+              perpendicularStack[i].y
+
+        // Then find the dot products with the highest and lowest values from polygon B
+        if(bmax === null || dot > bmax) {
+          bmax = dot;
+        }
+        if(bmin === null || dot > bmin) {
+          bmin = dot;
+        }
+      }
+
+      // If there is no gap between the dot products projection then we will continue onto evaluating the next perpendicular edge.
+      if ((amin < bmax && amin > bmin) || (bmin < amax && bmin > amin)) {
+        continue;
+      } else {
+        // Otherwise, we know that there is no collision for definite.
+        return false;
       }
     }
+    // If we have gotten this far, having looped through ALL of the perpendicular edges with none of their projections having gaps between them,
+    // then we know two polygons are colliding.
+    return true;
   }
 }
