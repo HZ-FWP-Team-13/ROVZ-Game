@@ -8,8 +8,8 @@ export default class FovOverlay extends GameItem {
         this.input = new Input();
         this.rotationSpeed = 1;
     }
-    control() {
-        this.rotate(this.input.readRotationInput() * this.rotationSpeed);
+    control(input) {
+        this.rotate(input.readRotationInput() * this.rotationSpeed);
     }
 }
 //# sourceMappingURL=FovOverlay.js.map

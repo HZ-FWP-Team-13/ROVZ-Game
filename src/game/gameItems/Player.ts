@@ -2,9 +2,6 @@ import GameItem from '../../engine/GameItem.js';
 import Input from '../../engine/Input.js';
 
 export default class Player extends GameItem {
-  // Input to read the Player Controls
-  private input: Input;
-
   // The speed of the Player Character movement measured in pixels per second
   private movementSpeed: number;
 
@@ -49,24 +46,26 @@ export default class Player extends GameItem {
       colliderHeight, animationState,
     );
 
-    this.input = new Input();
     this.movementSpeed = 1;
     this.rotationSpeed = 1;
   }
 
   /**
    * Move this Player Character across the Game Canvas in response to the Player Input
+   *
+   * @param input of the keys when moving
    */
-  public control(): void {
-    this.input.readVerticalInput();
+  public control(input: Input): void {
+    input.readVerticalInput();
     // Traction
-    if (this.input.getVerticalAxis() != 0) {
-      this.moveRelative(0, this.input.getVerticalAxis() * this.movementSpeed);
+    if (input.getVerticalAxis() != 0) {
+      this.moveRelative(0, input.getVerticalAxis() * this.movementSpeed);
     }
     // Steering
     this.rotate(
       this.previousFrameRotation =
-      this.input.readHorizontalInput() * this.rotationSpeed * this.input.getVerticalAxis());
+      input.readHorizontalInput() * this.rotationSpeed * input.getVerticalAxis()
+    );
   }
 
   /**

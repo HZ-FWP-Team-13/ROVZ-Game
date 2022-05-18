@@ -1,1 +1,1 @@
-{"version":3,"file":"Scene.js","sourceRoot":"","sources":["../../src/engine/Scene.ts"],"names":[],"mappings":"AAWA,MAAM,CAAC,OAAO,OAAgB,KAAK;IACd,IAAI,CAAO;IAO9B,YAAmB,IAAU;QAC3B,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;IACnB,CAAC;CAwBF"}
+{"version":3,"file":"Scene.js","sourceRoot":"","sources":["../../src/engine/Scene.ts"],"names":[],"mappings":"AAYA,MAAM,CAAC,OAAO,OAAgB,KAAK;IACd,IAAI,CAAO;IAEpB,KAAK,CAAQ;IAYvB,YAAmB,IAAU;QAC3B,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;IACnB,CAAC;CAwBF"}
