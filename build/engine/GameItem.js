@@ -31,6 +31,8 @@ export default class GameItem {
     }
     rotate(dR) {
         this.rotation += dR;
+        if (this.rotation > 360 || this.rotation < -360)
+            this.rotation = 0;
     }
     moveRelative(dXRel, dYRel) {
         const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) * (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
@@ -53,9 +55,8 @@ export default class GameItem {
         ctx.lineTo(this.getRotatedRectangleCoordinates().tr.x, this.getRotatedRectangleCoordinates().tr.y);
         ctx.lineTo(this.getRotatedRectangleCoordinates().br.x, this.getRotatedRectangleCoordinates().br.y);
         ctx.lineTo(this.getRotatedRectangleCoordinates().bl.x, this.getRotatedRectangleCoordinates().bl.y);
-        ctx.lineTo(this.getRotatedRectangleCoordinates().tl.x, this.getRotatedRectangleCoordinates().tl.y);
         ctx.closePath();
-        ctx.fill;
+        ctx.fill();
     }
     getImgSourcePath() {
         return this.imgSourcePath;
@@ -161,7 +162,7 @@ export default class GameItem {
             new XY(tRR.br.x - tRR.tr.x, tRR.br.y - tRR.tr.y),
             new XY(tRR.bl.x - tRR.br.x, tRR.bl.y - tRR.br.y),
             new XY(tRR.tl.x - tRR.bl.x, tRR.tl.y - tRR.bl.y),
-            new XY(tRR.tr.x - tRR.tl.x, tRR.tr.y - tRR.tl.y),
+            new XY(tRR.tr.x - tRR.tl.x, tRR.tr.y - tRR.tl.y)
         ];
         let otherVertices = [
             new XY(oRR.tr.x, oRR.tr.y),

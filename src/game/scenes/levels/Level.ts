@@ -100,7 +100,7 @@ export default class Level extends Scene {
     // Drawing the Player Character on the Game Canvas
     this.player.draw(this.game.ctx);
     // Drawing the FovOverlay on the Game Canvas
-    this.fov.draw(this.game.ctx);
+    // DEBUG this.fov.draw(this.game.ctx);
     // Drawing the car
     this.cars.forEach(car => {
       car.draw(this.game.ctx);

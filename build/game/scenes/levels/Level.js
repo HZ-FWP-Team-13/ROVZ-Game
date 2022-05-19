@@ -27,7 +27,6 @@ export default class Level extends Scene {
     render() {
         this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
         this.player.draw(this.game.ctx);
-        this.fov.draw(this.game.ctx);
         this.cars.forEach(car => {
             car.draw(this.game.ctx);
         });
