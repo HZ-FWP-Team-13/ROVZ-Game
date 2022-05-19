@@ -49,4 +49,12 @@ export default class Vector2 {
   public static vectorQuotient (a : Vector2 , b : Vector2) : Vector2  {
     return new Vector2(a.x - b.x, a.y - b.y);
   }
+
+
+  public static vectorNegate (a: Vector2) : Vector2 {
+    return new Vector2(-a.x, -a.y);
+  }
+
+
+
 }

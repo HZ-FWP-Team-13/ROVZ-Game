@@ -17,5 +17,8 @@ export default class Vector2 {
     static vectorQuotient(a, b) {
         return new Vector2(a.x - b.x, a.y - b.y);
     }
+    static vectorNegate(a) {
+        return new Vector2(-a.x, -a.y);
+    }
 }
 //# sourceMappingURL=Vector2.js.map

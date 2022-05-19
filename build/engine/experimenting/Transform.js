@@ -8,10 +8,8 @@ export default class Transform {
         this.orientation = rotation;
         this.scale = new Vector2(scaleX, scaleY);
     }
-    moveAbsolute(dXAbs, dYAbs, dR = 0) {
-        this.position.x += dXAbs;
-        this.position.y += dYAbs;
-        this.rotate(dR);
+    moveAbsolute(vectorDAbs) {
+        this.position = Vector2.vectorsSum(this.position, vectorDAbs);
     }
     rotate(dR) {
         this.orientation += dR;
@@ -20,10 +18,9 @@ export default class Transform {
         const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) * (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
         const moveSlopeRel = Math.atan(dXRel / dYRel);
         const moveSlopeAbs = moveSlopeRel + this.getRotationInRadians();
-        const dXAbs = dist * Math.sin(moveSlopeAbs);
-        const dYAbs = dist * Math.cos(moveSlopeAbs);
+        const vectorDAbs = new Vector2(dist * Math.sin(moveSlopeAbs), -dist * Math.cos(moveSlopeAbs));
         console.log(Math.atan(dXRel / dYRel));
-        this.moveAbsolute(dXAbs, -dYAbs);
+        this.moveAbsolute(vectorDAbs);
     }
     getRotationInRadians() {
         return (this.orientation / 180) * Math.PI;
