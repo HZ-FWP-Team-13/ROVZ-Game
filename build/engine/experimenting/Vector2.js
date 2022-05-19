@@ -5,7 +5,7 @@ export default class Vector2 {
         this.x = x;
         this.y = y;
     }
-    static vectorsSum(a, b) {
+    static vectorSum(a, b) {
         return new Vector2(a.x + b.x, a.y + b.y);
     }
     static vectorDifference(a, b) {

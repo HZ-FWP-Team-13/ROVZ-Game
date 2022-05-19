@@ -9,7 +9,7 @@ export default class Transform {
         this.scale = new Vector2(scaleX, scaleY);
     }
     moveAbsolute(vectorDAbs) {
-        this.position = Vector2.vectorsSum(this.position, vectorDAbs);
+        this.position = Vector2.vectorSum(this.position, vectorDAbs);
     }
     rotate(dR) {
         this.orientation += dR;

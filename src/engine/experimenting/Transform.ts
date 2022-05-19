@@ -21,7 +21,7 @@ export default class Transform {
    */
 
   public moveAbsolute(vectorDAbs: Vector2): void {
-    this.position = Vector2.vectorsSum(this.position, vectorDAbs);
+    this.position = Vector2.vectorSum(this.position, vectorDAbs);
   }
 
   /**
@@ -68,6 +68,4 @@ export default class Transform {
   public getRotationInRadians(): number {
     return (this.orientation / 180) * Math.PI;
   }
-
-
 }

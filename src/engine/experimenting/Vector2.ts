@@ -1,5 +1,6 @@
 export default class Vector2 {
 
+
   public x : number;
   public y : number;
 
@@ -8,15 +9,13 @@ export default class Vector2 {
     this.y = y;
   }
 
-
-
   /**
    * Calculate the sum of 2 given vectors (ADDITION)
    * @param a Vector a
    * @param b Vector b
    * @returns The sum of vector a and vector b
    */
-  public static vectorsSum (a : Vector2 , b : Vector2) : Vector2  {
+  public static vectorSum (a : Vector2 , b : Vector2) : Vector2  {
     return new Vector2(a.x + b.x, a.y + b.y);
   }
 
@@ -50,11 +49,12 @@ export default class Vector2 {
     return new Vector2(a.x - b.x, a.y - b.y);
   }
 
-
+  /**
+   * Negate the given Vector2
+   * @param a The Vector2 to be negated
+   * @returns The negated Vector2
+   */
   public static vectorNegate (a: Vector2) : Vector2 {
     return new Vector2(-a.x, -a.y);
   }
-
-
-
 }
