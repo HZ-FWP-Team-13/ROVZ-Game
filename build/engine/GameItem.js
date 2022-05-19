@@ -15,7 +15,7 @@ export default class GameItem {
         this.setImgSource(imgSourcePath);
         this.transform.position.x = xPos;
         this.transform.position.y = yPos;
-        this.transform.orientation.angle = rotation;
+        this.transform.orientation = rotation;
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
         this.colliderWidth = colliderWidth;
@@ -43,7 +43,7 @@ export default class GameItem {
         return this.transform.position.y;
     }
     getRotation() {
-        return this.transform.orientation.angle;
+        return this.transform.orientation;
     }
     getFrameWidth() {
         return this.frameWidth;
@@ -70,7 +70,7 @@ export default class GameItem {
         this.transform.position.y = yPos;
     }
     setRotation(rotation) {
-        this.transform.orientation.angle = rotation;
+        this.transform.orientation = rotation;
     }
     getTransform() {
         return this.transform;

@@ -1,19 +1,18 @@
 import Orientation from "./Orientation.js";
-import Position from "./Position.js";
-import Scale from "./Scale.js";
+import Vector2 from "./Vector2.js";
 
 export default class Transform {
-  public position: Position;
-  public orientation: Orientation;
-  public scale: Scale;
+  public position: Vector2;
+  public orientation: number;
+  public scale: Vector2;
 
   /**
    * Create a new Transform instance
    */
-  public constructor(xPos: number = 0, yPos: number = 0, rotation: number = 0, scale: number = 1) {
-    this.position = new Position();
-    this.orientation = new Orientation();
-    this.scale = new Scale();
+  public constructor(xPos: number = 0, yPos: number = 0, rotation: number = 0, scaleX: number = 1, scaleY: number = 1) {
+    this.position = new Vector2(xPos, yPos);
+    this.orientation = rotation;
+    this.scale = new Vector2(scaleX, scaleY);
   }
 
   /**
@@ -35,7 +34,7 @@ export default class Transform {
    * @param dR Deviation of the rotation of this GameItem
    */
    public rotate(dR: number): void {
-    this.orientation.angle += dR;
+    this.orientation += dR;
   }
 
    /**
@@ -70,7 +69,7 @@ export default class Transform {
    * @returns The rotation of this GameItem measured in radians
    */
   public getRotationInRadians(): number {
-    return (this.orientation.angle / 180) * Math.PI;
+    return (this.orientation / 180) * Math.PI;
   }
 
 

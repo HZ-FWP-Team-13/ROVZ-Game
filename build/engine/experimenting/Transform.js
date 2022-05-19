@@ -1,14 +1,12 @@
-import Orientation from "./Orientation.js";
-import Position from "./Position.js";
-import Scale from "./Scale.js";
+import Vector2 from "./Vector2.js";
 export default class Transform {
     position;
     orientation;
     scale;
-    constructor(xPos = 0, yPos = 0, rotation = 0, scale = 1) {
-        this.position = new Position();
-        this.orientation = new Orientation();
-        this.scale = new Scale();
+    constructor(xPos = 0, yPos = 0, rotation = 0, scaleX = 1, scaleY = 1) {
+        this.position = new Vector2(xPos, yPos);
+        this.orientation = rotation;
+        this.scale = new Vector2(scaleX, scaleY);
     }
     moveAbsolute(dXAbs, dYAbs, dR = 0) {
         this.position.x += dXAbs;
@@ -16,7 +14,7 @@ export default class Transform {
         this.rotate(dR);
     }
     rotate(dR) {
-        this.orientation.angle += dR;
+        this.orientation += dR;
     }
     moveRelative(dXRel, dYRel) {
         const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) * (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
@@ -28,7 +26,7 @@ export default class Transform {
         this.moveAbsolute(dXAbs, -dYAbs);
     }
     getRotationInRadians() {
-        return (this.orientation.angle / 180) * Math.PI;
+        return (this.orientation / 180) * Math.PI;
     }
 }
 //# sourceMappingURL=Transform.js.map

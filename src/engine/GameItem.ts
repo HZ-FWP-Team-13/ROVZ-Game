@@ -66,7 +66,7 @@ export default abstract class GameItem {
     this.transform.position.x = xPos;
     this.transform.position.y = yPos;
 
-    this.transform.orientation.angle = rotation;
+    this.transform.orientation = rotation;
 
     this.frameWidth = frameWidth;
     this.frameHeight = frameHeight;
@@ -206,7 +206,7 @@ export default abstract class GameItem {
    * @returns The rotation of this GameItem measured in degrees
    */
   public getRotation(): number {
-    return this.transform.orientation.angle;
+    return this.transform.orientation;
   }
 
   // /**
@@ -296,7 +296,7 @@ export default abstract class GameItem {
    * @param rotation The rotation of this GameItem measured in degrees
    */
   public setRotation(rotation: number): void {
-    this.transform.orientation.angle = rotation;
+    this.transform.orientation = rotation;
   }
 
   public getTransform(): Transform {
