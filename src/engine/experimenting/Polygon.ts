@@ -18,20 +18,25 @@ export default class Polygon extends GameItem{
     ctx.rotate(this.transform.getRotationInRadians());
     ctx.beginPath();
 
+
+    // Polygons will be red when overlapping and blue when they are not.
     if (this.overlap) {
       ctx.fillStyle = 'red';
     } else {
       ctx.fillStyle = 'black'
     }
 
+
+    // Draw the polygon
     this.points.forEach(point => {
     ctx.lineTo(point.x, point.y);
     });
     ctx.fill();
     ctx.closePath();
 
+    // Draw a line from the center to the first point to visualize rotation
     ctx.beginPath();
-    ctx.fillStyle = "red";
+    ctx.strokeStyle = "red";
     console.log(ctx.fillStyle);
     ctx.moveTo(0, 0);
     ctx.lineTo(this.points[0].x, this.points[0].y);
@@ -39,7 +44,6 @@ export default class Polygon extends GameItem{
     ctx.lineWidth = 6;
     ctx.stroke();
     ctx.closePath();
-
 
     ctx.restore();
   }

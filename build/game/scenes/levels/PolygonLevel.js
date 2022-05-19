@@ -11,7 +11,7 @@ export default class Level1 extends Level {
         this.poly1.addNewPoint(10, -10);
         this.poly1.addNewPoint(10, 10);
         this.poly1.addNewPoint(-10, 10);
-        this.poly2 = new Polygon(100, 100, 0);
+        this.poly2 = new Polygon(300, 500, 0);
         this.poly2.addNewPoint(-100, -100);
         this.poly2.addNewPoint(100, -100);
         this.poly2.addNewPoint(100, 100);

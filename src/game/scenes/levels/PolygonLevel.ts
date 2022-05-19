@@ -20,13 +20,15 @@ export default class Level1 extends Level {
   public constructor(game: Game) {
     super(game);
 
+    // Create polygon 1
     this.poly1 = new Polygon(150 - 100, 100 - 100, 0);
     this.poly1.addNewPoint(-10, -10);
     this.poly1.addNewPoint(10, -10);
     this.poly1.addNewPoint(10, 10);
     this.poly1.addNewPoint(-10, 10);
 
-    this.poly2 = new Polygon(100, 100, 0);
+    // Create polygon 2
+    this.poly2 = new Polygon(300, 500, 0);
     this.poly2.addNewPoint(-100, -100);
     this.poly2.addNewPoint(100, -100);
     this.poly2.addNewPoint(100, 100);

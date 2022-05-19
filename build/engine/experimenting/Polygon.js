@@ -25,7 +25,7 @@ export default class Polygon extends GameItem {
         ctx.fill();
         ctx.closePath();
         ctx.beginPath();
-        ctx.fillStyle = "red";
+        ctx.strokeStyle = "red";
         console.log(ctx.fillStyle);
         ctx.moveTo(0, 0);
         ctx.lineTo(this.points[0].x, this.points[0].y);
