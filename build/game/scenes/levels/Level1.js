@@ -14,8 +14,7 @@ export default class Level1 extends Level {
     update() {
         this.player.control(this.input);
         this.fov.control(this.input);
-        this.fov.transform.position.x = this.player.transform.position.x;
-        this.fov.transform.position.y = this.player.transform.position.y;
+        this.fov.transform.position = this.player.transform.position;
         this.fov.transform.rotate(this.player.getPreviousFrameRotation());
         return null;
     }

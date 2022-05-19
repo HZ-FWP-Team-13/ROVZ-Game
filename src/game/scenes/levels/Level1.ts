@@ -103,8 +103,7 @@ export default class Level1 extends Level {
     this.fov.control(this.input);
 
     // Preserving the position of the FovOverlay relative to the Player Character
-    this.fov.transform.position.x = this.player.transform.position.x;
-    this.fov.transform.position.y = this.player.transform.position.y;
+    this.fov.transform.position = this.player.transform.position;
 
     // Preserving the rotation of the FovOverlay relative to the Player Character
     this.fov.transform.rotate(this.player.getPreviousFrameRotation());
