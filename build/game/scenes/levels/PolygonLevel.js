@@ -19,6 +19,7 @@ export default class Level1 extends Level {
         this.input = new Input();
     }
     update() {
+        this.poly1.control();
         return null;
     }
     render() {

@@ -52,7 +52,7 @@ export default class Level1 extends Level {
    *   current scene, just return `null`
    */
   public update(): Scene {
-
+    this.poly1.control();
     return null;
   }
 
@@ -68,4 +68,8 @@ export default class Level1 extends Level {
     this.poly1.draw(ctx);
     this.poly2.draw(ctx);
   }
+
+
+
+
 }

@@ -1,12 +1,20 @@
 import GameItem from "../GameItem.js";
 import Vector2 from "./Vector2.js";
+import KeyListener from "../KeyListener.js";
 export default class Polygon extends GameItem {
     points;
     overlap;
+    previousFrameRotation;
+    kl;
+    kl_up = 38;
+    kl_down = 40;
+    kl_left = 37;
+    kl_right = 39;
     constructor(xPos, yPos, rot) {
         super('', xPos, yPos, rot, 50, 50, 0);
         this.points = [];
         this.overlap = false;
+        this.kl = new KeyListener();
     }
     draw(ctx) {
         ctx.save();
@@ -35,10 +43,26 @@ export default class Polygon extends GameItem {
         ctx.closePath();
         ctx.restore();
     }
+    control() {
+        if (this.kl.isKeyDown(this.kl_up)) {
+            this.transform.moveRelative(0, 3);
+        }
+        if (this.kl.isKeyDown(this.kl_down)) {
+            this.transform.moveRelative(0, -3);
+        }
+        if (this.kl.isKeyDown(this.kl_left)) {
+            this.transform.rotate(this.previousFrameRotation =
+                -3);
+        }
+        if (this.kl.isKeyDown(this.kl_right)) {
+            this.transform.rotate(this.previousFrameRotation =
+                3);
+        }
+    }
     addNewPoint(x, y) {
         this.points.push(new Vector2(x, y));
     }
-    control() {
+    static shapeOverlap_SAT(poly1, poly2) {
     }
 }
 //# sourceMappingURL=Polygon.js.map
