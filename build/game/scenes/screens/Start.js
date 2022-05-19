@@ -1,7 +1,7 @@
 import Graphics from '../../../engine/Graphics.js';
 import Input from '../../../engine/Input.js';
 import Screen from '../../../engine/Screen.js';
-import Level1 from '../levels/Level1.js';
+import PolygonLevel from '../levels/PolygonLevel.js';
 export default class Start extends Screen {
     constructor(game) {
         super(game);
@@ -10,7 +10,7 @@ export default class Start extends Screen {
     }
     update() {
         if (this.input.readStartInput()) {
-            return new Level1(this.game);
+            return new PolygonLevel(this.game);
         }
         return null;
     }

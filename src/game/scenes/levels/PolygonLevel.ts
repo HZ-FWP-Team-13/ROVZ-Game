@@ -1,20 +1,37 @@
 import Game from '../../../engine/Game.js';
-import Graphics from '../../../engine/Graphics.js';
-import Input from '../../../engine/Input.js';
 import Scene from '../../../engine/Scene.js';
-import Screen from '../../../engine/Screen.js';
-import Level1 from '../levels/Level1.js';
-import PolygonLevel from '../levels/PolygonLevel.js';
+import Player from '../../gameItems/Player.js';
+import FovOverlay from '../../gameItems/FovOverlay.js';
+// import GameItem from '../../../engine/GameItem.js';
+import Level from '../../../engine/Level.js';
+import Input from '../../../engine/Input.js';
+import Polygon from '../../../engine/experimenting/Polygon.js';
 
-export default class Start extends Screen {
+export default class Level1 extends Level {
+  // Polygons
+  private poly1: Polygon;
+  private poly2: Polygon;
+
   /**
-   * Create a new Start Scene instance
+   * Create a new Level Scene instance
    *
    * @param game The Game namespace
    */
   public constructor(game: Game) {
     super(game);
-    game.reset();
+
+    this.poly1 = new Polygon(150 - 100, 100 - 100, 0);
+    this.poly1.addNewPoint(-10, -10);
+    this.poly1.addNewPoint(10, -10);
+    this.poly1.addNewPoint(10, 10);
+    this.poly1.addNewPoint(-10, 10);
+
+    this.poly2 = new Polygon(100, 100, 0);
+    this.poly2.addNewPoint(-100, -100);
+    this.poly2.addNewPoint(100, -100);
+    this.poly2.addNewPoint(100, 100);
+    this.poly2.addNewPoint(-100, 100);
+
     this.input = new Input();
   }
 
@@ -33,20 +50,20 @@ export default class Start extends Screen {
    *   current scene, just return `null`
    */
   public update(): Scene {
-    if (this.input.readStartInput()) {
-      return new PolygonLevel(this.game);
-    }
+
     return null;
   }
 
   /**
-   * Render this Start Scene to the Game Canvas
+   * Render this Level Scene to the Game Canvas
    */
   public render(): void {
+    let ctx = this.game.ctx;
     // Clearing the screen
-    this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-    // Showing the score
-    this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/startscreen.png'),
-      0, 0, this.game.canvas.width, this.game.canvas.height);
+    ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
+
+    // Drawing polygons
+    this.poly1.draw(ctx);
+    this.poly2.draw(ctx);
   }
 }
