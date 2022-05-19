@@ -1,9 +1,8 @@
-import Graphics from '../../engine/Graphics.js';
-import Input from '../../engine/Input.js';
-import Scene from '../../engine/Scene.js';
-import Level1 from './levels/Level1.js';
-export default class Start extends Scene {
-    input;
+import Graphics from '../../../engine/Graphics.js';
+import Input from '../../../engine/Input.js';
+import Screen from '../../../engine/Screen.js';
+import Level1 from '../levels/Level1.js';
+export default class Start extends Screen {
     constructor(game) {
         super(game);
         game.reset();

@@ -1,13 +1,11 @@
-import Game from '../../engine/Game.js';
-import Graphics from '../../engine/Graphics.js';
-import Input from '../../engine/Input.js';
-import Level from './levels/Level.js';
-import Scene from '../../engine/Scene.js';
+import Game from '../../../engine/Game.js';
+import Graphics from '../../../engine/Graphics.js';
+import Input from '../../../engine/Input.js';
+import Scene from '../../../engine/Scene.js';
+import Screen from '../../../engine/Screen.js';
+import Level1 from '../levels/Level1.js';
 
-export default class Start extends Scene {
-  // Input to read the Player controls
-  private input: Input;
-
+export default class Start extends Screen {
   /**
    * Create a new Start Scene instance
    *
@@ -35,7 +33,7 @@ export default class Start extends Scene {
    */
   public update(): Scene {
     if (this.input.readStartInput()) {
-      return new Level(this.game);
+      return new Level1(this.game);
     }
     return null;
   }

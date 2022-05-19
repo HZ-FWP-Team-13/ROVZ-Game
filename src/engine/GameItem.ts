@@ -1,4 +1,5 @@
 import Graphics from './Graphics.js';
+import Input from './Input.js';
 
 export default abstract class GameItem {
   // The path to the Source Image of the GameItem appearance
@@ -146,8 +147,10 @@ export default abstract class GameItem {
 
   /**
    * Process the Player Input to modify this GameItem
+   *
+   * @param input of the keys when moving
    */
-  public abstract control(): void;
+  public abstract control(input: Input): void;
 
   /**
    * Get the path to the Source Image of this GameItem appearance

@@ -1,4 +1,5 @@
 import Game from './Game.js';
+import Input from './Input.js';
 
 /**
  * A superclass for objects that must be able to be animated by a `GameLoop`.
@@ -11,6 +12,13 @@ import Game from './Game.js';
  */
 export default abstract class Scene {
   protected readonly game: Game;
+
+  protected input: Input;
+
+  /**
+   * Keeping the gameitems map here after testing to bring it back when needed.
+   */
+  // protected gameItems: Map<string, GameItem>;
 
   /**
    * Create a new Scene instance

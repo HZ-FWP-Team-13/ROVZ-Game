@@ -1,17 +1,19 @@
-import Scene from '../../../engine/Scene.js';
 import Player from '../../gameItems/Player.js';
 import FovOverlay from '../../gameItems/FovOverlay.js';
-export default class Level extends Scene {
+import Level from '../../../engine/Level.js';
+import Input from '../../../engine/Input.js';
+export default class Level1 extends Level {
     player;
     fov;
     constructor(game) {
         super(game);
+        this.input = new Input();
         this.player = new Player('./assets/img/testplayer-old.png', game.canvas.width / 2, game.canvas.height / 2, 0, 32, 32, 32, 32, 0);
         this.fov = new FovOverlay('./assets/img/fov.png', game.canvas.width / 2, game.canvas.height / 2, 0, 6000, 6000);
     }
     update() {
-        this.player.control();
-        this.fov.control();
+        this.player.control(this.input);
+        this.fov.control(this.input);
         this.fov.setXPos(this.player.getXPos());
         this.fov.setYPos(this.player.getYPos());
         this.fov.rotate(this.player.getPreviousFrameRotation());
@@ -23,4 +25,4 @@ export default class Level extends Scene {
         this.fov.draw(this.game.ctx);
     }
 }
-//# sourceMappingURL=Level.js.map
+//# sourceMappingURL=Level1.js.map

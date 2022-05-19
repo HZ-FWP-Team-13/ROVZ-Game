@@ -1,5 +1,5 @@
 import GameLoop from './GameLoop.js';
-import Start from '../game/scenes/Start.js';
+import Start from '../game/scenes/screens/Start.js';
 import UserData from '../UserData.js';
 export default class Game {
     canvas;
