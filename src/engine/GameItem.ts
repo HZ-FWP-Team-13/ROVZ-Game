@@ -1,16 +1,10 @@
 import Transform from './experimenting/Transform.js';
-import Graphics from './Graphics.js';
 import Input from './Input.js';
+import Mesh from './Mesh.js';
 
 export default abstract class GameItem {
-  // The path to the Source Image of the GameItem appearance
-  protected imgSourcePath: string;
-
-  // The Source Image of the GameItem appearance
-  protected imgSource: HTMLImageElement;
-
   // Transforms
-  protected transform: Transform;
+  public transform: Transform;
 
   // The X coordinate of the GameItem on the game canvas
   // protected xPos: number;
@@ -21,20 +15,8 @@ export default abstract class GameItem {
   // The rotation of the GameItem measured in degrees
   // protected rotation: number;
 
-  // The width of the GameItem appearance
-  protected frameWidth: number;
-
-  // The height of the GameItem appearance
-  protected frameHeight: number;
-
-  // The width of the GameItem collider
-  protected colliderWidth: number;
-
-  // The height of the GameItem collider
-  protected colliderHeight: number;
-
-  // The current state of the GameItem animation cycle
-  protected animationState: number;
+  // All the variables and functions to show an item on the screen
+  public mesh: Mesh;
 
   /**
    * Create a new GameItem instance
@@ -45,8 +27,6 @@ export default abstract class GameItem {
    * @param rotation The rotation of the GameItem measured in degrees
    * @param frameWidth The width of the GameItem appearance
    * @param frameHeight The height of the GameItem appearance
-   * @param colliderWidth The width of the GameItem collider
-   * @param colliderHeight The height of the GameItem collider
    * @param animationState The current state of the GameItem animation cycle
    */
   public constructor(
@@ -54,29 +34,11 @@ export default abstract class GameItem {
     xPos: number, yPos: number,
     rotation: number,
     frameWidth: number, frameHeight: number,
-    colliderWidth: number = frameWidth, colliderHeight: number = frameHeight,
     animationState: number = 0,
   ) {
-
     this.transform = new Transform(xPos, yPos, rotation);
-
-    this.imgSourcePath = imgSourcePath;
-    this.setImgSource(imgSourcePath);
-
-    this.transform.position.x = xPos;
-    this.transform.position.y = yPos;
-
-    this.transform.orientation = rotation;
-
-    this.frameWidth = frameWidth;
-    this.frameHeight = frameHeight;
-
-    this.colliderWidth = colliderWidth;
-    this.colliderHeight = colliderHeight;
-
-    this.animationState = animationState;
+    this.mesh = new Mesh(imgSourcePath, frameWidth, frameHeight, animationState);
   }
-
 
 // /**
 //    * Move this GameItem across the Game Canvas within the absolute coordinate system
@@ -90,8 +52,6 @@ export default abstract class GameItem {
 //     this.yPos += dYAbs;
 //     this.rotate(dR);
 //   }
-
-
 
   // /**
   //  * Rotate this GameItem by the given angle measured in degrees
@@ -129,58 +89,11 @@ export default abstract class GameItem {
   // }
 
   /**
-   * Draw this GameItem appearance on the Game Canvas
-   * based on rotation and current state of the animation cycle
-   *
-   * @param ctx the Canvas that needs to be drawn upon each cycle
-   */
-  public draw(ctx: CanvasRenderingContext2D): void {
-    let tt = this.transform;
-
-    // Creating a backup of the Game Canvas rendering context in the absolute coordinate system
-    ctx.save();
-
-    // Switching the Game Canvas rendering context to the relative coordinate system
-    // Moving the origin of the coordinate system to the center of the future GameItem appearance
-    ctx.translate(tt.position.x, tt.position.y);
-    // Rotating coordinate system to correspond with this GameItem rotation
-    ctx.rotate(this.transform.getRotationInRadians());
-
-    //
-    ctx.drawImage(this.imgSource,
-      this.frameWidth * this.animationState, 0,
-      this.frameWidth, this.frameHeight,
-      -this.frameWidth / 2, -this.frameHeight / 2,
-      this.frameWidth, this.frameHeight);
-
-    // Returning the Game Canvas rendering context to the absolute coordinate system
-    ctx.restore();
-  }
-
-  /**
    * Process the Player Input to modify this GameItem
    *
    * @param input of the keys when moving
    */
   public abstract control(input: Input): void;
-
-  /**
-   * Get the path to the Source Image of this GameItem appearance
-   *
-   * @returns The path to the Source Image of this GameItem appearance
-   */
-  public getImgSourcePath(): string {
-    return this.imgSourcePath;
-  }
-
-  /**
-   * Get the Source Image of this GameItem appearance
-   *
-   * @returns The Source Image of this GameItem appearance
-   */
-  public getImgSource(): HTMLImageElement {
-    return this.imgSource;
-  }
 
   /**
    * Get the X coordinate of this GameItem
@@ -219,60 +132,6 @@ export default abstract class GameItem {
   // }
 
   /**
-   * Get the width of the GameItem appearance
-   *
-   * @returns The width of the GameItem appearance
-   */
-  public getFrameWidth(): number {
-    return this.frameWidth;
-  }
-
-  /**
-   * Get the height of the GameItem appearance
-   *
-   * @returns The height of the GameItem appearance
-   */
-  public getFrameHeight(): number {
-    return this.frameHeight;
-  }
-
-  /**
-   * Get the width of the GameItem collider
-   *
-   * @returns The width of the GameItem collider
-   */
-  public getColliderWidth(): number {
-    return this.colliderWidth;
-  }
-
-  /**
-   * Get the height of the GameItem collider
-   *
-   * @returns The height of the GameItem collider
-   */
-  public getColliderHeight(): number {
-    return this.colliderHeight;
-  }
-
-  /**
-   * Get the current state of this GameItem animation cycle
-   *
-   * @returns The current state of this GameItem animation cycle
-   */
-  public getAnimationState(): number {
-    return this.animationState;
-  }
-
-  /**
-   * Set the Source Image of this GameItem appearance
-   *
-   * @param imgSourcePath The path to the Source Image of this GameItem appearance
-   */
-  public setImgSource(imgSourcePath: string): void {
-    this.imgSource = Graphics.loadNewImage(imgSourcePath);
-  }
-
-  /**
    * Set the X coordinate of this GameItem
    *
    * @param xPos The X coordinate of this GameItem
@@ -301,50 +160,5 @@ export default abstract class GameItem {
 
   public getTransform(): Transform {
     return this.transform;
-  }
-
-  /**
-   * Set the width of the GameItem appearance
-   *
-   * @param frameWidth The width of the GameItem appearance
-   */
-  public setFrameWidth(frameWidth: number): void {
-    this.frameWidth = frameWidth;
-  }
-
-  /**
-   * Set the height of the GameItem appearance
-   *
-   * @param frameHeight The height of the GameItem appearance
-   */
-  public setFrameHeight(frameHeight: number): void {
-    this.frameHeight = frameHeight;
-  }
-
-  /**
-   * Set the width of the GameItem collider
-   *
-   * @param colliderWidth The width of the GameItem collider
-   */
-  public setColliderWidth(colliderWidth: number): void {
-    this.colliderWidth = colliderWidth;
-  }
-
-  /**
-   * Set the height of the GameItem collider
-   *
-   * @param colliderHeight The height of the GameItem collider
-   */
-  public setColliderHeight(colliderHeight: number): void {
-    this.colliderHeight = colliderHeight;
-  }
-
-  /**
-   * Set the current state of this GameItem animation cycle
-   *
-   * @param animationState The current state of this GameItem animation cycle
-   */
-  public setAnimationState(animationState: number): void {
-    this.animationState = animationState;
   }
 }

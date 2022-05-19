@@ -65,8 +65,6 @@ export default class Level1 extends Level {
       0,
       // The dimensions of the Player Character appearance
       32, 32,
-      // The dimensions of the Player Character collider
-      32, 32,
       // The current state of the Player Character animation cycle
       0,
     );
@@ -105,11 +103,11 @@ export default class Level1 extends Level {
     this.fov.control(this.input);
 
     // Preserving the position of the FovOverlay relative to the Player Character
-    this.fov.setXPos(this.player.getXPos());
-    this.fov.setYPos(this.player.getYPos());
+    this.fov.transform.position.x = this.player.transform.position.x;
+    this.fov.transform.position.y = this.player.transform.position.y;
 
     // Preserving the rotation of the FovOverlay relative to the Player Character
-    this.fov.getTransform().rotate(this.player.getPreviousFrameRotation());
+    this.fov.transform.rotate(this.player.getPreviousFrameRotation());
 
     return null;
   }
@@ -122,8 +120,8 @@ export default class Level1 extends Level {
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
 
     // Drawing the Player Character on the Game Canvas
-    this.player.draw(this.game.ctx);
+    this.player.mesh.draw(this.game.ctx, this.player.transform);
     // Drawing the FovOverlay on the Game Canvas
-    this.fov.draw(this.game.ctx);
-  } 
+    this.fov.mesh.draw(this.game.ctx, this.fov.transform);
+  }
 }

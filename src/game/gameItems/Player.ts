@@ -24,9 +24,6 @@ export default class Player extends GameItem {
    * @param frameWidth The width of the Player Character appearance
    * @param frameHeight The height of the Player Character appearance
    *
-   * @param colliderWidth The width of the Player Character collider
-   * @param colliderHeight The height of the Player Character collider
-   *
    * @param animationState The current state of the Player Character animation cycle
    */
   public constructor(
@@ -34,7 +31,6 @@ export default class Player extends GameItem {
     xPos: number, yPos: number,
     rotation: number,
     frameWidth: number, frameHeight: number,
-    colliderWidth: number = frameWidth, colliderHeight: number = frameHeight,
     animationState: number = 0,
   ) {
     super(
@@ -42,8 +38,8 @@ export default class Player extends GameItem {
       xPos, yPos,
       rotation,
       frameWidth,
-      frameHeight, colliderWidth,
-      colliderHeight, animationState,
+      frameHeight,
+      animationState,
     );
 
     this.movementSpeed = 1;
@@ -64,7 +60,7 @@ export default class Player extends GameItem {
     // Steering
     this.transform.rotate(
       this.previousFrameRotation =
-      input.readHorizontalInput() * this.rotationSpeed * input.getVerticalAxis()
+      input.readHorizontalInput() * this.rotationSpeed * input.getVerticalAxis(),
     );
   }
 

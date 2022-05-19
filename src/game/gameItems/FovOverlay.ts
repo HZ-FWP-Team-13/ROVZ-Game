@@ -32,7 +32,6 @@ export default class FovOverlay extends GameItem {
       xPos, yPos,
       rotation,
       frameWidth, frameHeight,
-      frameWidth, frameHeight,
       0,
     );
 
