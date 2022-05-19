@@ -1,48 +1,32 @@
+import Transform from './experimenting/Transform.js';
 import Graphics from './Graphics.js';
 export default class GameItem {
     imgSourcePath;
     imgSource;
-    xPos;
-    yPos;
-    rotation;
+    transform;
     frameWidth;
     frameHeight;
     colliderWidth;
     colliderHeight;
     animationState;
     constructor(imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, colliderWidth = frameWidth, colliderHeight = frameHeight, animationState = 0) {
+        this.transform = new Transform(xPos, yPos, rotation);
         this.imgSourcePath = imgSourcePath;
         this.setImgSource(imgSourcePath);
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.rotation = rotation;
+        this.transform.position.x = xPos;
+        this.transform.position.y = yPos;
+        this.transform.orientation = rotation;
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
         this.colliderWidth = colliderWidth;
         this.colliderHeight = colliderHeight;
         this.animationState = animationState;
     }
-    moveAbsolute(dXAbs, dYAbs, dR = 0) {
-        this.xPos += dXAbs;
-        this.yPos += dYAbs;
-        this.rotate(dR);
-    }
-    rotate(dR) {
-        this.rotation += dR;
-    }
-    moveRelative(dXRel, dYRel) {
-        const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) * (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
-        const moveSlopeRel = Math.atan(dXRel / dYRel);
-        const moveSlopeAbs = moveSlopeRel + this.getRotationInRadians();
-        const dXAbs = dist * Math.sin(moveSlopeAbs);
-        const dYAbs = dist * Math.cos(moveSlopeAbs);
-        console.log(Math.atan(dXRel / dYRel));
-        this.moveAbsolute(dXAbs, -dYAbs);
-    }
     draw(ctx) {
+        let tt = this.transform;
         ctx.save();
-        ctx.translate(this.xPos, this.yPos);
-        ctx.rotate(this.getRotationInRadians());
+        ctx.translate(tt.position.x, tt.position.y);
+        ctx.rotate(this.transform.getRotationInRadians());
         ctx.drawImage(this.imgSource, this.frameWidth * this.animationState, 0, this.frameWidth, this.frameHeight, -this.frameWidth / 2, -this.frameHeight / 2, this.frameWidth, this.frameHeight);
         ctx.restore();
     }
@@ -53,16 +37,13 @@ export default class GameItem {
         return this.imgSource;
     }
     getXPos() {
-        return this.xPos;
+        return this.transform.position.x;
     }
     getYPos() {
-        return this.yPos;
+        return this.transform.position.y;
     }
     getRotation() {
-        return this.rotation;
-    }
-    getRotationInRadians() {
-        return (this.rotation / 180) * Math.PI;
+        return this.transform.orientation;
     }
     getFrameWidth() {
         return this.frameWidth;
@@ -83,13 +64,16 @@ export default class GameItem {
         this.imgSource = Graphics.loadNewImage(imgSourcePath);
     }
     setXPos(xPos) {
-        this.xPos = xPos;
+        this.transform.position.x = xPos;
     }
     setYPos(yPos) {
-        this.yPos = yPos;
+        this.transform.position.y = yPos;
     }
     setRotation(rotation) {
-        this.rotation = rotation;
+        this.transform.orientation = rotation;
+    }
+    getTransform() {
+        return this.transform;
     }
     setFrameWidth(frameWidth) {
         this.frameWidth = frameWidth;
@@ -97,10 +81,10 @@ export default class GameItem {
     setFrameHeight(frameHeight) {
         this.frameHeight = frameHeight;
     }
-    setColiderWidth(colliderWidth) {
+    setColliderWidth(colliderWidth) {
         this.colliderWidth = colliderWidth;
     }
-    setColiderHeight(colliderHeight) {
+    setColliderHeight(colliderHeight) {
         this.colliderHeight = colliderHeight;
     }
     setAnimationState(animationState) {

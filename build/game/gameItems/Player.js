@@ -11,9 +11,9 @@ export default class Player extends GameItem {
     control(input) {
         input.readVerticalInput();
         if (input.getVerticalAxis() != 0) {
-            this.moveRelative(0, input.getVerticalAxis() * this.movementSpeed);
+            this.transform.moveRelative(0, input.getVerticalAxis() * this.movementSpeed);
         }
-        this.rotate(this.previousFrameRotation =
+        this.transform.rotate(this.previousFrameRotation =
             input.readHorizontalInput() * this.rotationSpeed * input.getVerticalAxis());
     }
     getPreviousFrameRotation() {

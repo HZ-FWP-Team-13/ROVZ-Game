@@ -109,7 +109,7 @@ export default class Level1 extends Level {
     this.fov.setYPos(this.player.getYPos());
 
     // Preserving the rotation of the FovOverlay relative to the Player Character
-    this.fov.rotate(this.player.getPreviousFrameRotation());
+    this.fov.getTransform().rotate(this.player.getPreviousFrameRotation());
 
     return null;
   }
@@ -125,5 +125,5 @@ export default class Level1 extends Level {
     this.player.draw(this.game.ctx);
     // Drawing the FovOverlay on the Game Canvas
     this.fov.draw(this.game.ctx);
-  }
+  } 
 }
