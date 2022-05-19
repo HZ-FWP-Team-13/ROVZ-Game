@@ -16,7 +16,7 @@ export default class Level1 extends Level {
         this.fov.control(this.input);
         this.fov.setXPos(this.player.getXPos());
         this.fov.setYPos(this.player.getYPos());
-        this.fov.rotate(this.player.getPreviousFrameRotation());
+        this.fov.getTransform().rotate(this.player.getPreviousFrameRotation());
         return null;
     }
     render() {

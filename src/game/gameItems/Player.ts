@@ -59,10 +59,10 @@ export default class Player extends GameItem {
     input.readVerticalInput();
     // Traction
     if (input.getVerticalAxis() != 0) {
-      this.moveRelative(0, input.getVerticalAxis() * this.movementSpeed);
+      this.transform.moveRelative(0, input.getVerticalAxis() * this.movementSpeed);
     }
     // Steering
-    this.rotate(
+    this.transform.rotate(
       this.previousFrameRotation =
       input.readHorizontalInput() * this.rotationSpeed * input.getVerticalAxis()
     );
