@@ -1,10 +1,7 @@
 import GameItem from '../../engine/GameItem.js';
-import Input from '../../engine/Input.js';
+import Input from '../../engine/InputModule/Input.js';
 
 export default class FovOverlay extends GameItem {
-  // Input to read the Player Controls
-  private input: Input;
-
   // The speed of the FovOverlay rotation measured in degrees per second
   private rotationSpeed: number;
 
@@ -35,7 +32,6 @@ export default class FovOverlay extends GameItem {
       0,
     );
 
-    this.input = new Input();
     this.rotationSpeed = 1;
   }
 
@@ -45,7 +41,10 @@ export default class FovOverlay extends GameItem {
    * @param input of the keys when moving
    */
   public control(input: Input): void {
+    // Read the Input of the FovRotation InputAxis
+    const fovRotation = input.readAxisInput('fovRotation');
+
     // Looking around
-    this.transform.rotate(input.readRotationInput() * this.rotationSpeed);
+    this.transform.rotate(fovRotation * this.rotationSpeed);
   }
 }

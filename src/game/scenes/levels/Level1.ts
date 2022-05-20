@@ -3,9 +3,14 @@ import Scene from '../../../engine/Scene.js';
 import Player from '../../gameItems/Player.js';
 import FovOverlay from '../../gameItems/FovOverlay.js';
 import Level from '../../../engine/Level.js';
-import Input from '../../../engine/Input.js';
+import Input from '../../../engine/InputModule/Input.js';
+import KeyListener from '../../../engine/InputModule/KeyListener.js';
+import InputAxis from '../../../engine/InputModule/InputAxis.js';
 
 export default class Level1 extends Level {
+  // The KeyListener
+  private keyListener: KeyListener;
+
   // Player Character
   private player: Player;
 
@@ -20,7 +25,14 @@ export default class Level1 extends Level {
   public constructor(game: Game) {
     super(game);
 
-    this.input = new Input();
+    this.keyListener = new KeyListener();
+
+    this.input = new Input(new Map<string, InputAxis>([
+      ['fovRotation', new InputAxis(
+        KeyListener.KEY_RIGHT,
+        KeyListener.KEY_LEFT
+        )
+      ]]));
     /**
      * Test to see if we can map the gameItems of each level
      * and call their respective properties and methods

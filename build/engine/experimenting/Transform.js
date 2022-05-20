@@ -15,11 +15,10 @@ export default class Transform {
         this.orientation += dR;
     }
     moveRelative(dXRel, dYRel) {
-        const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) * (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
+        const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2);
         const moveSlopeRel = Math.atan(dXRel / dYRel);
         const moveSlopeAbs = moveSlopeRel + this.getRotationInRadians();
-        const vectorDAbs = new Vector2(dist * Math.sin(moveSlopeAbs), -dist * Math.cos(moveSlopeAbs));
-        console.log(Math.atan(dXRel / dYRel));
+        const vectorDAbs = new Vector2(dist * Math.sin(moveSlopeAbs) * (dXRel >= 0 ? 1 : -1), -dist * Math.cos(moveSlopeAbs) * (dYRel >= 0 ? 1 : -1));
         this.moveAbsolute(vectorDAbs);
     }
     getXPos() {

@@ -1,5 +1,5 @@
 import Transform from './experimenting/Transform.js';
-import Input from './Input.js';
+import Input from './InputModule/Input.js';
 import Mesh from './Mesh.js';
 
 export default abstract class GameItem {

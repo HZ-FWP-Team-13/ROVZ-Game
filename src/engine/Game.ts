@@ -1,6 +1,7 @@
 import GameLoop from './GameLoop.js';
 import Start from '../game/scenes/screens/Start.js';
 import UserData from '../UserData.js';
+import Level1 from '../game/scenes/levels/Level1.js';
 
 export default class Game {
   // Necessary canvas attributes
@@ -27,7 +28,7 @@ export default class Game {
 
     // Start the game cycle
     this.gameLoop = new GameLoop();
-    this.gameLoop.start(new Start(this));
+    this.gameLoop.start(new Level1(this));
   }
 
   /**

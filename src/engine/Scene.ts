@@ -1,5 +1,5 @@
 import Game from './Game.js';
-import Input from './Input.js';
+import Input from './InputModule/Input.js';
 
 /**
  * A superclass for objects that must be able to be animated by a `GameLoop`.

@@ -1,15 +1,22 @@
 import Graphics from '../../../engine/Graphics.js';
-import Input from '../../../engine/Input.js';
+import Input from '../../../engine/InputModule/Input.js';
+import InputAxis from '../../../engine/InputModule/InputAxis.js';
+import KeyListener from '../../../engine/InputModule/KeyListener.js';
 import Screen from '../../../engine/Screen.js';
 import Level1 from '../levels/Level1.js';
 export default class Start extends Screen {
+    keyListener;
     constructor(game) {
         super(game);
         game.reset();
-        this.input = new Input();
+        this.keyListener = new KeyListener();
+        this.input = new Input(new Map([
+            ['startKey', new InputAxis(KeyListener.KEY_S)]
+        ]));
     }
     update() {
-        if (this.input.readStartInput()) {
+        const fovRotation = this.input.readAxisInput('fovRotation');
+        if (fovRotation) {
             return new Level1(this.game);
         }
         return null;

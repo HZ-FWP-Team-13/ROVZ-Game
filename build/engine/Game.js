@@ -1,6 +1,6 @@
 import GameLoop from './GameLoop.js';
-import Start from '../game/scenes/screens/Start.js';
 import UserData from '../UserData.js';
+import Level1 from '../game/scenes/levels/Level1.js';
 export default class Game {
     canvas;
     ctx;
@@ -12,7 +12,7 @@ export default class Game {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.gameLoop = new GameLoop();
-        this.gameLoop.start(new Start(this));
+        this.gameLoop.start(new Level1(this));
     }
     getPlayerStats() {
         return this.playerStats;
