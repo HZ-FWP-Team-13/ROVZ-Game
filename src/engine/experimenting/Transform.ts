@@ -46,18 +46,18 @@ export default class Transform {
    */
   public moveRelative(dXRel: number, dYRel: number): void {
     // Distance to the movement destination
-    const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2);
+    const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) * (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
 
     // Slope of the movement vector in the relative coordinate system
     const moveSlopeRel = Math.atan(dXRel / dYRel);
     // Slope of the movement vector in the absolute coordinate system
     const moveSlopeAbs = moveSlopeRel + this.getRotationInRadians();
 
-    // Deviation of X and Y coordinates in the absolute coordinate system
-    const vectorDAbs = new Vector2(
-      dist * Math.sin(moveSlopeAbs) * (dXRel >= 0 ? 1 : -1),
-      -dist * Math.cos(moveSlopeAbs) * (dYRel >= 0 ? 1 : -1)
-      );
+    // Deviation of X and Y coordinates of this Transform in the absolute coordinate system
+    const dXAbs = dist * Math.sin(moveSlopeAbs);
+    const dYAbs = -dist * Math.cos(moveSlopeAbs);
+    // Movement vector of this Transform in the absolute coordinate system
+    const vectorDAbs = new Vector2(dXAbs, dYAbs);
 
     // Moving this Transform across the Game Canvas within the absolute coordinate system
     this.moveAbsolute(vectorDAbs);

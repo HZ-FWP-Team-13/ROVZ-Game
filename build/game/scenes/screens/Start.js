@@ -15,7 +15,7 @@ export default class Start extends Screen {
         ]));
     }
     update() {
-        const fovRotation = this.input.readAxisInput('fovRotation');
+        const fovRotation = this.input.readAxisInput('startKey');
         if (fovRotation) {
             return new Level1(this.game);
         }
