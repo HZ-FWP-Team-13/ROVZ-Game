@@ -57,11 +57,11 @@ export default class Player extends GameItem {
     // Read the Input of the Horizontal InputAxis
     const steering = input.readAxisInput('horizontal');
 
-    // Traction
+    // Traction TODO: Bind to fps
     if (traction != 0) {
       this.transform.moveRelative(0, traction * this.movementSpeed);
     }
-    // Steering
+    // Steering TODO: Bind to fps
     this.transform.rotate(this.previousFrameRotation = steering * this.rotationSpeed * traction);
   }
 

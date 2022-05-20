@@ -8,11 +8,11 @@ export default class Input {
                 ['vertical', new InputAxis(KeyListener.KEY_W, KeyListener.KEY_S)]
             ])]);
     }
-    readAxisInput(axisName) {
-        return this.axises.get(axisName).readInput();
-    }
     getAxis(axisName) {
         return this.axises.get(axisName);
+    }
+    readAxisInput(axisName) {
+        return this.getAxis(axisName).readInput();
     }
 }
 //# sourceMappingURL=Input.js.map

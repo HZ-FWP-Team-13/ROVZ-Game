@@ -39,6 +39,16 @@ export default class InputAxis {
   }
 
   /**
+   * Read the value of the Key with the given KeyCode
+   *
+   * @param keyCode The given KeyCode
+   * @returns The value of the Key with the given KeyCode
+   */
+  public isKeyDown(keyCode: number): number {
+    return Number(this.keyListener.isKeyDown(keyCode));
+  }
+
+  /**
    * Read the value of this InputAxis
    *
    * @returns The value of this InputAxis
@@ -49,22 +59,22 @@ export default class InputAxis {
     let positiveAxisInput = 0;
     if (this.positiveKeyAlt != 0) {
       positiveAxisInput = Math.max(
-        Number(this.keyListener.isKeyDown(this.positiveKey)),
-        Number(this.keyListener.isKeyDown(this.positiveKeyAlt))
+        Number(this.isKeyDown(this.positiveKey)),
+        Number(this.isKeyDown(this.positiveKeyAlt))
       );
     } else {
-      positiveAxisInput = Number(this.keyListener.isKeyDown(this.positiveKey));
+      positiveAxisInput = Number(this.isKeyDown(this.positiveKey));
     }
 
     // Reading the negative Input
     let negativeAxisInput = 0;
     if (this.negativeKeyAlt != 0) {
       negativeAxisInput = Math.max(
-        Number(this.keyListener.isKeyDown(this.negativeKey)),
-        Number(this.keyListener.isKeyDown(this.negativeKeyAlt))
+        Number(this.isKeyDown(this.negativeKey)),
+        Number(this.isKeyDown(this.negativeKeyAlt))
       );
     } else if (this.negativeKey != 0) {
-      negativeAxisInput = Number(this.keyListener.isKeyDown(this.negativeKey));
+      negativeAxisInput = Number(this.isKeyDown(this.negativeKey));
     } else {
       negativeAxisInput = 0;
     }

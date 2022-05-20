@@ -18,21 +18,22 @@ export default class Input {
   }
 
   /**
-   * Read the Input of an InputAxis with the given name
-   *
-   * @returns The Input of an InputAxis with the given name
-   */
-  public readAxisInput(axisName: string): number {
-    return this.axises.get(axisName).readInput();
-  }
-
-  /**
    * Get the InputAxis with the given name
    *
-   * @param axisName The given name
+   * @param axisName The given InputAxis name
    * @returns The InputAxis with the given name
    */
   public getAxis(axisName: string): InputAxis {
     return this.axises.get(axisName);
+  }
+
+  /**
+   * Read the Input of the InputAxis with the given name
+   *
+   * @param axisName The given InputAxis name
+   * @returns The Input of the InputAxis with the given name
+   */
+  public readAxisInput(axisName: string): number {
+    return this.getAxis(axisName).readInput();
   }
 }
