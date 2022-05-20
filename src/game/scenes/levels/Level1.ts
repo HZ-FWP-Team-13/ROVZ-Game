@@ -2,7 +2,6 @@ import Game from '../../../engine/Game.js';
 import Scene from '../../../engine/Scene.js';
 import Player from '../../gameItems/Player.js';
 import FovOverlay from '../../gameItems/FovOverlay.js';
-// import GameItem from '../../../engine/GameItem.js';
 import Level from '../../../engine/Level.js';
 import Input from '../../../engine/Input.js';
 
@@ -14,7 +13,7 @@ export default class Level1 extends Level {
   private fov: FovOverlay;
 
   /**
-   * Create a new Level Scene instance
+   * Create a new Level1 Level instance
    *
    * @param game The Game namespace
    */

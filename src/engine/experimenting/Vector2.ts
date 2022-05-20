@@ -3,6 +3,9 @@ export default class Vector2 {
   public x : number;
   public y : number;
 
+  /**
+   * Create a new Vector2 instance
+   */
   public constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
@@ -19,31 +22,31 @@ export default class Vector2 {
   }
 
   /**
-  * Calculate the difference between 2 given vectors (SUBTRACTION)
-  * @param a Vector a
-  * @param b Vector b
-  * @returns The difference of vector a and vector b
-  */
+   * Calculate the difference between 2 given vectors (SUBTRACTION)
+   * @param a Vector a
+   * @param b Vector b
+   * @returns The difference of vector a and vector b
+   */
   public static vectorDifference (a : Vector2 , b : Vector2) : Vector2  {
     return new Vector2(a.x - b.x, a.y - b.y);
   }
 
   /**
-  * Calculate the product of 2 given vectors (MULTIPLICATION)
-  * @param a Vector a
-  * @param b Vector b
-  * @returns The product of vector a and vector b
-  */
+   * Calculate the product of 2 given vectors (MULTIPLICATION)
+   * @param a Vector a
+   * @param b Vector b
+   * @returns The product of vector a and vector b
+   */
   public static vectorProduct (a : Vector2 , b : Vector2) : Vector2  {
     return new Vector2(a.x * b.x, a.y * b.y);
   }
 
   /**
-  * Calculate the quotient of 2 given vectors (DIVISION)
-  * @param a Vector a
-  * @param b Vector b
-  * @returns The quotient of vector a and vector b
-  */
+   * Calculate the quotient of 2 given vectors (DIVISION)
+   * @param a Vector a
+   * @param b Vector b
+   * @returns The quotient of vector a and vector b
+   */
   public static vectorQuotient (a : Vector2 , b : Vector2) : Vector2  {
     return new Vector2(a.x - b.x, a.y - b.y);
   }

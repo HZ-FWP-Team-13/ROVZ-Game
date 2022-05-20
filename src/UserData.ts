@@ -9,7 +9,7 @@ export default class UserData {
   private def: number;
 
   /**
-   * Creates a new instance of this class
+   * Create a new UserData instance
    *
    * @param health the character's health value
    * @param attack the character's attack value

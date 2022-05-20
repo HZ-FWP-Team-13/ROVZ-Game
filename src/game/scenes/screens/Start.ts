@@ -7,7 +7,7 @@ import Level1 from '../levels/Level1.js';
 
 export default class Start extends Screen {
   /**
-   * Create a new Start Scene instance
+   * Create a new Start Screen instance
    *
    * @param game The Game namespace
    */

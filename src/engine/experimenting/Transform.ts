@@ -7,38 +7,43 @@ export default class Transform {
 
   /**
    * Create a new Transform instance
+   *
+   * @param xPos The X coordinate of the Transform on the game canvas
+   * @param yPos The Y coordinate of the Transform on the game canvas
+   * @param rotation The rotation of the Transform measured in degrees
+   * @param xScale The width of the Transform on the game canvas
+   * @param yScale The height of the Transform on the game canvas
    */
-  public constructor(xPos: number = 0, yPos: number = 0, rotation: number = 0, scaleX: number = 1, scaleY: number = 1) {
+  public constructor(xPos: number = 0, yPos: number = 0, rotation: number = 0, xScale: number = 1, yScale: number = 1) {
     this.position = new Vector2(xPos, yPos);
     this.orientation = rotation;
-    this.scale = new Vector2(scaleX, scaleY);
+    this.scale = new Vector2(xScale, yScale);
   }
 
   /**
-   * Move this GameItem across the Game Canvas within the absolute coordinate system
+   * Move this Transform across the Game Canvas within the absolute coordinate system
    *
-   * @param vectorDAbs Vector containing the X and Y deviation of this GameItem in the absolute coordinate system
+   * @param vectorDAbs Vector containing the X and Y deviation of this Transform in the absolute coordinate system
    */
-
   public moveAbsolute(vectorDAbs: Vector2): void {
     this.position = Vector2.vectorsSum(this.position, vectorDAbs);
   }
 
   /**
-   * Rotate this GameItem by the given angle measured in degrees
+   * Rotate this Transform by the given angle measured in degrees
    *
-   * @param dR Deviation of the rotation of this GameItem in degrees
+   * @param dR Deviation of the rotation of this Transform in degrees
    */
   public rotate(dR: number): void {
     this.orientation += dR;
   }
 
   /**
-  * Move this GameItem across the Game Canvas within the relative coordinate system
-  *
-  * @param dXRel Deviation of the X coordinate of this GameItem in the relative coordinate system
-  * @param dYRel Deviation of the Y coordinate of this GameItem in the relative coordinate system
-  */
+   * Move this Transform across the Game Canvas within the relative coordinate system
+   *
+   * @param dXRel Deviation of the X coordinate of this Transform in the relative coordinate system
+   * @param dYRel Deviation of the Y coordinate of this Transform in the relative coordinate system
+   */
   public moveRelative(dXRel: number, dYRel: number): void {
     // Distance to the movement destination
     const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) * (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
@@ -56,18 +61,70 @@ export default class Transform {
 
     console.log(Math.atan(dXRel / dYRel));
 
-    // Moving this GameItem across the Game Canvas within the absolute coordinate system
+    // Moving this Transform across the Game Canvas within the absolute coordinate system
     this.moveAbsolute(vectorDAbs);
   }
 
   /**
- * Get the rotation of this GameItem measured in radians
- *
- * @returns The rotation of this GameItem measured in radians
- */
-  public getRotationInRadians(): number {
+   * Get the X coordinate of this Transform
+   *
+   * @returns The X coordinate of this Transform
+   */
+   public getXPos(): number {
+    return this.position.x;
+  }
+
+  /**
+   * Get the Y coordinate of this Transform
+   *
+   * @returns The Y coordinate of this Transform
+   */
+  public getYPos(): number {
+    return this.position.y;
+  }
+
+  /**
+   * Get the rotation of this Transform measured in degrees
+   *
+   * @returns The rotation of this Transform measured in degrees
+   */
+  public getRotation(): number {
+    return this.orientation;
+  }
+
+  /**
+   * Get the rotation of this Transform measured in radians
+   *
+   * @returns The rotation of this Transform measured in radians
+   */
+   public getRotationInRadians(): number {
     return (this.orientation / 180) * Math.PI;
   }
 
+  /**
+   * Set the X coordinate of this Transform
+   *
+   * @param xPos The X coordinate of this Transform
+   */
+  public setXPos(xPos: number): void {
+    this.position.x = xPos;
+  }
 
+  /**
+   * Set the Y coordinate of this Transform
+   *
+   * @param yPos The Y coordinate of this Transform
+   */
+  public setYPos(yPos: number): void {
+    this.position.y = yPos;
+  }
+
+  /**
+   * Set the rotation of this Transform measured in degrees
+   *
+   * @param rotation The rotation of this Transform measured in degrees
+   */
+  public setRotation(rotation: number): void {
+    this.orientation = rotation;
+  }
 }
