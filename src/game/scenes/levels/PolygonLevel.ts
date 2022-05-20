@@ -53,6 +53,7 @@ export default class Level1 extends Level {
    */
   public update(): Scene {
     this.poly1.control();
+    Polygon.shapeOverlap_SAT(this.poly1, this.poly2);
     return null;
   }
 
@@ -68,8 +69,4 @@ export default class Level1 extends Level {
     this.poly1.draw(ctx);
     this.poly2.draw(ctx);
   }
-
-
-
-
 }

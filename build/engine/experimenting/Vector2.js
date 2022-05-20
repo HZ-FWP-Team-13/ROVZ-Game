@@ -11,11 +11,8 @@ export default class Vector2 {
     static vectorDifference(a, b) {
         return new Vector2(a.x - b.x, a.y - b.y);
     }
-    static vectorProduct(a, b) {
-        return new Vector2(a.x * b.x, a.y * b.y);
-    }
-    static vectorQuotient(a, b) {
-        return new Vector2(a.x - b.x, a.y - b.y);
+    static dotProduct(a, b) {
+        return (a.x * b.x + a.y * b.y);
     }
     static vectorNegate(a) {
         return new Vector2(-a.x, -a.y);

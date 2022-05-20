@@ -20,6 +20,7 @@ export default class Level1 extends Level {
     }
     update() {
         this.poly1.control();
+        Polygon.shapeOverlap_SAT(this.poly1, this.poly2);
         return null;
     }
     render() {
