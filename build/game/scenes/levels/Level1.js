@@ -12,8 +12,7 @@ export default class Level1 extends Level {
         super(game);
         this.keyListener = new KeyListener();
         this.input = new Input(new Map([
-            ['fovRotation', new InputAxis(KeyListener.KEY_RIGHT, KeyListener.KEY_LEFT)
-            ]
+            ['fovRotation', new InputAxis(KeyListener.KEY_RIGHT, KeyListener.KEY_LEFT)]
         ]));
         this.player = new Player('./assets/img/testplayer-old.png', game.canvas.width / 2, game.canvas.height / 2, 0, 32, 32, 0);
         this.fov = new FovOverlay('./assets/img/fov.png', game.canvas.width / 2, game.canvas.height / 2, 0, 6000, 6000);

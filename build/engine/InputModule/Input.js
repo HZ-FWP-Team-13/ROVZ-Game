@@ -4,10 +4,8 @@ export default class Input {
     axises;
     constructor(axises = null) {
         this.axises = new Map([...axises, ...new Map([
-                ['horizontal', new InputAxis(KeyListener.KEY_D, KeyListener.KEY_A)
-                ],
-                ['vertical', new InputAxis(KeyListener.KEY_W, KeyListener.KEY_S)
-                ],
+                ['horizontal', new InputAxis(KeyListener.KEY_D, KeyListener.KEY_A)],
+                ['vertical', new InputAxis(KeyListener.KEY_W, KeyListener.KEY_S)]
             ])]);
     }
     readAxisInput(axisName) {
