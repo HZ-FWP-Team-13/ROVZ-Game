@@ -28,11 +28,8 @@ export default class Level1 extends Level {
     this.keyListener = new KeyListener();
 
     this.input = new Input(new Map<string, InputAxis>([
-      ['fovRotation', new InputAxis(
-        KeyListener.KEY_RIGHT,
-        KeyListener.KEY_LEFT
-        )
-      ]]));
+      ['fovRotation', new InputAxis(KeyListener.KEY_RIGHT, KeyListener.KEY_LEFT)]
+    ]));
     /**
      * Test to see if we can map the gameItems of each level
      * and call their respective properties and methods

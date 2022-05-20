@@ -12,23 +12,15 @@ export default class Input {
    */
   public constructor(axises: Map<string, InputAxis> = null) {
     this.axises = new Map<string,InputAxis>([...axises, ...new Map<string, InputAxis>([
-      ['horizontal', new InputAxis(
-        KeyListener.KEY_D,
-        KeyListener.KEY_A
-        )
-      ],
-      ['vertical', new InputAxis(
-        KeyListener.KEY_W,
-        KeyListener.KEY_S
-        )
-      ],
+      ['horizontal', new InputAxis(KeyListener.KEY_D, KeyListener.KEY_A)],
+      ['vertical', new InputAxis(KeyListener.KEY_W, KeyListener.KEY_S)]
     ])]);
   }
 
   /**
-   * Read the Input of the given name of an InputAxis
+   * Read the Input of an InputAxis with the given name
    *
-   * @returns The Input of the given name of an InputAxis
+   * @returns The Input of an InputAxis with the given name
    */
   public readAxisInput(axisName: string): number {
     return this.axises.get(axisName).readInput();
