@@ -40,18 +40,18 @@ export default abstract class GameItem {
     this.mesh = new Mesh(imgSourcePath, frameWidth, frameHeight, animationState);
   }
 
-// /**
-//    * Move this GameItem across the Game Canvas within the absolute coordinate system
-//    *
-//    * @param dXAbs Deviation of the X coordinate of this GameItem in the absolute coordinate system
-//    * @param dYAbs Deviation of the Y coordinate of this GameItem in the absolute coordinate system
-//    * @param dR Deviation of the rotation of this GameItem
-//    */
-//   public moveAbsolute(dXAbs: number, dYAbs: number, dR: number = 0): void {
-//     this.xPos += dXAbs;
-//     this.yPos += dYAbs;
-//     this.rotate(dR);
-//   }
+  // /**
+  //    * Move this GameItem across the Game Canvas within the absolute coordinate system
+  //    *
+  //    * @param dXAbs Deviation of the X coordinate of this GameItem in the absolute coordinate system
+  //    * @param dYAbs Deviation of the Y coordinate of this GameItem in the absolute coordinate system
+  //    * @param dR Deviation of the rotation of this GameItem
+  //    */
+  //   public moveAbsolute(dXAbs: number, dYAbs: number, dR: number = 0): void {
+  //     this.xPos += dXAbs;
+  //     this.yPos += dYAbs;
+  //     this.rotate(dR);
+  //   }
 
   // /**
   //  * Rotate this GameItem by the given angle measured in degrees

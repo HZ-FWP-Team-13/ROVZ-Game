@@ -17,6 +17,14 @@ export default class Mesh {
   // The current state of the GameItem animation cycle
   protected animationState: number;
 
+  /**
+   * Mesh is a class that stores the movement and drawing functions
+   *
+   * @param imgSourcePath the path of the image
+   * @param frameWidth the Width of the image
+   * @param frameHeight the height of the image
+   * @param animationState state of animation
+   */
   public constructor(
     imgSourcePath: string,
     frameWidth: number,
