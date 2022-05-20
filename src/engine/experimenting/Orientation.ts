@@ -1,6 +1,6 @@
 export default class Orientation {
 
-  private angle: number;
+  public angle: number;
 
   public constructor(angle: number = 0) {
     this.angle = angle;

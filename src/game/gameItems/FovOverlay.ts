@@ -32,7 +32,6 @@ export default class FovOverlay extends GameItem {
       xPos, yPos,
       rotation,
       frameWidth, frameHeight,
-      frameWidth, frameHeight,
       0,
     );
 
@@ -47,6 +46,6 @@ export default class FovOverlay extends GameItem {
    */
   public control(input: Input): void {
     // Looking around
-    this.rotate(input.readRotationInput() * this.rotationSpeed);
+    this.transform.rotate(input.readRotationInput() * this.rotationSpeed);
   }
 }
