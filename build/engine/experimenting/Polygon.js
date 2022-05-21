@@ -37,6 +37,13 @@ export default class Polygon extends GameItem {
         ctx.lineWidth = 6;
         ctx.stroke();
         ctx.closePath();
+        ctx.beginPath();
+        ctx.strokeStyle = "white";
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, this.points[0].y);
+        ctx.lineWidth = 6;
+        ctx.stroke();
+        ctx.closePath();
         ctx.restore();
         this.updatedPoints.forEach(point => {
             ctx.fillStyle = 'blue';

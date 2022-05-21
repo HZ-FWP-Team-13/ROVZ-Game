@@ -57,11 +57,20 @@ export default class Polygon extends GameItem {
     ctx.fill();
     ctx.closePath();
 
-    // Draw a line from the center to the first point to visualize rotation
+    // Draw a line from the center to the first point for testing purposes
     ctx.beginPath();
     ctx.strokeStyle = "red";
     ctx.moveTo(0, 0);
     ctx.lineTo(this.points[0].x, this.points[0].y);
+    ctx.lineWidth = 6;
+    ctx.stroke();
+    ctx.closePath();
+
+    // Draw a white line to visualize rotation
+    ctx.beginPath();
+    ctx.strokeStyle = "white";
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, this.points[0].y);
     ctx.lineWidth = 6;
     ctx.stroke();
     ctx.closePath();
