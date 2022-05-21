@@ -1,6 +1,5 @@
 import GameItem from "../GameItem.js";
 import Vector2 from "./Vector2.js";
-import KeyListener from "../KeyListener.js";
 import Input from "../Input.js";
 export default class Polygon extends GameItem {
     points;
@@ -8,17 +7,11 @@ export default class Polygon extends GameItem {
     input;
     previousFrameRotation;
     updatedPoints;
-    kl;
-    kl_up = 38;
-    kl_down = 40;
-    kl_left = 37;
-    kl_right = 39;
     constructor(xPos, yPos, rot) {
         super('', xPos, yPos, rot, 50, 50, 0);
         this.points = [];
         this.updatedPoints = [];
         this.overlap = false;
-        this.kl = new KeyListener();
         this.input = new Input();
     }
     draw(ctx) {
@@ -58,12 +51,12 @@ export default class Polygon extends GameItem {
         this.transform.rotate(this.previousFrameRotation =
             this.input.readHorizontalInput() * 4 * this.input.getVerticalAxis());
         console.log(this.transform.position);
-        this.updatePoints();
     }
     updatePoints() {
         for (let i = 0; i < this.points.length; i++) {
-            this.updatedPoints[i].x = this.points[i].x + this.transform.position.x;
-            this.updatedPoints[i].y = this.points[i].y + this.transform.position.y;
+            console.log(this.transform.orientation);
+            this.updatedPoints[i].x = (this.points[i].x * Math.cos(this.transform.getRotationInRadians())) - (this.points[i].y * Math.sin(this.transform.getRotationInRadians())) + this.transform.position.x;
+            this.updatedPoints[i].y = (this.points[i].x * Math.sin(this.transform.getRotationInRadians())) + (this.points[i].y * Math.cos(this.transform.getRotationInRadians())) + this.transform.position.y;
         }
     }
     update() {

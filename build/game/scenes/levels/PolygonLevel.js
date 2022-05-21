@@ -6,7 +6,7 @@ export default class Level1 extends Level {
     poly2;
     constructor(game) {
         super(game);
-        this.poly1 = new Polygon(0, 0, 90);
+        this.poly1 = new Polygon(0, 0, 0);
         this.poly1.addNewPoint(-100, -100);
         this.poly1.addNewPoint(100, -100);
         this.poly1.addNewPoint(100, 100);

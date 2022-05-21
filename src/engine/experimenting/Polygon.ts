@@ -11,24 +11,12 @@ export default class Polygon extends GameItem {
 
   private updatedPoints: Vector2[];
 
-  // This is temporary
-  kl: KeyListener;
-
-  kl_up: number = 38;
-
-  kl_down: number = 40;
-
-  kl_left: number = 37;
-
-  kl_right: number = 39;
-
   public constructor(xPos: number, yPos: number, rot: number) {
     super('', xPos, yPos, rot, 50, 50, 0);
     this.points = [];
     this.updatedPoints = [];
     this.overlap = false;
 
-    this.kl = new KeyListener();
     this.input = new Input();
   }
 
@@ -92,20 +80,21 @@ export default class Polygon extends GameItem {
 
 
     console.log(this.transform.position);
-    this.updatePoints();
   }
 
   public updatePoints() {
     for (let i = 0; i < this.points.length; i++) {
-      this.updatedPoints[i].x = this.points[i].x + this.transform.position.x;
-      this.updatedPoints[i].y = this.points[i].y + this.transform.position.y;
+      console.log(this.transform.orientation);
+      this.updatedPoints[i].x = (this.points[i].x*Math.cos(this.transform.getRotationInRadians())) - (this.points[i].y * Math.sin(this.transform.getRotationInRadians())) + this.transform.position.x;
+      this.updatedPoints[i].y = (this.points[i].x*Math.sin(this.transform.getRotationInRadians())) + (this.points[i].y * Math.cos(this.transform.getRotationInRadians())) + this.transform.position.y;
     }
   }
-
 
   public update() {
     this.updatePoints();
   }
+
+
 
   public addNewPoint(x: number, y: number): void {
     this.points.push(new Vector2(x, y));
