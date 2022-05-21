@@ -27,6 +27,7 @@ export default class Polygon extends GameItem {
 
   public constructor(xPos: number, yPos: number, rot: number) {
     super('', xPos, yPos, rot, 50, 50, 0);
+
     this.points = [];
     this.updatedPoints = [];
 
@@ -92,6 +93,10 @@ export default class Polygon extends GameItem {
     console.log(this.transform.position);
   }
 
+
+  /**
+   * Update the positions of the points in World space (Absolute).
+   */
   public updatePoints() {
     for (let i = 0; i < this.points.length; i++) {
       console.log(this.transform.orientation);
