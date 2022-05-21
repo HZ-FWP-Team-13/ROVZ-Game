@@ -3,10 +3,10 @@ import Vector2 from "./Vector2.js";
 import Input from "../Input.js";
 export default class Polygon extends GameItem {
     points;
+    updatedPoints;
+    previousFrameRotation;
     overlap;
     input;
-    previousFrameRotation;
-    updatedPoints;
     constructor(xPos, yPos, rot) {
         super('', xPos, yPos, rot, 50, 50, 0);
         this.points = [];
@@ -66,38 +66,38 @@ export default class Polygon extends GameItem {
         this.points.push(new Vector2(x, y));
         this.updatedPoints.push(new Vector2(x, y));
     }
-    static shapeOverlap_SAT(r1, r2) {
-        let poly1 = r1;
-        let poly2 = r2;
+    static shapeOverlap_SAT(poly1, poly2) {
+        let p1 = poly1;
+        let p2 = poly2;
         for (let shape = 0; shape < 2; shape++) {
             if (shape == 1) {
-                poly1 = r2;
-                poly2 = r1;
+                p1 = poly2;
+                p2 = poly1;
             }
-            for (let a = 0; a < poly1.updatedPoints.length; a++) {
-                let b = (a + 1) % poly1.updatedPoints.length;
-                let axisProj = new Vector2(-(poly1.updatedPoints[b].y - poly1.updatedPoints[a].y), poly1.updatedPoints[b].x - poly1.updatedPoints[a].x);
-                let min_r1 = Infinity;
-                let max_r1 = -Infinity;
-                for (let p = 0; p < poly1.updatedPoints.length; p++) {
-                    let dot = Vector2.dotProduct(poly1.updatedPoints[p], axisProj);
-                    min_r1 = Math.min(min_r1, dot);
-                    max_r1 = Math.max(max_r1, dot);
+            for (let a = 0; a < p1.updatedPoints.length; a++) {
+                let b = (a + 1) % p1.updatedPoints.length;
+                let axisProj = new Vector2(-(p1.updatedPoints[b].y - p1.updatedPoints[a].y), p1.updatedPoints[b].x - p1.updatedPoints[a].x);
+                let min_p1 = Infinity;
+                let max_p1 = -Infinity;
+                for (let p = 0; p < p1.updatedPoints.length; p++) {
+                    let dot = Vector2.dotProduct(p1.updatedPoints[p], axisProj);
+                    min_p1 = Math.min(min_p1, dot);
+                    max_p1 = Math.max(max_p1, dot);
                 }
-                let min_r2 = Infinity;
-                let max_r2 = -Infinity;
-                for (let p = 0; p < poly1.updatedPoints.length; p++) {
-                    let dot = Vector2.dotProduct(poly2.updatedPoints[p], axisProj);
-                    min_r2 = Math.min(min_r2, dot);
-                    max_r2 = Math.max(max_r2, dot);
+                let min_p2 = Infinity;
+                let max_p2 = -Infinity;
+                for (let p = 0; p < p1.updatedPoints.length; p++) {
+                    let dot = Vector2.dotProduct(p2.updatedPoints[p], axisProj);
+                    min_p2 = Math.min(min_p2, dot);
+                    max_p2 = Math.max(max_p2, dot);
                 }
-                if (!(max_r2 >= min_r1 && max_r1 >= min_r2)) {
-                    poly1.overlap = false;
+                if (!(max_p2 >= min_p1 && max_p1 >= min_p2)) {
+                    p1.overlap = false;
                     return false;
                 }
             }
         }
-        poly1.overlap = true;
+        p1.overlap = true;
         return true;
     }
 }

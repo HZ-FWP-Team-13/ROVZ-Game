@@ -3,20 +3,34 @@ import Vector2 from "./Vector2.js";
 import KeyListener from "../KeyListener.js";
 import Input from "../Input.js";
 
+/*===========================================================================================
+|| NOTE: THIS CLASS WAS MADE AS AN EXPERIMENT, I WILL REFACTOR IT AS "Collider" ON MONDAY  ||
+===========================================================================================*/
+
+
 export default class Polygon extends GameItem {
-  private points: Vector2[];
+
+  private points: Vector2[]; // Contains the original points of the collider, defining it's "shape" for the purposes of drawing
+
+  private updatedPoints: Vector2[]; // Contains the updated points of the mesh collider, i.e. the points when the collider is moved / rotated.
+
+  // When you 'attach' a Collider to a GameItem, you can define the points in the constructor.
+  // Since we pretty much exclusively use squares and rectangles, perhaps we can just take the frame height and width of the Mesh attached to the GameItem,
+  // alongside the transforms of the GameItem, to define these points via a method of some kind.
+
+  // Right now, the Polygon extends GameItem. The final, refactored Collider obviously won't.
+  // This is done merely to provide visual feedback for testing purposes.
+
+  previousFrameRotation: number;
   public overlap: boolean;
   private input: Input;
-  previousFrameRotation: number;
-
-  private updatedPoints: Vector2[];
 
   public constructor(xPos: number, yPos: number, rot: number) {
     super('', xPos, yPos, rot, 50, 50, 0);
     this.points = [];
     this.updatedPoints = [];
-    this.overlap = false;
 
+    this.overlap = false;
     this.input = new Input();
   }
 
@@ -45,10 +59,8 @@ export default class Polygon extends GameItem {
     // Draw a line from the center to the first point to visualize rotation
     ctx.beginPath();
     ctx.strokeStyle = "red";
-    // console.log(ctx.fillStyle);
     ctx.moveTo(0, 0);
     ctx.lineTo(this.points[0].x, this.points[0].y);
-    // console.log(this.points[0].x, this.points[0].y);
     ctx.lineWidth = 6;
     ctx.stroke();
     ctx.closePath();
@@ -62,11 +74,10 @@ export default class Polygon extends GameItem {
   }
 
   /**
- * Move this Player Character across the Game Canvas in response to the Player Input
+ * Move this Polygon across the Game Canvas in response to player Input
  *
  */
   public control(): void {
-    // Quick and dirty movement - next time might use a switch statement instead.
     this.input.readVerticalInput();
     // Traction
     if (this.input.getVerticalAxis() != 0) {
@@ -77,7 +88,6 @@ export default class Polygon extends GameItem {
       this.previousFrameRotation =
       this.input.readHorizontalInput() * 4 * this.input.getVerticalAxis(),
     );
-
 
     console.log(this.transform.position);
   }
@@ -94,67 +104,69 @@ export default class Polygon extends GameItem {
     this.updatePoints();
   }
 
-
-
+  /**
+   * Add a new vertex to the polygon
+   * @param x X position of the vertex
+   * @param y Y position of the vertex
+   */
   public addNewPoint(x: number, y: number): void {
     this.points.push(new Vector2(x, y));
+
+    // TODO: This part here will probably break when adding points after moving the Polygon.
     this.updatedPoints.push(new Vector2(x, y));
-    // console.log(this.points);
-    // console.log(this.updatedPoints);
   }
 
-  public static shapeOverlap_SAT(r1: Polygon, r2: Polygon) {
+  public static shapeOverlap_SAT(poly1: Polygon, poly2: Polygon) {
 
-    let poly1 = r1;
-    let poly2 = r2;
+    let p1 = poly1;
+    let p2 = poly2;
 
     for (let shape = 0; shape < 2; shape++) {
 
+      // Once the test has been performed using the axes of the first shape, perform the test using the axes of the second shape.
       if (shape == 1) {
-        poly1 = r2;
-        poly2 = r1;
+        p1 = poly2;
+        p2 = poly1;
       }
 
-      for (let a = 0; a < poly1.updatedPoints.length; a++) {
+      for (let a = 0; a < p1.updatedPoints.length; a++) {
 
         // Obtain the 'next' point
-        let b = (a + 1) % poly1.updatedPoints.length;
+        let b = (a + 1) % p1.updatedPoints.length;
 
         // Obtain edge normals
-        let axisProj = new Vector2(-(poly1.updatedPoints[b].y - poly1.updatedPoints[a].y), poly1.updatedPoints[b].x - poly1.updatedPoints[a].x);
+        let axisProj = new Vector2(-(p1.updatedPoints[b].y - p1.updatedPoints[a].y), p1.updatedPoints[b].x - p1.updatedPoints[a].x);
 
+        // Work out min and max 1D points of p1
+        let min_p1 = Infinity;
+        let max_p1 = -Infinity;
 
-        // Work out min and max 1D points of r1
-        let min_r1 = Infinity;
-        let max_r1 = -Infinity;
-
-        // Iterate through all the points of r1
-        for (let p = 0; p < poly1.updatedPoints.length; p++) {
-          let dot = Vector2.dotProduct(poly1.updatedPoints[p], axisProj);
-          min_r1 = Math.min(min_r1, dot);
-          max_r1 = Math.max(max_r1, dot);
-          // console.log(`MIN R1: ${min_r1}, MAX R1: ${min_r1}`);
+        // Iterate through all the points of p1
+        for (let p = 0; p < p1.updatedPoints.length; p++) {
+          let dot = Vector2.dotProduct(p1.updatedPoints[p], axisProj);
+          min_p1 = Math.min(min_p1, dot);
+          max_p1 = Math.max(max_p1, dot);
         }
 
-        // Work out min and max 1D points of r2
-        let min_r2 = Infinity;
-        let max_r2 = -Infinity;
+        // Work out min and max 1D points of p2
+        let min_p2 = Infinity;
+        let max_p2 = -Infinity;
 
-        // Iterate through all the points of r2
-        for (let p = 0; p < poly1.updatedPoints.length; p++) {
-          let dot = Vector2.dotProduct(poly2.updatedPoints[p], axisProj);
-          min_r2 = Math.min(min_r2, dot);
-          max_r2 = Math.max(max_r2, dot);
-          // console.log(`MIN R2: ${min_r1}, MAX R2: ${min_r1}`);
+        // Iterate through all the points of p2
+        for (let p = 0; p < p1.updatedPoints.length; p++) {
+          let dot = Vector2.dotProduct(p2.updatedPoints[p], axisProj);
+          min_p2 = Math.min(min_p2, dot);
+          max_p2 = Math.max(max_p2, dot);
+
         }
 
-        if(!(max_r2 >= min_r1 && max_r1 >= min_r2)) {
-          poly1.overlap = false;
+        if(!(max_p2 >= min_p1 && max_p1 >= min_p2)) {
+          p1.overlap = false;
           return false;
         }
       }
     }
-    poly1.overlap = true;
+    p1.overlap = true;
     // console.log(true);
     return true;
   }
