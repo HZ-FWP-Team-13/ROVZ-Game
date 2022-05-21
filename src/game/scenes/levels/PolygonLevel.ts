@@ -21,11 +21,11 @@ export default class Level1 extends Level {
     super(game);
 
     // Create polygon 1
-    this.poly1 = new Polygon(150 - 100, 100 - 100, 0);
-    this.poly1.addNewPoint(-10, -10);
-    this.poly1.addNewPoint(10, -10);
-    this.poly1.addNewPoint(10, 10);
-    this.poly1.addNewPoint(-10, 10);
+    this.poly1 = new Polygon(0, 0, 90);
+    this.poly1.addNewPoint(-100, -100);
+    this.poly1.addNewPoint(100, -100);
+    this.poly1.addNewPoint(100, 100);
+    this.poly1.addNewPoint(-100, 100);
 
     // Create polygon 2
     this.poly2 = new Polygon(300, 500, 0);
@@ -52,8 +52,21 @@ export default class Level1 extends Level {
    *   current scene, just return `null`
    */
   public update(): Scene {
+    this.poly1.update();
     this.poly1.control();
-    Polygon.shapeOverlap_SAT(this.poly1, this.poly2);
+
+    this.poly2.update();
+
+
+    if(Polygon.shapeOverlap_SAT(this.poly1, this.poly2)) {
+      this.poly1.overlap = true;
+      this.poly2.overlap = true;
+    }
+    else {
+      this.poly1.overlap = false;
+      this.poly2.overlap = false;
+    }
+
     return null;
   }
 

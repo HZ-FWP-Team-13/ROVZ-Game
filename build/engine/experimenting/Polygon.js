@@ -1,10 +1,13 @@
 import GameItem from "../GameItem.js";
 import Vector2 from "./Vector2.js";
 import KeyListener from "../KeyListener.js";
+import Input from "../Input.js";
 export default class Polygon extends GameItem {
     points;
     overlap;
+    input;
     previousFrameRotation;
+    updatedPoints;
     kl;
     kl_up = 38;
     kl_down = 40;
@@ -13,8 +16,10 @@ export default class Polygon extends GameItem {
     constructor(xPos, yPos, rot) {
         super('', xPos, yPos, rot, 50, 50, 0);
         this.points = [];
+        this.updatedPoints = [];
         this.overlap = false;
         this.kl = new KeyListener();
+        this.input = new Input();
     }
     draw(ctx) {
         ctx.save();
@@ -34,34 +39,39 @@ export default class Polygon extends GameItem {
         ctx.closePath();
         ctx.beginPath();
         ctx.strokeStyle = "red";
-        console.log(ctx.fillStyle);
         ctx.moveTo(0, 0);
         ctx.lineTo(this.points[0].x, this.points[0].y);
-        console.log(this.points[0].x, this.points[0].y);
         ctx.lineWidth = 6;
         ctx.stroke();
         ctx.closePath();
         ctx.restore();
+        this.updatedPoints.forEach(point => {
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(point.x, point.y, 20, 20);
+        });
     }
     control() {
-        if (this.kl.isKeyDown(this.kl_up)) {
-            this.transform.moveRelative(0, 3);
+        this.input.readVerticalInput();
+        if (this.input.getVerticalAxis() != 0) {
+            this.transform.moveRelative(0, this.input.getVerticalAxis() * 4);
         }
-        if (this.kl.isKeyDown(this.kl_down)) {
-            this.transform.moveRelative(0, -3);
+        this.transform.rotate(this.previousFrameRotation =
+            this.input.readHorizontalInput() * 4 * this.input.getVerticalAxis());
+        console.log(this.transform.position);
+        this.updatePoints();
+    }
+    updatePoints() {
+        for (let i = 0; i < this.points.length; i++) {
+            this.updatedPoints[i].x = this.points[i].x + this.transform.position.x;
+            this.updatedPoints[i].y = this.points[i].y + this.transform.position.y;
         }
-        if (this.kl.isKeyDown(this.kl_left)) {
-            this.transform.rotate(this.previousFrameRotation =
-                -3);
-        }
-        if (this.kl.isKeyDown(this.kl_right)) {
-            this.transform.rotate(this.previousFrameRotation =
-                3);
-        }
+    }
+    update() {
+        this.updatePoints();
     }
     addNewPoint(x, y) {
         this.points.push(new Vector2(x, y));
-        console.log(this.points);
+        this.updatedPoints.push(new Vector2(x, y));
     }
     static shapeOverlap_SAT(r1, r2) {
         let poly1 = r1;
@@ -71,21 +81,20 @@ export default class Polygon extends GameItem {
                 poly1 = r2;
                 poly2 = r1;
             }
-            for (let a = 0; a < poly1.points.length; a++) {
-                let b = (a + 1) % poly1.points.length;
-                let axisProj = new Vector2(-(poly1.points[b].y - poly1.points[a].y), poly1.points[b].x - poly1.points[a].x);
+            for (let a = 0; a < poly1.updatedPoints.length; a++) {
+                let b = (a + 1) % poly1.updatedPoints.length;
+                let axisProj = new Vector2(-(poly1.updatedPoints[b].y - poly1.updatedPoints[a].y), poly1.updatedPoints[b].x - poly1.updatedPoints[a].x);
                 let min_r1 = Infinity;
                 let max_r1 = -Infinity;
-                for (let p = 0; p < poly1.points.length; p++) {
-                    let dot = Vector2.dotProduct(poly1.points[p], axisProj);
+                for (let p = 0; p < poly1.updatedPoints.length; p++) {
+                    let dot = Vector2.dotProduct(poly1.updatedPoints[p], axisProj);
                     min_r1 = Math.min(min_r1, dot);
                     max_r1 = Math.max(max_r1, dot);
-                    console.log(`MIN R1: ${min_r1}, MAX R1: ${min_r1}`);
                 }
                 let min_r2 = Infinity;
                 let max_r2 = -Infinity;
-                for (let p = 0; p < poly1.points.length; p++) {
-                    let dot = Vector2.dotProduct(poly2.points[p], axisProj);
+                for (let p = 0; p < poly1.updatedPoints.length; p++) {
+                    let dot = Vector2.dotProduct(poly2.updatedPoints[p], axisProj);
                     min_r2 = Math.min(min_r2, dot);
                     max_r2 = Math.max(max_r2, dot);
                 }
@@ -96,7 +105,6 @@ export default class Polygon extends GameItem {
             }
         }
         poly1.overlap = true;
-        console.log(true);
         return true;
     }
 }
