@@ -59,22 +59,22 @@ export default class InputAxis {
     let positiveAxisInput = 0;
     if (this.positiveKeyAlt != 0) {
       positiveAxisInput = Math.max(
-        Number(this.isKeyDown(this.positiveKey)),
-        Number(this.isKeyDown(this.positiveKeyAlt))
+        this.isKeyDown(this.positiveKey),
+        this.isKeyDown(this.positiveKeyAlt)
       );
     } else {
-      positiveAxisInput = Number(this.isKeyDown(this.positiveKey));
+      positiveAxisInput = this.isKeyDown(this.positiveKey);
     }
 
     // Reading the negative Input
     let negativeAxisInput = 0;
     if (this.negativeKeyAlt != 0) {
       negativeAxisInput = Math.max(
-        Number(this.isKeyDown(this.negativeKey)),
-        Number(this.isKeyDown(this.negativeKeyAlt))
+        this.isKeyDown(this.negativeKey),
+        this.isKeyDown(this.negativeKeyAlt)
       );
     } else if (this.negativeKey != 0) {
-      negativeAxisInput = Number(this.isKeyDown(this.negativeKey));
+      negativeAxisInput = this.isKeyDown(this.negativeKey);
     } else {
       negativeAxisInput = 0;
     }
