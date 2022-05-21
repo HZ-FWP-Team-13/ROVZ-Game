@@ -42,7 +42,7 @@ export default class Polygon extends GameItem {
     ctx.beginPath();
 
 
-    // Polygons will be red when overlapping and blue when they are not.
+    // Polygons will be red when overlapping and black when they are not.
     if (this.overlap) {
       ctx.fillStyle = 'red';
     } else {
