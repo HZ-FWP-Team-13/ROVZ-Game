@@ -22,9 +22,11 @@ export default class Start extends Screen {
 
     this.keyListener = new KeyListener();
 
-    this.input = new Input(new Map<string, InputAxis>([
-      ['startKey', new InputAxis(KeyListener.KEY_S)]
-    ]));
+    this.input = new Input(
+      new Map<string, InputAxis>([
+        ['startKey', new InputAxis(KeyListener.KEY_S)]
+      ])
+    );
   }
 
   /**
