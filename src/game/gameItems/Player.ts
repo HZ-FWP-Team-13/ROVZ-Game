@@ -1,3 +1,4 @@
+import Collider from '../../engine/experimenting/Collider.js';
 import GameItem from '../../engine/GameItem.js';
 import Input from '../../engine/Input.js';
 
@@ -10,6 +11,11 @@ export default class Player extends GameItem {
 
   // The rotation the Player Character underwent since the last Frame
   private previousFrameRotation: number;
+
+
+  // The collider attached to the player
+  public collider: Collider;
+
 
   /**
    * Create a new Player Character instance
@@ -44,6 +50,9 @@ export default class Player extends GameItem {
 
     this.movementSpeed = 1;
     this.rotationSpeed = 1;
+
+    this.collider = new Collider;
+    this.collider.generateRectCollider(this.mesh.getFrameWidth(), this.mesh.getFrameHeight());
   }
 
   /**
@@ -62,6 +71,9 @@ export default class Player extends GameItem {
       this.previousFrameRotation =
       input.readHorizontalInput() * this.rotationSpeed * input.getVerticalAxis(),
     );
+
+    // This is placed here for testing purposes.
+    this.collider.updatePoints(this.transform);
   }
 
   /**
@@ -71,5 +83,10 @@ export default class Player extends GameItem {
    */
   public getPreviousFrameRotation(): number {
     return this.previousFrameRotation;
+  }
+
+  public draw(ctx: CanvasRenderingContext2D) {
+    this.mesh.draw(ctx, this.transform);
+    this.collider.draw(ctx);
   }
 }

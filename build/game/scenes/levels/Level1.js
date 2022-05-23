@@ -22,6 +22,7 @@ export default class Level1 extends Level {
         this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
         this.player.mesh.draw(this.game.ctx, this.player.transform);
         this.fov.mesh.draw(this.game.ctx, this.fov.transform);
+        this.player.collider.draw(this.game.ctx);
     }
 }
 //# sourceMappingURL=Level1.js.map

@@ -120,7 +120,11 @@ export default class Level1 extends Level {
 
     // Drawing the Player Character on the Game Canvas
     this.player.mesh.draw(this.game.ctx, this.player.transform);
+
     // Drawing the FovOverlay on the Game Canvas
     this.fov.mesh.draw(this.game.ctx, this.fov.transform);
+
+    // Drawing the points of the player's collider.
+    this.player.collider.draw(this.game.ctx);
   }
 }
