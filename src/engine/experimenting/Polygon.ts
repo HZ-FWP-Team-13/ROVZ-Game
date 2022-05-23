@@ -167,7 +167,7 @@ export default class Polygon extends GameItem {
         let max_p2 = -Infinity;
 
         // Iterate through all the points of p2
-        for (let p = 0; p < p1.updatedPoints.length; p++) {
+        for (let p = 0; p < p2.updatedPoints.length; p++) {
           let dot = Vector2.dotProduct(p2.updatedPoints[p], axisProj);
           min_p2 = Math.min(min_p2, dot);
           max_p2 = Math.max(max_p2, dot);
