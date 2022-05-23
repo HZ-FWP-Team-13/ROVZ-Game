@@ -31,10 +31,15 @@ export default class Collider {
     this.overlap = false;
   }
 
+
+
   public draw(ctx: CanvasRenderingContext2D) {
+
+    let vertSize = 8;
+
     this.updatedPoints.forEach(point => {
       ctx.fillStyle = 'blue';
-      ctx.fillRect(point.x - 4, point.y + 4, 8, 8);
+      ctx.fillRect(point.x - vertSize / 2, point.y - vertSize / 2, vertSize, vertSize);
     });
   }
 

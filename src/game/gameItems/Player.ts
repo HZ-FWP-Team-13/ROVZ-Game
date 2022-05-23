@@ -1,4 +1,5 @@
 import Collider from '../../engine/experimenting/Collider.js';
+import Transform from '../../engine/experimenting/Transform.js';
 import GameItem from '../../engine/GameItem.js';
 import Input from '../../engine/Input.js';
 

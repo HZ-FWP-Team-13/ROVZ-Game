@@ -58,7 +58,7 @@ export default class Level1 extends Level {
     // Spawning the Player Character
     this.player = new Player(
       // The path to the Source Image of the Player Character appearance
-      './assets/img/testplayer-old.png',
+      './assets/img/testplayer.png',
       // The coordinates of the Player Character on the game canvas
       game.canvas.width / 2, game.canvas.height / 2,
       // The rotation of the Player Character measured in degrees
