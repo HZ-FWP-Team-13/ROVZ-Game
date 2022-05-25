@@ -43,12 +43,14 @@ export default class FovOverlay extends GameItem {
    */
   public control(input: Input): void {
 
+    // Calculating a Vector2 from the Player towards the Cursor
     let toCursor = new Vector2(0, -1);
     if (input.getMouseInAction()) {
       toCursor = Vector2.vectorDifference(this.getTransform().position, input.getMousePosition());
       toCursor.y *= -1;
     }
 
+    // Calculating the slope of the mentioned vector
     const toCursorSlope = Math.atan(toCursor.x / toCursor.y) * (180 / Math.PI) + (toCursor.y > 0 ? 180 : 0);
 
     // Looking around TODO: Bind to fps

@@ -30,6 +30,7 @@ export default class Start extends Screen {
    *   current scene, just return `null`
    */
   public update(): Scene {
+    // TODO: The start menu
     if (this.input.readAxisTyped('Select')) {
       return new Level1(this.game);
     }

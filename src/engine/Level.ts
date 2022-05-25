@@ -11,6 +11,8 @@ export default abstract class Level extends Scene {
    */
   public constructor(game: Game) {
     super(game);
+
+    // The default Level Input Axises
     this.input.editAxises(
       new Map<string, InputAxis>([
         [

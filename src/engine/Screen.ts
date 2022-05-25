@@ -11,6 +11,8 @@ export default abstract class Screen extends Scene {
    */
   public constructor(game: Game) {
     super(game);
+
+    // The default Screen Input Axises
     this.input.editAxises(
       new Map<string, InputAxis>([
         [
