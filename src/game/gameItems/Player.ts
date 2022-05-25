@@ -1,5 +1,5 @@
 import GameItem from '../../engine/GameItem.js';
-import Input from '../../engine/Input.js';
+import Input from '../../engine/InputModule/Input.js';
 
 export default class Player extends GameItem {
   // The speed of the Player Character movement measured in pixels per second
@@ -52,16 +52,17 @@ export default class Player extends GameItem {
    * @param input of the keys when moving
    */
   public control(input: Input): void {
-    input.readVerticalInput();
-    // Traction
-    if (input.getVerticalAxis() != 0) {
-      this.transform.moveRelative(0, input.getVerticalAxis() * this.movementSpeed);
+    // Read the Input of the Vertical InputAxis
+    const traction = input.readAxisPressed('verticalMovement');
+    // Read the Input of the Horizontal InputAxis
+    const steering = input.readAxisPressed('horizontalMovement');
+
+    // Traction TODO: Bind to fps
+    if (traction != 0) {
+      this.transform.moveRelative(0, traction * this.movementSpeed);
     }
-    // Steering
-    this.transform.rotate(
-      this.previousFrameRotation =
-      input.readHorizontalInput() * this.rotationSpeed * input.getVerticalAxis(),
-    );
+    // Steering TODO: Bind to fps
+    this.transform.rotate(this.previousFrameRotation = steering * this.rotationSpeed * traction);
   }
 
   /**

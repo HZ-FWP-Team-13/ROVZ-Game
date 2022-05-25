@@ -1,20 +1,18 @@
 import Game from '../../../engine/Game.js';
 import Graphics from '../../../engine/Graphics.js';
-import Input from '../../../engine/Input.js';
 import Scene from '../../../engine/Scene.js';
 import Screen from '../../../engine/Screen.js';
 import Level1 from '../levels/Level1.js';
 
 export default class Start extends Screen {
   /**
-   * Create a new Start Scene instance
+   * Create a new Start Screen instance
    *
    * @param game The Game namespace
    */
   public constructor(game: Game) {
     super(game);
     game.reset();
-    this.input = new Input();
   }
 
   /**
@@ -32,7 +30,8 @@ export default class Start extends Screen {
    *   current scene, just return `null`
    */
   public update(): Scene {
-    if (this.input.readStartInput()) {
+    // TODO: The start menu
+    if (this.input.readAxisTyped('Select')) {
       return new Level1(this.game);
     }
     return null;

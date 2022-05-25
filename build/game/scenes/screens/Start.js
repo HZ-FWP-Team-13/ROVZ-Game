@@ -1,15 +1,13 @@
 import Graphics from '../../../engine/Graphics.js';
-import Input from '../../../engine/Input.js';
 import Screen from '../../../engine/Screen.js';
 import Level1 from '../levels/Level1.js';
 export default class Start extends Screen {
     constructor(game) {
         super(game);
         game.reset();
-        this.input = new Input();
     }
     update() {
-        if (this.input.readStartInput()) {
+        if (this.input.readAxisTyped('Select')) {
             return new Level1(this.game);
         }
         return null;

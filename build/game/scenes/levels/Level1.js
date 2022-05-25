@@ -1,13 +1,11 @@
 import Player from '../../gameItems/Player.js';
 import FovOverlay from '../../gameItems/FovOverlay.js';
 import Level from '../../../engine/Level.js';
-import Input from '../../../engine/Input.js';
 export default class Level1 extends Level {
     player;
     fov;
     constructor(game) {
         super(game);
-        this.input = new Input();
         this.player = new Player('./assets/img/testplayer-old.png', game.canvas.width / 2, game.canvas.height / 2, 0, 32, 32, 0);
         this.fov = new FovOverlay('./assets/img/fov.png', game.canvas.width / 2, game.canvas.height / 2, 0, 6000, 6000);
     }
