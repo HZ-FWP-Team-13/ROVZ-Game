@@ -9,7 +9,7 @@ export default class Vector2 {
    * @param x Projection on Axis X
    * @param y Projection on Axis Y
    */
-  public constructor(x: number, y: number) {
+  public constructor(x: number = 0, y: number = 0) {
     this.x = x;
     this.y = y;
   }

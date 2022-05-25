@@ -1,3 +1,4 @@
+import Vector2 from '../../engine/experimenting/Vector2.js';
 import GameItem from '../../engine/GameItem.js';
 import Input from '../../engine/InputModule/Input.js';
 
@@ -41,10 +42,16 @@ export default class FovOverlay extends GameItem {
    * @param input of the keys when moving
    */
   public control(input: Input): void {
-    // Read the Input of the FovRotation InputAxis
-    const fovRotation = input.readAxisPressed('fovRotation');
+
+    let toCursor = new Vector2(0, -1);
+    if (input.getMouseInAction()) {
+      toCursor = Vector2.vectorDifference(this.getTransform().position, input.getMousePosition());
+      toCursor.y *= -1;
+    }
+
+    const toCursorSlope = Math.atan(toCursor.x / toCursor.y) * (180 / Math.PI) + (toCursor.y > 0 ? 180 : 0);
 
     // Looking around TODO: Bind to fps
-    this.transform.rotate(fovRotation * this.rotationSpeed);
+    this.transform.setRotation(toCursorSlope);
   }
 }

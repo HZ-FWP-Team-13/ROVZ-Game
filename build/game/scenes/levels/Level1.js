@@ -1,19 +1,11 @@
 import Player from '../../gameItems/Player.js';
 import FovOverlay from '../../gameItems/FovOverlay.js';
 import Level from '../../../engine/Level.js';
-import KeyListener from '../../../engine/InputModule/KeyListener.js';
-import InputAxis from '../../../engine/InputModule/InputAxis.js';
 export default class Level1 extends Level {
     player;
     fov;
     constructor(game) {
         super(game);
-        this.input.editAxises(new Map([
-            [
-                'fovRotation',
-                new InputAxis('Rotate Right', KeyListener.KEY_RIGHT, 'Rotate Left', KeyListener.KEY_LEFT)
-            ]
-        ]));
         this.player = new Player('./assets/img/testplayer-old.png', game.canvas.width / 2, game.canvas.height / 2, 0, 32, 32, 0);
         this.fov = new FovOverlay('./assets/img/fov.png', game.canvas.width / 2, game.canvas.height / 2, 0, 6000, 6000);
     }

@@ -1,5 +1,4 @@
 import Game from './Game.js';
-import Input from './InputModule/Input.js';
 import InputAxis from './InputModule/InputAxis.js';
 import KeyListener from './InputModule/KeyListener.js';
 import Scene from './Scene.js';

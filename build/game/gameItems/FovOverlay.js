@@ -1,3 +1,4 @@
+import Vector2 from '../../engine/experimenting/Vector2.js';
 import GameItem from '../../engine/GameItem.js';
 export default class FovOverlay extends GameItem {
     rotationSpeed;
@@ -6,8 +7,13 @@ export default class FovOverlay extends GameItem {
         this.rotationSpeed = 1;
     }
     control(input) {
-        const fovRotation = input.readAxisPressed('fovRotation');
-        this.transform.rotate(fovRotation * this.rotationSpeed);
+        let toCursor = new Vector2(0, -1);
+        if (input.getMouseInAction()) {
+            toCursor = Vector2.vectorDifference(this.getTransform().position, input.getMousePosition());
+            toCursor.y *= -1;
+        }
+        const toCursorSlope = Math.atan(toCursor.x / toCursor.y) * (180 / Math.PI) + (toCursor.y > 0 ? 180 : 0);
+        this.transform.setRotation(toCursorSlope);
     }
 }
 //# sourceMappingURL=FovOverlay.js.map

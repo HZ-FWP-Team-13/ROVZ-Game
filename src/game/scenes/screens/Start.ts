@@ -1,8 +1,5 @@
 import Game from '../../../engine/Game.js';
 import Graphics from '../../../engine/Graphics.js';
-import Input from '../../../engine/InputModule/Input.js';
-import InputAxis from '../../../engine/InputModule/InputAxis.js';
-import KeyListener from '../../../engine/InputModule/KeyListener.js';
 import Scene from '../../../engine/Scene.js';
 import Screen from '../../../engine/Screen.js';
 import Level1 from '../levels/Level1.js';
@@ -33,9 +30,7 @@ export default class Start extends Screen {
    *   current scene, just return `null`
    */
   public update(): Scene {
-    // Read the Input of the Select InputAxis
-    const start = this.input.readAxisTyped('Select');
-    if (start) {
+    if (this.input.readAxisTyped('Select')) {
       return new Level1(this.game);
     }
     return null;

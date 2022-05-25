@@ -7,8 +7,7 @@ export default class Start extends Screen {
         game.reset();
     }
     update() {
-        const start = this.input.readAxisTyped('Select');
-        if (start) {
+        if (this.input.readAxisTyped('Select')) {
             return new Level1(this.game);
         }
         return null;

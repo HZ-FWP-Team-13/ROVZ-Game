@@ -1,8 +1,12 @@
+import Vector2 from '../experimenting/Vector2.js';
 import InputAxis from './InputAxis.js';
+import MouseListener from './MouseListener.js';
 
 export default class Input {
   // The map of InputAxises
   private axises: Map<string, InputAxis>;
+
+  private mouse: MouseListener;
 
   /**
    * Create a new Input instance
@@ -13,6 +17,8 @@ export default class Input {
     if (axises != null) {
       this.editAxises(axises);
     }
+
+    this.mouse = new MouseListener();
   }
 
   /**
@@ -65,5 +71,32 @@ export default class Input {
    */
   public readAxisTyped(axisName: string): number {
     return this.getAxis(axisName).readTyped();
+  }
+
+  /**
+   * Get the position of the Mouse
+   *
+   * @returns The position of the Mouse
+   */
+   public getMousePosition(): Vector2 {
+    return this.mouse.getMousePosition();
+  }
+
+  /**
+   * Get the pressed Mouse buttons
+   *
+   * @returns The pressed Mouse buttons
+   */
+  public getMouseButtons(): number {
+    return this.mouse.getMouseButtons();
+  }
+
+  /**
+   * Get `true` if the Mouse was used at least once in this Scene
+   *
+   * @returns `true` if the Mouse was used at least once in this Scene
+   */
+  public getMouseInAction(): boolean {
+    return this.mouse.getMouseInAction();
   }
 }
