@@ -5,7 +5,7 @@ import MouseListener from './MouseListener.js';
 export default class Input {
   // The map of InputAxises
   private axises: Map<string, InputAxis>;
-
+  // The MouseListener
   private mouse: MouseListener;
 
   /**
