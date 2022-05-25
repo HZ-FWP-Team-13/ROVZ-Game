@@ -27,6 +27,7 @@ export default abstract class Scene {
    */
   public constructor(game: Game) {
     this.game = game;
+    this.input = new Input();
   }
 
   /**

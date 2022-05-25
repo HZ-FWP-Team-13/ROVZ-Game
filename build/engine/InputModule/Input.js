@@ -1,21 +1,29 @@
-import InputAxis from './InputAxis.js';
-import KeyListener from './KeyListener.js';
 export default class Input {
     axises;
     constructor(axises = null) {
-        this.axises = new Map([
-            ...axises,
-            ...new Map([
-                ['horizontal', new InputAxis(KeyListener.KEY_D, KeyListener.KEY_A)],
-                ['vertical', new InputAxis(KeyListener.KEY_W, KeyListener.KEY_S)]
-            ])
-        ]);
+        if (axises != null) {
+            this.editAxises(axises);
+        }
+    }
+    editAxises(axises) {
+        if (this.axises != null) {
+            this.axises = new Map([...this.axises, ...axises]);
+        }
+        else {
+            this.axises = axises;
+        }
+    }
+    getAxises() {
+        return this.axises;
     }
     getAxis(axisName) {
         return this.axises.get(axisName);
     }
-    readAxisInput(axisName) {
-        return this.getAxis(axisName).readInput();
+    readAxisPressed(axisName) {
+        return this.getAxis(axisName).readPressed();
+    }
+    readAxisTyped(axisName) {
+        return this.getAxis(axisName).readTyped();
     }
 }
 //# sourceMappingURL=Input.js.map

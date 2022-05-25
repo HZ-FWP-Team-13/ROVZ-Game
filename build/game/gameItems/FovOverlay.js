@@ -6,7 +6,7 @@ export default class FovOverlay extends GameItem {
         this.rotationSpeed = 1;
     }
     control(input) {
-        const fovRotation = input.readAxisInput('fovRotation');
+        const fovRotation = input.readAxisPressed('fovRotation');
         this.transform.rotate(fovRotation * this.rotationSpeed);
     }
 }

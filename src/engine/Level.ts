@@ -1,4 +1,7 @@
 import Game from './Game.js';
+import Input from './InputModule/Input.js';
+import InputAxis from './InputModule/InputAxis.js';
+import KeyListener from './InputModule/KeyListener.js';
 import Scene from './Scene.js';
 
 export default abstract class Level extends Scene {
@@ -9,5 +12,23 @@ export default abstract class Level extends Scene {
    */
   public constructor(game: Game) {
     super(game);
+    this.input.editAxises(
+      new Map<string, InputAxis>([
+        [
+          'horizontalMovement',
+          new InputAxis(
+            'Move Right', KeyListener.KEY_D,
+            'Move Left', KeyListener.KEY_A
+          )
+        ],
+        [
+          'verticalMovement',
+          new InputAxis(
+            'Move Up', KeyListener.KEY_W,
+            'Move Down', KeyListener.KEY_S
+          )
+        ]
+      ])
+    );
   }
 }

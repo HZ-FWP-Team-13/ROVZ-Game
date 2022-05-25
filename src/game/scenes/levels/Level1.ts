@@ -8,9 +8,6 @@ import KeyListener from '../../../engine/InputModule/KeyListener.js';
 import InputAxis from '../../../engine/InputModule/InputAxis.js';
 
 export default class Level1 extends Level {
-  // The KeyListener
-  private keyListener: KeyListener;
-
   // Player Character
   private player: Player;
 
@@ -25,45 +22,17 @@ export default class Level1 extends Level {
   public constructor(game: Game) {
     super(game);
 
-    this.keyListener = new KeyListener();
-
-    this.input = new Input(
+    this.input.editAxises(
       new Map<string, InputAxis>([
-        ['fovRotation', new InputAxis(KeyListener.KEY_RIGHT, KeyListener.KEY_LEFT)]
+        [
+          'fovRotation',
+          new InputAxis(
+            'Rotate Right', KeyListener.KEY_RIGHT,
+            'Rotate Left', KeyListener.KEY_LEFT
+          )
+        ]
       ])
     );
-    /**
-     * Test to see if we can map the gameItems of each level
-     * and call their respective properties and methods
-     */
-    // this.gameItems = new Map<string, GameItem>([
-    //   ['player', new Player(
-    //     // The path to the Source Image of the Player Character appearance
-    //     './assets/img/testplayer-old.png',
-    //     // The coordinates of the Player Character on the game canvas
-    //     game.canvas.width / 2, game.canvas.height / 2,
-    //     // The rotation of the Player Character measured in degrees
-    //     0,
-    //     // The dimensions of the Player Character appearance
-    //     32, 32,
-    //     // The dimensions of the Player Character collider
-    //     32, 32,
-    //     // The current state of the Player Character animation cycle
-    //     0,
-    //   )],
-    //   ['fov', this.fov = new FovOverlay(
-    //     // The path to the Source Image of the Fov appearance
-    //     './assets/img/fov.png',
-    //     // The coordinates of the FovOverlay on the game canvas
-    //     game.canvas.width / 2, game.canvas.height / 2,
-    //     // The rotation of the FovOverlay measured in degrees
-    //     0,
-    //     // The dimensions of the FovOverlay appearance
-    //     6000, 6000,
-    //   )],
-    // ]);
-    // console.log(this.gameItems);
-    // console.log(this.gameItems.get('player'));
 
     // Spawning the Player Character
     this.player = new Player(

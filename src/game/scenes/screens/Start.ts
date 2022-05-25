@@ -8,9 +8,6 @@ import Screen from '../../../engine/Screen.js';
 import Level1 from '../levels/Level1.js';
 
 export default class Start extends Screen {
-  // The KeyListener
-  private keyListener: KeyListener;
-
   /**
    * Create a new Start Screen instance
    *
@@ -19,14 +16,6 @@ export default class Start extends Screen {
   public constructor(game: Game) {
     super(game);
     game.reset();
-
-    this.keyListener = new KeyListener();
-
-    this.input = new Input(
-      new Map<string, InputAxis>([
-        ['startKey', new InputAxis(KeyListener.KEY_S)]
-      ])
-    );
   }
 
   /**
@@ -44,9 +33,9 @@ export default class Start extends Screen {
    *   current scene, just return `null`
    */
   public update(): Scene {
-    // Read the Input of the FovRotation InputAxis
-    const fovRotation = this.input.readAxisInput('startKey');
-    if (fovRotation) {
+    // Read the Input of the Select InputAxis
+    const start = this.input.readAxisTyped('Select');
+    if (start) {
       return new Level1(this.game);
     }
     return null;

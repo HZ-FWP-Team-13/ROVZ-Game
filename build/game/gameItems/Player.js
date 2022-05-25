@@ -9,8 +9,8 @@ export default class Player extends GameItem {
         this.rotationSpeed = 1;
     }
     control(input) {
-        const traction = input.readAxisInput('vertical');
-        const steering = input.readAxisInput('horizontal');
+        const traction = input.readAxisPressed('verticalMovement');
+        const steering = input.readAxisPressed('horizontalMovement');
         if (traction != 0) {
             this.transform.moveRelative(0, traction * this.movementSpeed);
         }

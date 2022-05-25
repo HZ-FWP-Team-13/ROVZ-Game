@@ -42,7 +42,7 @@ export default class FovOverlay extends GameItem {
    */
   public control(input: Input): void {
     // Read the Input of the FovRotation InputAxis
-    const fovRotation = input.readAxisInput('fovRotation');
+    const fovRotation = input.readAxisPressed('fovRotation');
 
     // Looking around TODO: Bind to fps
     this.transform.rotate(fovRotation * this.rotationSpeed);

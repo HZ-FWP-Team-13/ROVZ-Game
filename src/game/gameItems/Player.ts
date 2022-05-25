@@ -53,9 +53,9 @@ export default class Player extends GameItem {
    */
   public control(input: Input): void {
     // Read the Input of the Vertical InputAxis
-    const traction = input.readAxisInput('vertical');
+    const traction = input.readAxisPressed('verticalMovement');
     // Read the Input of the Horizontal InputAxis
-    const steering = input.readAxisInput('horizontal');
+    const steering = input.readAxisPressed('horizontalMovement');
 
     // Traction TODO: Bind to fps
     if (traction != 0) {
