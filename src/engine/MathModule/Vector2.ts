@@ -5,6 +5,10 @@ export default class Vector2 {
 
   public static readonly zero = new Vector2(0, 0);
   public static readonly one = new Vector2(1, 1);
+  public static readonly up = new Vector2(0, -1);
+  public static readonly down = new Vector2(0, 1);
+  public static readonly left = new Vector2(-1, 0);
+  public static readonly right = new Vector2(1, 0);
 
   /**
    * Create a new Vector2 instance
@@ -33,7 +37,7 @@ export default class Vector2 {
    * @param b Vector b
    * @returns The difference of vector a and vector b
    */
-  public static vectorDifference (a : Vector2 , b : Vector2) : Vector2  {
+  public static vectorDifference(a : Vector2 , b : Vector2) : Vector2  {
     return new Vector2(a.x - b.x, a.y - b.y);
   }
 
@@ -43,7 +47,7 @@ export default class Vector2 {
    * @param b Vector b
    * @returns The product of vector a and vector b
    */
-  public static vectorProduct (a : Vector2 , b : Vector2) : Vector2  {
+  public static vectorProduct(a : Vector2 , b : Vector2) : Vector2  {
     return new Vector2(a.x * b.x, a.y * b.y);
   }
 
@@ -53,8 +57,19 @@ export default class Vector2 {
    * @param b Vector b
    * @returns The quotient of vector a and vector b
    */
-  public static vectorQuotient (a : Vector2 , b : Vector2) : Vector2  {
+  public static vectorQuotient(a : Vector2 , b : Vector2) : Vector2  {
     return new Vector2(a.x - b.x, a.y - b.y);
+  }
+
+  /**
+   * Calculate the negative of this Vector2 (NEGATIVE)
+   *
+   * @returns The negative of this Vector2
+   */
+  public negate() : Vector2 {
+    this.x *= -1;
+    this.y *= -1;
+    return new Vector2(this.x, this.y);
   }
 
   /**
@@ -63,7 +78,7 @@ export default class Vector2 {
    * @param a Vector a
    * @returns The negative of a given Vector2
    */
-  public static vectorNegate (a: Vector2) : Vector2 {
+  public static negate(a: Vector2) : Vector2 {
     return new Vector2(-a.x, -a.y);
   }
 

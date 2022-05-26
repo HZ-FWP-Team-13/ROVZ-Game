@@ -9,13 +9,16 @@ export default class Transform {
         this.rotation = rotation;
         this.scale = scale;
     }
-    translate(dXRel, dYRel) {
-        const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) * (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
-        const moveSlopeRel = Math.atan(dXRel / dYRel);
+    translate(vectorDRel) {
+        const dist = Math.sqrt(vectorDRel.x ** 2 + vectorDRel.y ** 2);
+        const moveSlopeRel = Math.atan(vectorDRel.x / vectorDRel.y);
         const moveSlopeAbs = moveSlopeRel + Trigonometry.radians(this.rotation);
         const dXAbs = dist * Math.sin(moveSlopeAbs);
         const dYAbs = -dist * Math.cos(moveSlopeAbs);
-        const vectorDAbs = new Vector2(dXAbs, dYAbs);
+        let vectorDAbs = new Vector2(dXAbs, dYAbs);
+        if (vectorDRel.y < 0) {
+            vectorDAbs.negate();
+        }
         this.moveAbsolute(vectorDAbs);
     }
     moveAbsolute(vectorDAbs) {

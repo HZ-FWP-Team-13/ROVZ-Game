@@ -1,4 +1,5 @@
 import GameItem from '../../engine/GameObjectModule/GameItem.js';
+import Vector2 from '../../engine/MathModule/Vector2.js';
 export default class Player extends GameItem {
     movementSpeed;
     rotationSpeed;
@@ -12,7 +13,7 @@ export default class Player extends GameItem {
         const traction = input.readAxisPressed('verticalMovement');
         const steering = input.readAxisPressed('horizontalMovement');
         if (traction != 0) {
-            this.transform.translate(0, traction * this.movementSpeed);
+            this.transform.translate(new Vector2(0, traction * this.movementSpeed));
         }
         this.transform.rotate(this.lastFrameRotationDifference = steering * this.rotationSpeed * traction);
     }

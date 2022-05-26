@@ -2,6 +2,7 @@ import GameItem from '../../engine/GameObjectModule/GameItem.js';
 import Transform from '../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../engine/ComponentsModule/Mesh.js';
 import Input from '../../engine/InputModule/Input.js';
+import Vector2 from '../../engine/MathModule/Vector2.js';
 
 export default class Player extends GameItem {
   // The speed of the Player movement measured in pixels per second
@@ -39,7 +40,7 @@ export default class Player extends GameItem {
 
     // Traction TODO: Bind to fps
     if (traction != 0) {
-      this.transform.translate(0, traction * this.movementSpeed);
+      this.transform.translate(new Vector2(0, traction * this.movementSpeed)); // TODO: this.transform.translate(Vector2.up * traction * this.movementSpeed);
     }
     // Steering TODO: Bind to fps
     this.transform.rotate(this.lastFrameRotationDifference = steering * this.rotationSpeed * traction);

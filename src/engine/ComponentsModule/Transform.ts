@@ -31,15 +31,15 @@ export default class Transform {
   /**
    * Move this Transform across the Game Canvas within the relative coordinate system
    *
-   * @param dXRel Deviation of the X coordinate of this Transform in the relative coordinate system
+   * @param vectorDRel Deviation of the X coordinate of this Transform in the relative coordinate system
    * @param dYRel Deviation of the Y coordinate of this Transform in the relative coordinate system
    */
-  public translate(dXRel: number, dYRel: number): void {
+  public translate(vectorDRel: Vector2): void {
     // Distance to the movement destination
-    const dist = Math.sqrt(dXRel ** 2 + dYRel ** 2) * (dXRel >= 0 ? 1 : -1) * (dYRel >= 0 ? 1 : -1);
+    const dist = Math.sqrt(vectorDRel.x ** 2 + vectorDRel.y ** 2);
 
     // Slope of the movement vector in the relative coordinate system
-    const moveSlopeRel = Math.atan(dXRel / dYRel);
+    const moveSlopeRel = Math.atan(vectorDRel.x  / vectorDRel.y);
     // Slope of the movement vector in the absolute coordinate system
     const moveSlopeAbs = moveSlopeRel + Trigonometry.radians(this.rotation);
 
@@ -48,7 +48,12 @@ export default class Transform {
     // Deviation of the Y coordinate of this Transform in the absolute coordinate system
     const dYAbs = -dist * Math.cos(moveSlopeAbs);
     // Movement vector of this Transform in the absolute coordinate system
-    const vectorDAbs = new Vector2(dXAbs, dYAbs);
+    let vectorDAbs = new Vector2(dXAbs, dYAbs);
+
+    // Compensation of the arctangent absolute nature
+    if (vectorDRel.y < 0) {
+      vectorDAbs.negate(); // TODO: vectorDAbs *= -1;
+    }
 
     // Moving this Transform across the Game Canvas within the absolute coordinate system
     this.moveAbsolute(vectorDAbs);
@@ -57,10 +62,10 @@ export default class Transform {
   /**
    * Move this Transform across the Game Canvas within the absolute coordinate system
    *
-   * @param vectorDAbs Vector containing the X and Y deviation of this Transform in the absolute coordinate system
+   * @param vectorDAbs Position deviation of this Transform in the absolute coordinate system
    */
   public moveAbsolute(vectorDAbs: Vector2): void {
-    this.position = Vector2.vectorsSum(this.position, vectorDAbs);
+    this.position = Vector2.vectorsSum(this.position, vectorDAbs); // TODO: this.position += vectorDAbs;
   }
 
   /**
