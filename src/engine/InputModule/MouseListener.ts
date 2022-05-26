@@ -1,20 +1,20 @@
-import Vector2 from "../experimenting/Vector2.js";
+import Vector2 from "../MathModule/Vector2.js";
 
 export default class MouseListener {
-  private mousePosition: Vector2 = new Vector2();
-  private mouseButtons: number;
-  private mouseInAction: boolean = false;
+  private _mousePosition: Vector2 = new Vector2();
+  private _mouseButtons: number;
+  private _mouseInAction: boolean = false;
 
   /**
    * Constructs a new MouseListener.
    */
   constructor() {
     window.addEventListener('mousemove', (event: MouseEvent) => {
-      this.mousePosition = new Vector2(event.clientX, event.clientY);
-      if (this.mousePosition.x != 0 || this.mousePosition.y != 0) {
-        this.mouseInAction = true;
+      this._mousePosition = new Vector2(event.clientX, event.clientY);
+      if (this._mousePosition.x != 0 || this._mousePosition.y != 0) {
+        this._mouseInAction = true;
       }
-      this.mouseButtons = event.buttons;
+      this._mouseButtons = event.buttons;
     });
   }
 
@@ -23,8 +23,8 @@ export default class MouseListener {
    *
    * @returns The position of this Mouse
    */
-  public getMousePosition(): Vector2 {
-    return this.mousePosition;
+  get mousePosition(): Vector2 {
+    return this._mousePosition;
   }
 
   /**
@@ -32,8 +32,8 @@ export default class MouseListener {
    *
    * @returns The pressed Mouse buttons
    */
-   public getMouseButtons(): number {
-    return this.mouseButtons;
+  get mouseButtons(): number {
+    return this._mouseButtons;
   }
 
   /**
@@ -41,7 +41,7 @@ export default class MouseListener {
    *
    * @returns `true` if the Mouse was used at least once in this Scene
    */
-   public getMouseInAction(): boolean {
-    return this.mouseInAction;
+  get mouseInAction(): boolean {
+    return this._mouseInAction;
   }
 }

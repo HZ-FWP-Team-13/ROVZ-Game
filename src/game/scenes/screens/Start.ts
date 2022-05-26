@@ -1,7 +1,7 @@
-import Game from '../../../engine/Game.js';
-import Graphics from '../../../engine/Graphics.js';
-import Scene from '../../../engine/Scene.js';
-import Screen from '../../../engine/Screen.js';
+import Game from '../../../engine/CoreModule/Game.js';
+import Graphics from '../../../engine/GraphicsModule/Graphics.js';
+import Scene from '../../../engine/SceneModule/Scene.js';
+import Screen from '../../../engine/SceneModule/Screen.js';
 import Level1 from '../levels/Level1.js';
 
 export default class Start extends Screen {

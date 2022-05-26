@@ -1,10 +1,10 @@
-import GameItem from '../../engine/GameItem.js';
+import GameItem from '../../engine/GameObjectModule/GameItem.js';
 export default class Player extends GameItem {
     movementSpeed;
     rotationSpeed;
-    previousFrameRotation;
-    constructor(imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, animationState = 0) {
-        super(imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, animationState);
+    lastFrameRotationDifference;
+    constructor(transform, mesh) {
+        super(transform, mesh);
         this.movementSpeed = 1;
         this.rotationSpeed = 1;
     }
@@ -12,12 +12,9 @@ export default class Player extends GameItem {
         const traction = input.readAxisPressed('verticalMovement');
         const steering = input.readAxisPressed('horizontalMovement');
         if (traction != 0) {
-            this.transform.moveRelative(0, traction * this.movementSpeed);
+            this.transform.translate(0, traction * this.movementSpeed);
         }
-        this.transform.rotate(this.previousFrameRotation = steering * this.rotationSpeed * traction);
-    }
-    getPreviousFrameRotation() {
-        return this.previousFrameRotation;
+        this.transform.rotate(this.lastFrameRotationDifference = steering * this.rotationSpeed * traction);
     }
 }
 //# sourceMappingURL=Player.js.map

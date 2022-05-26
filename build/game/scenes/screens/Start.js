@@ -1,5 +1,5 @@
-import Graphics from '../../../engine/Graphics.js';
-import Screen from '../../../engine/Screen.js';
+import Graphics from '../../../engine/GraphicsModule/Graphics.js';
+import Screen from '../../../engine/SceneModule/Screen.js';
 import Level1 from '../levels/Level1.js';
 export default class Start extends Screen {
     constructor(game) {

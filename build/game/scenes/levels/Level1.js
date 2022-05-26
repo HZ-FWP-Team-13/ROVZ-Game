@@ -1,19 +1,23 @@
+import Level from '../../../engine/SceneModule/Level.js';
 import Player from '../../gameItems/Player.js';
 import FovOverlay from '../../gameItems/FovOverlay.js';
-import Level from '../../../engine/Level.js';
+import Vector2 from '../../../engine/MathModule/Vector2.js';
+import Transform from '../../../engine/ComponentsModule/Transform.js';
+import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 export default class Level1 extends Level {
     player;
     fov;
     constructor(game) {
         super(game);
-        this.player = new Player('./assets/img/testplayer-old.png', game.canvas.width / 2, game.canvas.height / 2, 0, 32, 32, 0);
-        this.fov = new FovOverlay('./assets/img/fov.png', game.canvas.width / 2, game.canvas.height / 2, 0, 6000, 6000);
+        let sceneCentre = new Vector2(game.canvas.width / 2, game.canvas.height / 2);
+        this.player = new Player(new Transform(sceneCentre), new Mesh('./assets/img/testplayer-old.png', new Vector2(32, 32)));
+        this.fov = new FovOverlay(new Transform(sceneCentre), new Mesh('./assets/img/fov.png', new Vector2(6000, 6000)));
     }
     update() {
         this.player.control(this.input);
         this.fov.control(this.input);
         this.fov.transform.position = this.player.transform.position;
-        this.fov.transform.rotate(this.player.getPreviousFrameRotation());
+        this.fov.transform.rotate(this.player.lastFrameRotationDifference);
         return null;
     }
     render() {

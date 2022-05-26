@@ -1,53 +1,33 @@
-import GameItem from '../../engine/GameItem.js';
+import GameItem from '../../engine/GameObjectModule/GameItem.js';
+import Transform from '../../engine/ComponentsModule/Transform.js';
+import Mesh from '../../engine/ComponentsModule/Mesh.js';
 import Input from '../../engine/InputModule/Input.js';
 
 export default class Player extends GameItem {
-  // The speed of the Player Character movement measured in pixels per second
-  private movementSpeed: number;
+  // The speed of the Player movement measured in pixels per second
+  public movementSpeed: number;
 
-  // The speed of the Player Character rotation measured in degrees per second
-  private rotationSpeed: number;
+  // The speed of the Player rotation measured in degrees per second
+  public rotationSpeed: number;
 
-  // The rotation the Player Character underwent since the last Frame
-  private previousFrameRotation: number;
+  // The rotation the Player underwent since the last Frame
+  public lastFrameRotationDifference: number;
 
   /**
-   * Create a new Player Character instance
+   * Create a new Player instance
    *
-   * @param imgSourcePath The path to the Source Image of the Player Character appearance
-   *
-   * @param xPos The X coordinate of the Player Character on the game canvas
-   * @param yPos The Y coordinate of the Player Character on the game canvas
-   *
-   * @param rotation The rotation of the Player Character measured in degrees
-   *
-   * @param frameWidth The width of the Player Character appearance
-   * @param frameHeight The height of the Player Character appearance
-   *
-   * @param animationState The current state of the Player Character animation cycle
+   * @param transform The Transform of the Player
+   * @param mesh The Mesh of the Player
    */
-  public constructor(
-    imgSourcePath: string,
-    xPos: number, yPos: number,
-    rotation: number,
-    frameWidth: number, frameHeight: number,
-    animationState: number = 0,
-  ) {
-    super(
-      imgSourcePath,
-      xPos, yPos,
-      rotation,
-      frameWidth,
-      frameHeight,
-      animationState,
-    );
+   public constructor(transform: Transform, mesh: Mesh) {
+    super(transform, mesh);
 
     this.movementSpeed = 1;
     this.rotationSpeed = 1;
   }
 
   /**
-   * Move this Player Character across the Game Canvas in response to the Player Input
+   * Move this Player across the Game Canvas in response to the Player Input
    *
    * @param input of the keys when moving
    */
@@ -59,18 +39,9 @@ export default class Player extends GameItem {
 
     // Traction TODO: Bind to fps
     if (traction != 0) {
-      this.transform.moveRelative(0, traction * this.movementSpeed);
+      this.transform.translate(0, traction * this.movementSpeed);
     }
     // Steering TODO: Bind to fps
-    this.transform.rotate(this.previousFrameRotation = steering * this.rotationSpeed * traction);
-  }
-
-  /**
-   * Get the rotation this Player Character underwent since the last Frame
-   *
-   * @returns The rotation this Player Character underwent since the last Frame
-   */
-  public getPreviousFrameRotation(): number {
-    return this.previousFrameRotation;
+    this.transform.rotate(this.lastFrameRotationDifference = steering * this.rotationSpeed * traction);
   }
 }

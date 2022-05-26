@@ -5,15 +5,15 @@ export default class InputAxis {
   private keyListener: KeyListener;
 
   // The value of the InputAxis
-  private value: number = 0;
+  private _value: number = 0;
 
   // The description of the positive InputAxis direction
-  private positiveDescription: string;
+  private _positiveDescription: string;
   // The KeyCode of the InputAxis positive Input Key
   private positiveKey: number;
 
   // The description of the negative InputAxis direction
-  private negativeDescription: string;
+  private _negativeDescription: string;
   // The KeyCode of the InputAxis negative Input Key
   private negativeKey: number;
 
@@ -41,9 +41,9 @@ export default class InputAxis {
     negativeKeyAlt: number = 0,
   ) {
     this.keyListener = new KeyListener();
-    this.positiveDescription = positiveDescription;
+    this._positiveDescription = positiveDescription;
     this.positiveKey = positiveKey;
-    this.negativeDescription = negativeDescription;
+    this._negativeDescription = negativeDescription;
     this.negativeKey = negativeKey;
     this.positiveKeyAlt = positiveKeyAlt;
     this.negativeKeyAlt = negativeKeyAlt;
@@ -54,8 +54,8 @@ export default class InputAxis {
    *
    * @returns The value of this InputAxis
    */
-  public getValue(): number {
-    return this.value;
+  get value(): number {
+    return this._value;
   }
 
   /**
@@ -63,8 +63,8 @@ export default class InputAxis {
    *
    * @returns The description of the positive InputAxis direction
    */
-  public getPositiveDescription(): string {
-    return this.positiveDescription;
+  get positiveDescription(): string {
+    return this._positiveDescription;
   }
 
   /**
@@ -72,8 +72,8 @@ export default class InputAxis {
    *
    * @returns The description of the negative InputAxis direction
    */
-  public getNegativeDescription(): string {
-    return this.negativeDescription;
+  get negativeDescription(): string {
+    return this._negativeDescription;
   }
 
   /**
@@ -178,7 +178,7 @@ export default class InputAxis {
    * @returns The Pressed value of this InputAxis
    */
   public readPressed(): number {
-    return this.value = this.getPositivePressedInput() - this.getNegativePressedInput();
+    return this._value = this.getPositivePressedInput() - this.getNegativePressedInput();
   }
 
   /**
@@ -187,6 +187,6 @@ export default class InputAxis {
    * @returns The Typed value of this InputAxis
    */
   public readTyped(): number {
-    return this.value = this.getPositiveTypedInput() - this.getNegativeTypedInput();
+    return this._value = this.getPositiveTypedInput() - this.getNegativeTypedInput();
   }
 }
