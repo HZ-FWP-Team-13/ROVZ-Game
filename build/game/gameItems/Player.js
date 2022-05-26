@@ -1,6 +1,6 @@
-import GameItem from '../../engine/GameObjectModule/GameItem.js';
+import GameObject from '../../engine/GameObjectModule/GameObject.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
-export default class Player extends GameItem {
+export default class Player extends GameObject {
     movementSpeed;
     rotationSpeed;
     lastFrameRotationDifference;

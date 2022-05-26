@@ -18,7 +18,7 @@ export default abstract class Scene {
   /**
    * Keeping the gameitems map here after testing to bring it back when needed.
    */
-  // protected gameItems: Map<string, GameItem>;
+  // protected gameItems: Map<string, GameObject>;
 
   /**
    * Create a new Scene instance

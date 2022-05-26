@@ -1,10 +1,10 @@
-import GameItem from '../../engine/GameObjectModule/GameItem.js';
+import GameObject from '../../engine/GameObjectModule/GameObject.js';
 import Transform from '../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../engine/ComponentsModule/Mesh.js';
 import Input from '../../engine/InputModule/Input.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
 
-export default class FovOverlay extends GameItem {
+export default class FovOverlay extends GameObject {
   // The speed of the FovOverlay rotation measured in degrees per second
   public rotationSpeed: number;
 

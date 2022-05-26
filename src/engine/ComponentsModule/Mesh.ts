@@ -51,7 +51,7 @@ export default class Mesh {
   }
 
   /**
-   * Draw this GameItem appearance on the Game Canvas
+   * Draw this GameObject appearance on the Game Canvas
    * based on rotation and current state of the animation cycle
    *
    * @param ctx the Canvas that needs to be drawn upon each cycle
@@ -62,9 +62,9 @@ export default class Mesh {
     ctx.save();
 
     // Switching the Game Canvas rendering context to the relative coordinate system
-    // Moving the origin of the coordinate system to the center of the future GameItem appearance
+    // Moving the origin of the coordinate system to the center of the future GameObject appearance
     ctx.translate(transform.position.x, transform.position.y);
-    // Rotating coordinate system to correspond with this GameItem rotation
+    // Rotating coordinate system to correspond with this GameObject rotation
     ctx.rotate(Trigonometry.radians(transform.rotation));
 
     // Drawing the Mesh to the Game Canvas

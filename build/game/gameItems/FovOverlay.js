@@ -1,6 +1,6 @@
-import GameItem from '../../engine/GameObjectModule/GameItem.js';
+import GameObject from '../../engine/GameObjectModule/GameObject.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
-export default class FovOverlay extends GameItem {
+export default class FovOverlay extends GameObject {
     rotationSpeed;
     constructor(transform, mesh) {
         super(transform, mesh);

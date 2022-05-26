@@ -1,4 +1,4 @@
-export default class GameItem {
+export default class GameObject {
     _transform;
     _mesh;
     constructor(transform, mesh) {
@@ -18,4 +18,4 @@ export default class GameItem {
         this._mesh = mesh;
     }
 }
-//# sourceMappingURL=GameItem.js.map
+//# sourceMappingURL=GameObject.js.map
