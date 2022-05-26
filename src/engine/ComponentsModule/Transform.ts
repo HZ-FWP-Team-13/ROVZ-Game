@@ -31,8 +31,7 @@ export default class Transform {
   /**
    * Move this Transform across the Game Canvas within the relative coordinate system
    *
-   * @param vectorDRel Deviation of the X coordinate of this Transform in the relative coordinate system
-   * @param dYRel Deviation of the Y coordinate of this Transform in the relative coordinate system
+   * @param vectorDRel Position deviation of this Transform in the relative coordinate system
    */
   public translate(vectorDRel: Vector2): void {
     // Distance to the movement destination
