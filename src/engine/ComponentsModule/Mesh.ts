@@ -62,7 +62,6 @@ export default class Mesh {
     ctx.save();
 
     // Switching the Game Canvas rendering context to the relative coordinate system
-
     // Moving the origin of the coordinate system to the center of the future GameItem appearance
     ctx.translate(transform.position.x, transform.position.y);
     // Rotating coordinate system to correspond with this GameItem rotation
