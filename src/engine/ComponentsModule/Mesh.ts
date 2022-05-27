@@ -1,6 +1,6 @@
 import Vector2 from '../MathModule/Vector2.js';
 import Transform from './Transform.js';
-import Trigonometry from '../MathModule/Trigonometry.js';
+import Mathematics from '../MathModule/Mathematics.js';
 import Graphics from '../GraphicsModule/Graphics.js';
 
 export default class Mesh {
@@ -65,7 +65,7 @@ export default class Mesh {
     // Moving the origin of the coordinate system to the center of the future GameObject appearance
     ctx.translate(transform.position.x, transform.position.y);
     // Rotating coordinate system to correspond with this GameObject rotation
-    ctx.rotate(Trigonometry.radians(transform.rotation));
+    ctx.rotate(Mathematics.radians(transform.rotation));
 
     // Drawing the Mesh to the Game Canvas
     ctx.drawImage(

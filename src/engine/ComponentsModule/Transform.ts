@@ -1,5 +1,5 @@
 import Vector2 from "../MathModule/Vector2.js";
-import Trigonometry from "../MathModule/Trigonometry.js";
+import Mathematics from "../MathModule/Mathematics.js";
 
 export default class Transform {
   // The Position of this Transform
@@ -33,14 +33,14 @@ export default class Transform {
    *
    * @param vectorDRel Position deviation of this Transform in the relative coordinate system
    */
-  public translate(vectorDRel: Vector2): void {
+  public translate(vectorDRel: Vector2 = Vector2.zero): void {
     // Distance to the movement destination
     const dist = Math.sqrt(vectorDRel.x ** 2 + vectorDRel.y ** 2);
 
     // Slope of the movement vector in the relative coordinate system
     const moveSlopeRel = Math.atan(vectorDRel.x  / vectorDRel.y);
     // Slope of the movement vector in the absolute coordinate system
-    const moveSlopeAbs = moveSlopeRel + Trigonometry.radians(this.rotation);
+    const moveSlopeAbs = moveSlopeRel + Mathematics.radians(this.rotation);
 
     // Deviation of the X coordinate of this Transform in the absolute coordinate system
     const dXAbs = dist * Math.sin(moveSlopeAbs);
@@ -63,7 +63,7 @@ export default class Transform {
    *
    * @param vectorDAbs Position deviation of this Transform in the absolute coordinate system
    */
-  public moveAbsolute(vectorDAbs: Vector2): void {
+  public moveAbsolute(vectorDAbs: Vector2 = Vector2.zero): void {
     this.position = Vector2.vectorsSum(this.position, vectorDAbs); // TODO: this.position += vectorDAbs;
   }
 
@@ -72,7 +72,7 @@ export default class Transform {
    *
    * @param dR Deviation of the rotation of this Transform in degrees
    */
-  public rotate(dR: number): void {
+  public rotate(dR: number = 0): void {
     this.rotation += dR;
   }
 

@@ -1,4 +1,4 @@
-import Trigonometry from '../MathModule/Trigonometry.js';
+import Mathematics from '../MathModule/Mathematics.js';
 import Graphics from '../GraphicsModule/Graphics.js';
 export default class Mesh {
     _sourceImagePath;
@@ -20,7 +20,7 @@ export default class Mesh {
     draw(ctx, transform) {
         ctx.save();
         ctx.translate(transform.position.x, transform.position.y);
-        ctx.rotate(Trigonometry.radians(transform.rotation));
+        ctx.rotate(Mathematics.radians(transform.rotation));
         ctx.drawImage(this.sourceImage, this.dimensions.x * this.animationState, 0, this.dimensions.x, this.dimensions.y, -this.dimensions.x / 2, -this.dimensions.y / 2, this.dimensions.x, this.dimensions.y);
         ctx.restore();
     }

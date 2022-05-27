@@ -1,6 +1,7 @@
-import GameObject from '../../engine/GameObjectModule/GameObject.js';
+import GameItem from '../../engine/CoreModule/GameItem.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
-export default class FovOverlay extends GameObject {
+import Mathematics from '../../engine/MathModule/Mathematics.js';
+export default class FovOverlay extends GameItem {
     rotationSpeed;
     constructor(transform, mesh) {
         super(transform, mesh);
@@ -12,7 +13,7 @@ export default class FovOverlay extends GameObject {
             toCursor = Vector2.vectorDifference(this.transform.position, input.mouse.mousePosition);
             toCursor.y *= -1;
         }
-        const toCursorSlope = Math.atan(toCursor.x / toCursor.y) * (180 / Math.PI) + (toCursor.y > 0 ? 180 : 0);
+        const toCursorSlope = Mathematics.degress(Math.atan(toCursor.x / toCursor.y)) + (toCursor.y > 0 ? 180 : 0);
         this.transform.rotation = toCursorSlope;
     }
 }

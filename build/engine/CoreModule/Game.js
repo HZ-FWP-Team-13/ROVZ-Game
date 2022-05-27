@@ -20,14 +20,5 @@ export default class Game {
     reset() {
         this.playerStats = new UserData(1, 3, 2);
     }
-    writeTextToCanvas(text, fontSize = 14, xCoordinate, yCoordinate, alignment = 'center', color = 'white') {
-        this.ctx.font = `${fontSize}px sans-serif`;
-        this.ctx.fillStyle = color;
-        this.ctx.textAlign = alignment;
-        this.ctx.fillText(text, xCoordinate, yCoordinate);
-    }
-    static randomNumber(min, max) {
-        return Math.round(Math.random() * (max - min) + min);
-    }
 }
 //# sourceMappingURL=Game.js.map

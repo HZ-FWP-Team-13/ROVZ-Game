@@ -1,10 +1,12 @@
-import GameObject from '../../engine/GameObjectModule/GameObject.js';
+import GameItem from '../../engine/CoreModule/GameItem.js';
 import Transform from '../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../engine/ComponentsModule/Mesh.js';
 import Input from '../../engine/InputModule/Input.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
+import Mathematics from '../../engine/MathModule/Mathematics.js';
 
-export default class FovOverlay extends GameObject {
+
+export default class FovOverlay extends GameItem {
   // The speed of the FovOverlay rotation measured in degrees per second
   public rotationSpeed: number;
 
@@ -35,7 +37,7 @@ export default class FovOverlay extends GameObject {
     }
 
     // Calculating the slope of the mentioned vector
-    const toCursorSlope = Math.atan(toCursor.x / toCursor.y) * (180 / Math.PI) + (toCursor.y > 0 ? 180 : 0);
+    const toCursorSlope = Mathematics.degress(Math.atan(toCursor.x / toCursor.y)) + (toCursor.y > 0 ? 180 : 0);
 
     // Looking around TODO: Bind to fps
     this.transform.rotation = toCursorSlope;

@@ -1,5 +1,5 @@
 import Vector2 from "../MathModule/Vector2.js";
-import Trigonometry from "../MathModule/Trigonometry.js";
+import Mathematics from "../MathModule/Mathematics.js";
 export default class Transform {
     _position;
     _rotation;
@@ -9,10 +9,10 @@ export default class Transform {
         this.rotation = rotation;
         this.scale = scale;
     }
-    translate(vectorDRel) {
+    translate(vectorDRel = Vector2.zero) {
         const dist = Math.sqrt(vectorDRel.x ** 2 + vectorDRel.y ** 2);
         const moveSlopeRel = Math.atan(vectorDRel.x / vectorDRel.y);
-        const moveSlopeAbs = moveSlopeRel + Trigonometry.radians(this.rotation);
+        const moveSlopeAbs = moveSlopeRel + Mathematics.radians(this.rotation);
         const dXAbs = dist * Math.sin(moveSlopeAbs);
         const dYAbs = -dist * Math.cos(moveSlopeAbs);
         let vectorDAbs = new Vector2(dXAbs, dYAbs);
@@ -21,10 +21,10 @@ export default class Transform {
         }
         this.moveAbsolute(vectorDAbs);
     }
-    moveAbsolute(vectorDAbs) {
+    moveAbsolute(vectorDAbs = Vector2.zero) {
         this.position = Vector2.vectorsSum(this.position, vectorDAbs);
     }
-    rotate(dR) {
+    rotate(dR = 0) {
         this.rotation += dR;
     }
     get position() {
