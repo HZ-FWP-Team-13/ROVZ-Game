@@ -14,10 +14,6 @@ export default class Player extends GameItem {
   private previousFrameRotation: number;
 
 
-  // The collider attached to the player
-  public collider: Collider;
-
-
   /**
    * Create a new Player Character instance
    *
@@ -51,9 +47,6 @@ export default class Player extends GameItem {
 
     this.movementSpeed = 1;
     this.rotationSpeed = 1;
-
-    this.collider = new Collider;
-    this.collider.generateRectCollider(this.mesh.getFrameWidth(), this.mesh.getFrameHeight());
   }
 
   /**

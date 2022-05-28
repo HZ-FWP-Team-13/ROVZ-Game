@@ -5,10 +5,14 @@ import FovOverlay from '../../gameItems/FovOverlay.js';
 // import GameItem from '../../../engine/GameItem.js';
 import Level from '../../../engine/Level.js';
 import Input from '../../../engine/Input.js';
+import Collider from '../../../engine/experimenting/Collider.js';
 
 export default class Level1 extends Level {
   // Player Character
   private player: Player;
+
+
+  private player2: Player;
 
   // FovOverlay
   private fov: FovOverlay;
@@ -80,6 +84,21 @@ export default class Level1 extends Level {
       // The dimensions of the FovOverlay appearance
       6000, 6000,
     );
+
+
+    // Spawning the Player Character
+    this.player2 = new Player(
+      // The path to the Source Image of the Player Character appearance
+      './assets/img/testplayer.png',
+      // The coordinates of the Player Character on the game canvas
+      game.canvas.width / 3, game.canvas.height / 3,
+      // The rotation of the Player Character measured in degrees
+      0,
+      // The dimensions of the Player Character appearance
+      32, 32,
+      // The current state of the Player Character animation cycle
+      0,
+    );
   }
 
   /**
@@ -108,6 +127,15 @@ export default class Level1 extends Level {
     // Preserving the rotation of the FovOverlay relative to the Player Character
     this.fov.transform.rotate(this.player.getPreviousFrameRotation());
 
+    this.player2.collider.updatePoints(this.player2.transform);
+
+    if(Collider.checkCollision(this.player, this.player2)) {
+      console.log('true');
+    }
+    else {
+      console.log('false');
+    }
+
     return null;
   }
 
@@ -120,6 +148,9 @@ export default class Level1 extends Level {
 
     // Drawing the Player Character on the Game Canvas
     this.player.mesh.draw(this.game.ctx, this.player.transform);
+
+    // Drawing the Player Character on the Game Canvas
+    this.player2.mesh.draw(this.game.ctx, this.player2.transform);
 
     // Drawing the FovOverlay on the Game Canvas
     this.fov.mesh.draw(this.game.ctx, this.fov.transform);

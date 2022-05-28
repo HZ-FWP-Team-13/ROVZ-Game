@@ -1,3 +1,4 @@
+import Collider from './experimenting/Collider.js';
 import Transform from './experimenting/Transform.js';
 import Input from './Input.js';
 import Mesh from './Mesh.js';
@@ -17,6 +18,9 @@ export default abstract class GameItem {
 
   // All the variables and functions to show an item on the screen
   public mesh: Mesh;
+
+  // The collider attached to the GameItem
+  public collider: Collider;
 
   /**
    * Create a new GameItem instance
@@ -38,6 +42,8 @@ export default abstract class GameItem {
   ) {
     this.transform = new Transform(xPos, yPos, rotation);
     this.mesh = new Mesh(imgSourcePath, frameWidth, frameHeight, animationState);
+    this.collider = new Collider();
+    this.collider.generateRectCollider(frameWidth, frameHeight);
   }
 
   // /**
@@ -160,5 +166,9 @@ export default abstract class GameItem {
 
   public getTransform(): Transform {
     return this.transform;
+  }
+
+  public getCollider(): Collider {
+    return this.collider;
   }
 }

@@ -1,16 +1,12 @@
-import Collider from '../../engine/experimenting/Collider.js';
 import GameItem from '../../engine/GameItem.js';
 export default class Player extends GameItem {
     movementSpeed;
     rotationSpeed;
     previousFrameRotation;
-    collider;
     constructor(imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, animationState = 0) {
         super(imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, animationState);
         this.movementSpeed = 1;
         this.rotationSpeed = 1;
-        this.collider = new Collider;
-        this.collider.generateRectCollider(this.mesh.getFrameWidth(), this.mesh.getFrameHeight());
     }
     control(input) {
         input.readVerticalInput();
