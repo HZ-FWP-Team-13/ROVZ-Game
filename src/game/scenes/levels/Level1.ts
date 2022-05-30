@@ -1,10 +1,11 @@
-import Game from '../../../engine/Game.js';
-import Scene from '../../../engine/Scene.js';
+import Level from '../../../engine/SceneModule/Level.js';
 import Player from '../../gameItems/Player.js';
 import FovOverlay from '../../gameItems/FovOverlay.js';
-import Level from '../../../engine/Level.js';
-import KeyListener from '../../../engine/InputModule/KeyListener.js';
-import InputAxis from '../../../engine/InputModule/InputAxis.js';
+import Game from '../../../engine/CoreModule/Game.js';
+import Vector2 from '../../../engine/MathModule/Vector2.js';
+import Transform from '../../../engine/ComponentsModule/Transform.js';
+import Mesh from '../../../engine/ComponentsModule/Mesh.js';
+import Scene from '../../../engine/SceneModule/Scene.js';
 
 export default class Level1 extends Level {
   // Player Character
@@ -21,30 +22,38 @@ export default class Level1 extends Level {
   public constructor(game: Game) {
     super(game);
 
-    // Spawning the Player Character
+    let sceneCentre: Vector2 = new Vector2(game.canvas.width / 2, game.canvas.height / 2);
+
+    // Spawning the Player
     this.player = new Player(
-      // The path to the Source Image of the Player Character appearance
-      './assets/img/testplayer-old.png',
-      // The coordinates of the Player Character on the game canvas
-      game.canvas.width / 2, game.canvas.height / 2,
-      // The rotation of the Player Character measured in degrees
-      0,
-      // The dimensions of the Player Character appearance
-      32, 32,
-      // The current state of the Player Character animation cycle
-      0,
+      // The id of the GameObject
+      "player",
+      new Transform(
+        // The coordinates of the Player Transform
+        sceneCentre
+      ),
+      new Mesh(
+        // The path to the Source Image of the Player Mesh
+        './assets/img/testplayer-old.png',
+        // The dimensions of the Player Mesh
+        new Vector2 (32, 32)
+      )
     );
 
     // Spawning the FovOverlay
     this.fov = new FovOverlay(
-      // The path to the Source Image of the Fov appearance
-      './assets/img/fov.png',
-      // The coordinates of the FovOverlay on the game canvas
-      game.canvas.width / 2, game.canvas.height / 2,
-      // The rotation of the FovOverlay measured in degrees
-      0,
-      // The dimensions of the FovOverlay appearance
-      6000, 6000,
+      // The id of the GameObject
+      "fov",
+      new Transform(
+        // The position of the FovOverlay Transform
+        sceneCentre
+      ),
+      new Mesh(
+        // The path to the Source Image of the FovOverlay Mesh
+        './assets/img/fov.png',
+        // The dimensions of the FovOverlay Mesh
+        new Vector2 (6000, 6000)
+      )
     );
   }
 
@@ -72,7 +81,7 @@ export default class Level1 extends Level {
     this.fov.transform.position = this.player.transform.position;
 
     // Preserving the rotation of the FovOverlay relative to the Player Character
-    this.fov.transform.rotate(this.player.getPreviousFrameRotation());
+    this.fov.transform.rotate(this.player.lastFrameRotationDifference);
 
     return null;
   }

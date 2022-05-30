@@ -1,4 +1,4 @@
-import Game from './engine/Game.js';
+import Game from './engine/CoreModule/Game.js';
 /*
  * Start the game whenever the entire DOM is loaded
  */

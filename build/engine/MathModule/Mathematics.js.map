@@ -1,0 +1,1 @@
+{"version":3,"file":"Mathematics.js","sourceRoot":"","sources":["../../../src/engine/MathModule/Mathematics.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,OAAO,WAAW;IAOvB,MAAM,CAAC,OAAO,CAAC,KAAa;QACjC,OAAO,CAAC,KAAK,GAAG,GAAG,CAAC,GAAG,IAAI,CAAC,EAAE,CAAC;IACjC,CAAC;IAQM,MAAM,CAAC,OAAO,CAAC,KAAa;QACjC,OAAO,CAAC,KAAK,GAAG,GAAG,CAAC,GAAG,IAAI,CAAC,EAAE,CAAC;IACjC,CAAC;CACF"}

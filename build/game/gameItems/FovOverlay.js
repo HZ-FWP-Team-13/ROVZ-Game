@@ -1,19 +1,28 @@
-import Vector2 from '../../engine/experimenting/Vector2.js';
-import GameItem from '../../engine/GameItem.js';
+import GameItem from '../../engine/CoreModule/GameItem.js';
+import Vector2 from '../../engine/MathModule/Vector2.js';
+import Mathematics from '../../engine/MathModule/Mathematics.js';
 export default class FovOverlay extends GameItem {
+    _mesh;
     rotationSpeed;
-    constructor(imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight) {
-        super(imgSourcePath, xPos, yPos, rotation, frameWidth, frameHeight, 0);
+    constructor(id, transform, mesh) {
+        super(id, transform);
+        this.mesh = mesh;
         this.rotationSpeed = 1;
     }
     control(input) {
         let toCursor = new Vector2(0, -1);
-        if (input.getMouseInAction()) {
-            toCursor = Vector2.vectorDifference(this.getTransform().position, input.getMousePosition());
+        if (input.mouse.mouseInAction) {
+            toCursor = Vector2.vectorDifference(this.transform.position, input.mouse.mousePosition);
             toCursor.y *= -1;
         }
-        const toCursorSlope = Math.atan(toCursor.x / toCursor.y) * (180 / Math.PI) + (toCursor.y > 0 ? 180 : 0);
-        this.transform.setRotation(toCursorSlope);
+        const toCursorSlope = Mathematics.degress(Math.atan(toCursor.x / toCursor.y)) + (toCursor.y > 0 ? 180 : 0);
+        this.transform.rotation = toCursorSlope;
+    }
+    get mesh() {
+        return this._mesh;
+    }
+    set mesh(mesh) {
+        this._mesh = mesh;
     }
 }
 //# sourceMappingURL=FovOverlay.js.map

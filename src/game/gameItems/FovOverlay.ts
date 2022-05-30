@@ -1,37 +1,27 @@
-import Vector2 from '../../engine/experimenting/Vector2.js';
-import GameItem from '../../engine/GameItem.js';
+import GameItem from '../../engine/CoreModule/GameItem.js';
+import Transform from '../../engine/ComponentsModule/Transform.js';
+import Mesh from '../../engine/ComponentsModule/Mesh.js';
 import Input from '../../engine/InputModule/Input.js';
+import Vector2 from '../../engine/MathModule/Vector2.js';
+import Mathematics from '../../engine/MathModule/Mathematics.js';
 
 export default class FovOverlay extends GameItem {
+  // The Mesh of the GameItem
+  private _mesh: Mesh;
+
   // The speed of the FovOverlay rotation measured in degrees per second
-  private rotationSpeed: number;
+  public rotationSpeed: number;
 
   /**
    * Create a new FovOverlay instance
    *
-   * @param imgSourcePath The path to the Source Image of the FovOverlay appearance
-   *
-   * @param xPos The X coordinate of the FovOverlay on the game canvas
-   * @param yPos The Y coordinate of the FovOverlay on the game canvas
-   *
-   * @param rotation The rotation of the FovOverlay measured in degrees
-   *
-   * @param frameWidth The width of the FovOverlay appearance
-   * @param frameHeight The height of the FovOverlay appearance
+   * @param id The id of the GameObject
+   * @param transform The Transform of the FovOverlay
+   * @param mesh The Mesh of the FovOverlay
    */
-  public constructor(
-    imgSourcePath: string,
-    xPos: number, yPos: number,
-    rotation: number,
-    frameWidth: number, frameHeight: number,
-  ) {
-    super(
-      imgSourcePath,
-      xPos, yPos,
-      rotation,
-      frameWidth, frameHeight,
-      0,
-    );
+  public constructor(id: string, transform: Transform, mesh: Mesh) {
+    super(id, transform);
+    this.mesh = mesh;
 
     this.rotationSpeed = 1;
   }
@@ -45,15 +35,33 @@ export default class FovOverlay extends GameItem {
 
     // Calculating a Vector2 from the Player towards the Cursor
     let toCursor = new Vector2(0, -1);
-    if (input.getMouseInAction()) {
-      toCursor = Vector2.vectorDifference(this.getTransform().position, input.getMousePosition());
+    if (input.mouse.mouseInAction) {
+      toCursor = Vector2.vectorDifference(this.transform.position, input.mouse.mousePosition);
       toCursor.y *= -1;
     }
 
     // Calculating the slope of the mentioned vector
-    const toCursorSlope = Math.atan(toCursor.x / toCursor.y) * (180 / Math.PI) + (toCursor.y > 0 ? 180 : 0);
+    const toCursorSlope = Mathematics.degress(Math.atan(toCursor.x / toCursor.y)) + (toCursor.y > 0 ? 180 : 0);
 
     // Looking around TODO: Bind to fps
-    this.transform.setRotation(toCursorSlope);
+    this.transform.rotation = toCursorSlope;
+  }
+
+  /**
+   * Get the Mesh of this FovOverlay
+   *
+   * @returns The Mesh of this FovOverlay
+   */
+  get mesh(): Mesh {
+    return this._mesh;
+  }
+
+  /**
+   * Set the Mesh of this FovOverlay
+   *
+   * @param mesh The Mesh of this FovOverlay
+   */
+  set mesh(mesh: Mesh) {
+    this._mesh = mesh;
   }
 }

@@ -1,12 +1,12 @@
 import MouseListener from './MouseListener.js';
 export default class Input {
-    axises;
-    mouse;
+    _axises;
+    _mouse;
     constructor(axises = null) {
         if (axises != null) {
             this.editAxises(axises);
         }
-        this.mouse = new MouseListener();
+        this._mouse = new MouseListener();
     }
     editAxises(axises) {
         if (this.axises != null) {
@@ -15,9 +15,6 @@ export default class Input {
         else {
             this.axises = axises;
         }
-    }
-    getAxises() {
-        return this.axises;
     }
     getAxis(axisName) {
         return this.axises.get(axisName);
@@ -28,14 +25,14 @@ export default class Input {
     readAxisTyped(axisName) {
         return this.getAxis(axisName).readTyped();
     }
-    getMousePosition() {
-        return this.mouse.getMousePosition();
+    get axises() {
+        return this._axises;
     }
-    getMouseButtons() {
-        return this.mouse.getMouseButtons();
+    set axises(axises) {
+        this._axises = axises;
     }
-    getMouseInAction() {
-        return this.mouse.getMouseInAction();
+    get mouse() {
+        return this._mouse;
     }
 }
 //# sourceMappingURL=Input.js.map

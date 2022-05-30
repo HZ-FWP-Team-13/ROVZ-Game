@@ -1,12 +1,11 @@
-import Vector2 from '../experimenting/Vector2.js';
 import InputAxis from './InputAxis.js';
 import MouseListener from './MouseListener.js';
 
 export default class Input {
   // The map of InputAxises
-  private axises: Map<string, InputAxis>;
+  private _axises: Map<string, InputAxis>;
   // The MouseListener
-  private mouse: MouseListener;
+  private _mouse: MouseListener;
 
   /**
    * Create a new Input instance
@@ -18,7 +17,7 @@ export default class Input {
       this.editAxises(axises);
     }
 
-    this.mouse = new MouseListener();
+    this._mouse = new MouseListener();
   }
 
   /**
@@ -32,15 +31,6 @@ export default class Input {
     } else {
       this.axises = axises;
     }
-  }
-
-  /**
-   * Get all InputAxis of this Input
-   *
-   * @returns All InputAxis of this Input
-   */
-  public getAxises(): Map<string, InputAxis> {
-    return this.axises;
   }
 
   /**
@@ -74,29 +64,29 @@ export default class Input {
   }
 
   /**
-   * Get the position of the Mouse
+   * Get all InputAxis of this Input
    *
-   * @returns The position of the Mouse
+   * @returns All InputAxis of this Input
    */
-   public getMousePosition(): Vector2 {
-    return this.mouse.getMousePosition();
+  get axises(): Map<string, InputAxis> {
+    return this._axises;
   }
 
   /**
-   * Get the pressed Mouse buttons
+   * Set all InputAxis of this Input
    *
-   * @returns The pressed Mouse buttons
+   * @param axises All InputAxis of this Input
    */
-  public getMouseButtons(): number {
-    return this.mouse.getMouseButtons();
+  set axises(axises: Map<string, InputAxis>) {
+    this._axises = axises;
   }
 
   /**
-   * Get `true` if the Mouse was used at least once in this Scene
+   * Get the Mouse
    *
-   * @returns `true` if the Mouse was used at least once in this Scene
+   * @returns The Mouse
    */
-  public getMouseInAction(): boolean {
-    return this.mouse.getMouseInAction();
+  get mouse(): MouseListener {
+    return this._mouse;
   }
 }
