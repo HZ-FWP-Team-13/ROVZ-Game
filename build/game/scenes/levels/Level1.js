@@ -15,6 +15,7 @@ export default class Level1 extends Level {
     }
     update() {
         this.player.control(this.input);
+        this.player.collider.updatePoints(this.player.transform);
         this.fov.control(this.input);
         this.fov.transform.position = this.player.transform.position;
         this.fov.transform.rotate(this.player.lastFrameRotationDifference);
@@ -23,6 +24,7 @@ export default class Level1 extends Level {
     render() {
         this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
         this.player.mesh.draw(this.game.ctx, this.player.transform);
+        this.player.collider.draw(this.game.ctx);
         this.fov.mesh.draw(this.game.ctx, this.fov.transform);
     }
 }

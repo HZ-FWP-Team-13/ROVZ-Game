@@ -41,7 +41,7 @@ export default class FovOverlay extends GameItem {
     }
 
     // Calculating the slope of the mentioned vector
-    const toCursorSlope = Mathematics.degress(Math.atan(toCursor.x / toCursor.y)) + (toCursor.y > 0 ? 180 : 0);
+    const toCursorSlope = Mathematics.degrees(Math.atan(toCursor.x / toCursor.y)) + (toCursor.y > 0 ? 180 : 0);
 
     // Looking around TODO: Bind to fps
     this.transform.rotation = toCursorSlope;

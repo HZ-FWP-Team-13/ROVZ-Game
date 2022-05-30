@@ -3,7 +3,7 @@ export default class Component {
     constructor(type) {
         this.type = type;
     }
-    get id() {
+    get type() {
         return this._type;
     }
     set type(type) {

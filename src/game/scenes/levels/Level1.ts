@@ -74,6 +74,10 @@ export default class Level1 extends Level {
   public update(): Scene {
     // Providing Player Control over the Player Character
     this.player.control(this.input);
+
+    // We should probably do an update method in GameItem and just update all GameItems
+    this.player.collider.updatePoints(this.player.transform);
+
     // Providing Player Control over the FovOverlay
     this.fov.control(this.input);
 
@@ -95,6 +99,7 @@ export default class Level1 extends Level {
 
     // Drawing the Player Character on the Game Canvas
     this.player.mesh.draw(this.game.ctx, this.player.transform);
+    this.player.collider.draw(this.game.ctx);
     // Drawing the FovOverlay on the Game Canvas
     this.fov.mesh.draw(this.game.ctx, this.fov.transform);
   }
