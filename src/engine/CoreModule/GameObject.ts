@@ -1,33 +1,31 @@
-import Transform from '../ComponentsModule/Transform.js';
-
 export default abstract class GameObject {
-  // The Transform of the GameObject
-  public _transform: Transform;
+  // The id of the GameObject
+  private _id: string;
 
   /**
    * Create a new GameObject instance
    *
-   * @param transform The Transform of the GameObject
+   * @param id The id of the GameObject
    */
-  public constructor(transform: Transform) {
-    this.transform = transform;
+  public constructor(id: string) {
+    this.id = id;
   }
 
   /**
-   * Get the Transform of this GameObject
+   * Get the id of the GameObject
    *
-   * @returns The Transform of this GameObject
+   * @returns The id of the GameObject
    */
-  get transform(): Transform {
-    return this._transform;
+  get id(): string {
+    return this._id;
   }
 
   /**
-   * Set the Transform of this GameObject
+   * Set the id of the GameObject
    *
-   * @param transform The Transform of this GameObject
+   * @param id The id of the GameObject
    */
-  set transform(transform: Transform) {
-    this._transform = transform;
+  set id(id: string) {
+    this._id = id;
   }
 }

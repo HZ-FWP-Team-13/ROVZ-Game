@@ -1,15 +1,15 @@
 import GameObject from "./GameObject.js";
 export default class GameItem extends GameObject {
-    _mesh;
-    constructor(transform, mesh) {
-        super(transform);
-        this.mesh = mesh;
+    _transform;
+    constructor(id, transform) {
+        super(id);
+        this.transform = transform;
     }
-    get mesh() {
-        return this._mesh;
+    get transform() {
+        return this._transform;
     }
-    set mesh(mesh) {
-        this._mesh = mesh;
+    set transform(transform) {
+        this._transform = transform;
     }
 }
 //# sourceMappingURL=GameItem.js.map

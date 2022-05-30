@@ -10,8 +10,8 @@ export default class Level1 extends Level {
     constructor(game) {
         super(game);
         let sceneCentre = new Vector2(game.canvas.width / 2, game.canvas.height / 2);
-        this.player = new Player(new Transform(sceneCentre), new Mesh('./assets/img/testplayer-old.png', new Vector2(32, 32)));
-        this.fov = new FovOverlay(new Transform(sceneCentre), new Mesh('./assets/img/fov.png', new Vector2(6000, 6000)));
+        this.player = new Player("player", new Transform(sceneCentre), new Mesh('./assets/img/testplayer-old.png', new Vector2(32, 32)));
+        this.fov = new FovOverlay("fov", new Transform(sceneCentre), new Mesh('./assets/img/fov.png', new Vector2(6000, 6000)));
     }
     update() {
         this.player.control(this.input);

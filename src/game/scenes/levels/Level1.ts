@@ -26,6 +26,8 @@ export default class Level1 extends Level {
 
     // Spawning the Player
     this.player = new Player(
+      // The id of the GameObject
+      "player",
       new Transform(
         // The coordinates of the Player Transform
         sceneCentre
@@ -40,6 +42,8 @@ export default class Level1 extends Level {
 
     // Spawning the FovOverlay
     this.fov = new FovOverlay(
+      // The id of the GameObject
+      "fov",
       new Transform(
         // The position of the FovOverlay Transform
         sceneCentre

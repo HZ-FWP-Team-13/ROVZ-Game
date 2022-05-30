@@ -1,9 +1,10 @@
+import Component from '../CoreModule/Component.js';
 import Vector2 from '../MathModule/Vector2.js';
 import Transform from './Transform.js';
 import Mathematics from '../MathModule/Mathematics.js';
 import Graphics from '../GraphicsModule/Graphics.js';
 
-export default class Mesh {
+export default class Mesh extends Component {
   // The path to the Source Image of the Mesh
   private _sourceImagePath: string;
 
@@ -31,6 +32,7 @@ export default class Mesh {
     // The current animation state of the Mesh
     animationState: number = 0,
   ) {
+    super("mesh");
     this.loadNewImage(sourceImagePath);
     this.dimensions = dimensions;
     this.animationState = animationState;

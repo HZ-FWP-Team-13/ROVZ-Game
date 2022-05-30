@@ -1,13 +1,13 @@
 export default class GameObject {
-    _transform;
-    constructor(transform) {
-        this.transform = transform;
+    _id;
+    constructor(id) {
+        this.id = id;
     }
-    get transform() {
-        return this._transform;
+    get id() {
+        return this._id;
     }
-    set transform(transform) {
-        this._transform = transform;
+    set id(id) {
+        this._id = id;
     }
 }
 //# sourceMappingURL=GameObject.js.map

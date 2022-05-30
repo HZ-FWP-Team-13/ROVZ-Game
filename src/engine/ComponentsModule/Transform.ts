@@ -1,7 +1,9 @@
+import Component from "../CoreModule/Component.js";
 import Vector2 from "../MathModule/Vector2.js";
 import Mathematics from "../MathModule/Mathematics.js";
 
-export default class Transform {
+
+export default class Transform extends Component {
   // The Position of this Transform
   private _position: Vector2;
 
@@ -23,6 +25,7 @@ export default class Transform {
     rotation: number = 0,
     scale: Vector2 = Vector2.one
   ) {
+    super("transform");
     this.position = position;
     this.rotation = rotation;
     this.scale = scale;
