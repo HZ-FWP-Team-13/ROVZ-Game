@@ -40,9 +40,9 @@ export default class Transform extends Component {
     // Distance to the movement destination
     const dist = Math.sqrt(vectorDRel.x ** 2 + vectorDRel.y ** 2);
 
-    // Slope of the movement vector in the relative coordinate system
+    // Slope of the movement vector in the relative coordinate system measured in radians
     const moveSlopeRel = Math.atan(vectorDRel.x  / vectorDRel.y);
-    // Slope of the movement vector in the absolute coordinate system
+    // Slope of the movement vector in the absolute coordinate system measured in radians
     const moveSlopeAbs = moveSlopeRel + Mathematics.radians(this.rotation);
 
     // Deviation of the X coordinate of this Transform in the absolute coordinate system
@@ -54,7 +54,7 @@ export default class Transform extends Component {
 
     // Compensation of the arctangent absolute nature
     if (vectorDRel.y < 0) {
-      vectorDAbs.negate(); // TODO: vectorDAbs *= -1;
+      vectorDAbs.negate(); // TODO: vectorDAbs *= (vectorDRel.y < 0 ? -1 : 1);
     }
 
     // Moving this Transform across the Game Canvas within the absolute coordinate system
