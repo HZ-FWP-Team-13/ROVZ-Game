@@ -1,11 +1,13 @@
+import Component from '../CoreModule/Component.js';
 import Mathematics from '../MathModule/Mathematics.js';
 import Graphics from '../GraphicsModule/Graphics.js';
-export default class Mesh {
+export default class Mesh extends Component {
     _sourceImagePath;
     _sourceImage;
     _dimensions;
     _animationState;
     constructor(sourceImagePath, dimensions, animationState = 0) {
+        super("mesh");
         this.loadNewImage(sourceImagePath);
         this.dimensions = dimensions;
         this.animationState = animationState;

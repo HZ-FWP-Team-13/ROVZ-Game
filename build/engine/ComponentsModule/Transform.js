@@ -1,10 +1,12 @@
+import Component from "../CoreModule/Component.js";
 import Vector2 from "../MathModule/Vector2.js";
 import Mathematics from "../MathModule/Mathematics.js";
-export default class Transform {
+export default class Transform extends Component {
     _position;
     _rotation;
     _scale;
     constructor(position = Vector2.zero, rotation = 0, scale = Vector2.one) {
+        super("transform");
         this.position = position;
         this.rotation = rotation;
         this.scale = scale;
