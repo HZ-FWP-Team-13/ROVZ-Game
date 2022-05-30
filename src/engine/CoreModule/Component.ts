@@ -16,7 +16,7 @@ export default abstract class Component {
    *
    * @returns The type of the Component
    */
-  get id(): string {
+  get type(): string {
     return this._type;
   }
 
