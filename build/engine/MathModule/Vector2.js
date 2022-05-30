@@ -31,6 +31,9 @@ export default class Vector2 {
     static negate(a) {
         return new Vector2(-a.x, -a.y);
     }
+    static dotProduct(a, b) {
+        return a.x * b.x + a.y * b.y;
+    }
     get x() {
         return this._x;
     }

@@ -1,8 +1,8 @@
-import Component from "../CoreModule/Component";
-import GameItem from "../CoreModule/GameItem";
-import Mathematics from "../MathModule/Mathematics";
-import Vector2 from "../MathModule/Vector2";
-import Transform from "./Transform";
+import Component from "../CoreModule/Component.js";
+import GameItem from "../CoreModule/GameItem.js";
+import Mathematics from "../MathModule/Mathematics.js";
+import Vector2 from "../MathModule/Vector2.js";
+import Transform from "./Transform.js";
 
 export default class Collider extends Component {
 
@@ -28,6 +28,8 @@ export default class Collider extends Component {
       ctx.fillStyle = 'blue';
       ctx.fillRect(point.x - vertSize / 2, point.y - vertSize / 2, vertSize, vertSize);
     });
+
+    console.log('DRAW');
   }
 
   /**
