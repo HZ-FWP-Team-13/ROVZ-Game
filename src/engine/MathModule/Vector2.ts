@@ -82,6 +82,10 @@ export default class Vector2 {
     return new Vector2(-a.x, -a.y);
   }
 
+  public static dotProduct(a: Vector2, b: Vector2) {
+    return a.x * b.x + a.y * b.y;
+  }
+
   /**
    * Get the X value of this Vector2
    *
@@ -117,4 +121,7 @@ export default class Vector2 {
   set y(y: number) {
     this._y = y;
   }
+
+
+
 }
