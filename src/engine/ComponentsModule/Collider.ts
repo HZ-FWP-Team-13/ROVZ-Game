@@ -14,7 +14,7 @@ export default class Collider extends Component {
   public overlap: boolean;
 
   public constructor() {
-    super("collider")
+    super("collider");
     this.points = [];
     this.updatedPoints = [];
 
