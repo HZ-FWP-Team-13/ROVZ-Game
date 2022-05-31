@@ -39,7 +39,7 @@ export default class Input {
    * @param axisName The given InputAxis name
    * @returns The InputAxis with the given name
    */
-  public getAxis(axisName: string): InputAxis {
+  public axis(axisName: string): InputAxis {
     return this.axises.get(axisName);
   }
 
@@ -50,7 +50,7 @@ export default class Input {
    * @returns The Pressed value of the InputAxis with the given name
    */
   public readAxisPressed(axisName: string): number {
-    return this.getAxis(axisName).readPressed();
+    return this.axis(axisName).readPressed();
   }
 
   /**
@@ -60,7 +60,7 @@ export default class Input {
    * @returns The Typed value of the InputAxis with the given name
    */
   public readAxisTyped(axisName: string): number {
-    return this.getAxis(axisName).readTyped();
+    return this.axis(axisName).readTyped();
   }
 
   /**
@@ -68,17 +68,16 @@ export default class Input {
    *
    * @returns All InputAxis of this Input
    */
-  get axises(): Map<string, InputAxis> {
+  public get axises(): Map<string, InputAxis> {
     return this._axises;
   }
-
   /**
    * Set all InputAxis of this Input
    *
-   * @param axises All InputAxis of this Input
+   * @param value All InputAxis of this Input
    */
-  set axises(axises: Map<string, InputAxis>) {
-    this._axises = axises;
+  public set axises(value: Map<string, InputAxis>) {
+    this._axises = value;
   }
 
   /**
@@ -86,7 +85,7 @@ export default class Input {
    *
    * @returns The Mouse
    */
-  get mouse(): MouseListener {
+  public get mouse(): MouseListener {
     return this._mouse;
   }
 }

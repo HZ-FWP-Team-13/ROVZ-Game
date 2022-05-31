@@ -84,17 +84,16 @@ export default class Transform extends Component {
    *
    * @returns The Position of this Transform
    */
-  get position(): Vector2 {
+  public get position(): Vector2 {
     return this._position;
   }
-
   /**
    * Set the Position of this Transform
    *
-   * @param position The Position of this Transform
+   * @param value The Position of this Transform
    */
-  set position(position: Vector2) {
-    this._position = position;
+  public set position(value: Vector2) {
+    this._position = value;
   }
 
   /**
@@ -102,17 +101,16 @@ export default class Transform extends Component {
    *
    * @returns The Rotation of this Transform measured in degrees
    */
-  get rotation(): number {
+  public get rotation(): number {
     return this._rotation;
   }
-
   /**
    * Set the Rotation of this Transform measured in degrees
    *
-   * @param rotation The Rotation of this Transform measured in degrees
+   * @param value The Rotation of this Transform measured in degrees
    */
-  set rotation(rotation: number) {
-    this._rotation = rotation;
+  public set rotation(value: number) {
+    this._rotation = value;
   }
 
   /**
@@ -120,16 +118,15 @@ export default class Transform extends Component {
    *
    * @returns The Scale of this Transform
    */
-  get scale(): Vector2 {
+  public get scale(): Vector2 {
     return this._scale;
   }
-
   /**
    * Set the Scale of this Transform
    *
-   * @param scale The Scale of this Transform
+   * @param value The Scale of this Transform
    */
-  set scale(scale: Vector2) {
-    this._scale = scale;
+  public set scale(value: Vector2) {
+    this._scale = value;
   }
 }

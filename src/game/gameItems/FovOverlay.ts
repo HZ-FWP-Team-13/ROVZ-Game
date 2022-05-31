@@ -52,16 +52,15 @@ export default class FovOverlay extends GameItem {
    *
    * @returns The Mesh of this FovOverlay
    */
-  get mesh(): Mesh {
+  public get mesh(): Mesh {
     return this._mesh;
   }
-
   /**
    * Set the Mesh of this FovOverlay
    *
-   * @param mesh The Mesh of this FovOverlay
+   * @param value The Mesh of this FovOverlay
    */
-  set mesh(mesh: Mesh) {
-    this._mesh = mesh;
+  public set mesh(value: Mesh) {
+    this._mesh = value;
   }
 }

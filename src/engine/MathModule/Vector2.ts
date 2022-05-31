@@ -5,6 +5,7 @@ export default class Vector2 {
 
   public static readonly zero = new Vector2(0, 0);
   public static readonly one = new Vector2(1, 1);
+
   public static readonly up = new Vector2(0, -1);
   public static readonly down = new Vector2(0, 1);
   public static readonly left = new Vector2(-1, 0);
@@ -91,17 +92,16 @@ export default class Vector2 {
    *
    * @returns The X value of this Vector2
    */
-  get x(): number {
+  public get x(): number {
     return this._x;
   }
-
   /**
    * Set the X value of this Vector2
    *
-   * @param x The X value of this Vector2
+   * @param value The X value of this Vector2
    */
-  set x(x: number) {
-    this._x = x;
+  public set x(value: number) {
+    this._x = value;
   }
 
   /**
@@ -109,19 +109,15 @@ export default class Vector2 {
    *
    * @returns The Y value of this Vector2
    */
-  get y(): number {
+  public get y(): number {
     return this._y;
   }
-
   /**
    * Set the Y value of this Vector2
    *
-   * @param y The Y value of this Vector2
+   * @param value The Y value of this Vector2
    */
-  set y(y: number) {
-    this._y = y;
+  public set y(value: number) {
+    this._y = value;
   }
-
-
-
 }

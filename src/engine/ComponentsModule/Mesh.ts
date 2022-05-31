@@ -33,23 +33,9 @@ export default class Mesh extends Component {
     animationState: number = 0,
   ) {
     super("mesh");
-    this.loadNewImage(sourceImagePath);
+    this.sourceImagePath = sourceImagePath;
     this.dimensions = dimensions;
     this.animationState = animationState;
-  }
-
-  /**
-   * Load and set a new Source Image from a given or stored path
-   *
-   * @param sourceImagePath The given path to the Source Image of this Mesh
-   * @returns The new Source Image
-   */
-  public loadNewImage(sourceImagePath: string = null): HTMLImageElement {
-    if (sourceImagePath == null) {
-      this.sourceImagePath = sourceImagePath;
-      return this.sourceImage = Graphics.loadNewImage(this.sourceImagePath);
-    }
-    return this.sourceImage = Graphics.loadNewImage(sourceImagePath);
   }
 
   /**
@@ -91,17 +77,17 @@ export default class Mesh extends Component {
    *
    * @returns The path to the Source Image of this Mesh
    */
-  get sourceImagePath(): string {
+  public get sourceImagePath(): string {
     return this._sourceImagePath;
   }
-
   /**
    * Set the path to the Source Image of this Mesh
    *
-   * @param sourceImagePath The path to the Source Image of this Mesh
+   * @param value The path to the Source Image of this Mesh
    */
-  set sourceImagePath(sourceImagePath: string) {
-    this._sourceImagePath = sourceImagePath;
+  public set sourceImagePath(value: string) {
+    this._sourceImagePath = value;
+    this.sourceImage = Graphics.loadNewImage(value)
   }
 
   /**
@@ -109,17 +95,16 @@ export default class Mesh extends Component {
    *
    * @returns The Source Image of this Mesh
    */
-  get sourceImage(): HTMLImageElement {
+  public get sourceImage(): HTMLImageElement {
     return this._sourceImage;
   }
-
   /**
    * Set the Source Image of this Mesh
    *
-   * @param sourceImage The Source Image of this Mesh
+   * @param value The Source Image of this Mesh
    */
-  set sourceImage(sourceImage: HTMLImageElement) {
-    this._sourceImage = sourceImage;
+  public set sourceImage(value: HTMLImageElement) {
+    this._sourceImage = value;
   }
 
   /**
@@ -127,17 +112,16 @@ export default class Mesh extends Component {
    *
    * @returns The dimensions of this Mesh
    */
-  get dimensions(): Vector2 {
+  public get dimensions(): Vector2 {
     return this._dimensions;
   }
-
   /**
    * Set the dimensions of this Mesh
    *
-   * @param dimensions The width of this Mesh
+   * @param value The width of this Mesh
    */
-  set dimensions(dimensions: Vector2) {
-    this._dimensions = dimensions;
+  public set dimensions(value: Vector2) {
+    this._dimensions = value;
   }
 
   /**
@@ -145,16 +129,15 @@ export default class Mesh extends Component {
    *
    * @returns The current animation state of this Mesh
    */
-  get animationState(): number {
+  public get animationState(): number {
     return this._animationState;
   }
-
   /**
    * Set the current animation state of this Mesh
    *
-   * @param animationState The current animation state of this Mesh
+   * @param value The current animation state of this Mesh
    */
-  set animationState(animationState: number) {
-    this._animationState = animationState;
+  public set animationState(value: number) {
+    this._animationState = value;
   }
 }

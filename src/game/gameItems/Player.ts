@@ -62,17 +62,16 @@ export default class Player extends GameItem {
    *
    * @returns The Mesh of this Player
    */
-  get mesh(): Mesh {
+  public get mesh(): Mesh {
     return this._mesh;
   }
-
   /**
    * Set the Mesh of this Player
    *
-   * @param mesh The Mesh of this Player
+   * @param value The Mesh of this Player
    */
-  set mesh(mesh: Mesh) {
-    this._mesh = mesh;
+  public set mesh(value: Mesh) {
+    this._mesh = value;
   }
 
   /**
@@ -83,11 +82,10 @@ export default class Player extends GameItem {
   public get collider(): Collider {
     return this._collider;
   }
-
   /**
    * Set the Collider of this Player
    *
-   * @param collider The Collider of this Player
+   * @param value The Collider of this Player
    */
   public set collider(value: Collider) {
     this._collider = value;

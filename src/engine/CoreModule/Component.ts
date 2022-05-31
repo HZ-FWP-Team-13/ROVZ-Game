@@ -16,16 +16,15 @@ export default abstract class Component {
    *
    * @returns The type of the Component
    */
-  get type(): string {
+  public get type(): string {
     return this._type;
   }
-
   /**
    * Set the type of the Component
    *
-   * @param type The type of the Component
+   * @param value The type of the Component
    */
-  set type(type: string) {
-    this._type = type;
+  public set type(value: string) {
+    this._type = value;
   }
 }

@@ -16,16 +16,15 @@ export default abstract class GameObject {
    *
    * @returns The id of the GameObject
    */
-  get id(): string {
+  public get id(): string {
     return this._id;
   }
-
   /**
    * Set the id of the GameObject
    *
-   * @param id The id of the GameObject
+   * @param value The id of the GameObject
    */
-  set id(id: string) {
-    this._id = id;
+  public set id(value: string) {
+    this._id = value;
   }
 }

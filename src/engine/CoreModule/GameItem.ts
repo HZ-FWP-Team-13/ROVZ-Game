@@ -18,27 +18,26 @@ export default abstract class GameItem extends GameObject {
   }
 
   /**
-   * Get the Transform of this GameItem
-   *
-   * @returns The Transform of this GameItem
-   */
-  get transform(): Transform {
-    return this._transform;
-  }
-
-  /**
-   * Set the Transform of this GameItem
-   *
-   * @param transform The Transform of this GameItem
-   */
-  set transform(transform: Transform) {
-    this._transform = transform;
-  }
-
-  /**
    * Process the Player Input to modify this GameItem
    *
    * @param input of the keys when moving
    */
   public abstract control(input: Input): void;
+
+  /**
+   * Get the Transform of this GameItem
+   *
+   * @returns The Transform of this GameItem
+   */
+  public get transform(): Transform {
+    return this._transform;
+  }
+  /**
+   * Set the Transform of this GameItem
+   *
+   * @param value The Transform of this GameItem
+   */
+  public set transform(value: Transform) {
+    this._transform = value;
+  }
 }

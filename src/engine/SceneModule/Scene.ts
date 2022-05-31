@@ -4,8 +4,7 @@ import Input from '../InputModule/Input.js';
 /**
  * A superclass for objects that must be able to be animated by a `GameLoop`.
  *
- * Implementing classes must override the three methods `processInput()`,
- * `update(elapsed)` and `render()`.
+ * Implementing classes must override the three methods `update(elapsed)` and `render()`.
  *
  * @see GameLoop
  * @author BugSlayer

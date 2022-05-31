@@ -1,7 +1,7 @@
 import Vector2 from "../MathModule/Vector2.js";
 
 export default class MouseListener {
-  private _mousePosition: Vector2 = new Vector2();
+  private _mousePosition: Vector2 = Vector2.zero;
   private _mouseButtons: number;
   private _mouseInAction: boolean = false;
 
@@ -23,7 +23,7 @@ export default class MouseListener {
    *
    * @returns The position of this Mouse
    */
-  get mousePosition(): Vector2 {
+  public get mousePosition(): Vector2 {
     return this._mousePosition;
   }
 
@@ -32,7 +32,7 @@ export default class MouseListener {
    *
    * @returns The pressed Mouse buttons
    */
-  get mouseButtons(): number {
+  public get mouseButtons(): number {
     return this._mouseButtons;
   }
 
@@ -41,7 +41,7 @@ export default class MouseListener {
    *
    * @returns `true` if the Mouse was used at least once in this Scene
    */
-  get mouseInAction(): boolean {
+  public get mouseInAction(): boolean {
     return this._mouseInAction;
   }
 }
