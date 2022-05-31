@@ -2,8 +2,9 @@ import GameObject from "./GameObject.js";
 import Transform from "../ComponentsModule/Transform.js";
 import Mesh from "../ComponentsModule/Mesh.js";
 import Input from "../InputModule/Input.js";
+import Camera from "../GraphicsModule/Camera.js";
 
-export default abstract class GameItem extends GameObject {
+export default class GameItem extends GameObject {
   // The Mesh of the GameItem
   private _mesh: Mesh;
 
@@ -23,10 +24,13 @@ export default abstract class GameItem extends GameObject {
   /**
    * Process the Player Input to modify this GameItem
    *
-   * @param input of the keys when moving
-   * @param elapsed the time in ms that has been elapsed since the previous frame
+   * @param input The Input matrix of the Scene
+   * @param elapsed The time in seconds that has been elapsed since the previous frame
+   * @param camera The Camera of the Level
    */
-  public abstract control(input: Input, elapsed: number): void;
+  public control(input: Input, elapsed: number, camera?: Camera): void {
+
+  }
 
   /**
    * Get the Mesh of this GameItem

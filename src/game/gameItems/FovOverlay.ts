@@ -2,6 +2,7 @@ import GameItem from '../../engine/ObjectModule/GameItem.js';
 import Transform from '../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../engine/ComponentsModule/Mesh.js';
 import Input from '../../engine/InputModule/Input.js';
+import Camera from '../../engine/GraphicsModule/Camera.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
 
@@ -25,15 +26,18 @@ export default class FovOverlay extends GameItem {
   /**
    * Rotate this FovOverlay in response to the Player Input
    *
-   * @param input of the keys when moving
-   * @param elapsed the time in seconds that has been elapsed since the previous frame
+   * @param input The Input matrix of this Level
+   * @param elapsed The time in seconds that has been elapsed since the previous frame
+   * @param camera The Camera of this Level
    */
-  public control(input: Input, elapsed: number): void {
+  public control(input: Input, elapsed: number, camera: Camera): void {
 
     // Calculating a Vector2 from the Player towards the Cursor
     let toCursor = new Vector2(0, -1);
     if (input.mouse.mouseInAction) {
-      toCursor = Vector2.vectorDifference(this.transform.position, input.mouse.mousePosition);
+      toCursor = Vector2.vectorsSum(input.mouse.mousePosition, camera.transform.position);
+      toCursor = Vector2.vectorDifference(toCursor, new Vector2(camera.frameDimensions.x / 2, camera.frameDimensions.y / 2));
+      toCursor = Vector2.vectorDifference(this.transform.position, toCursor);
       toCursor.y *= -1;
     }
 

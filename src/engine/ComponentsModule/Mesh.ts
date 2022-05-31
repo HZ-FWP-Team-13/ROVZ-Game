@@ -1,6 +1,7 @@
 import Component from '../CoreModule/Component.js';
 import Vector2 from '../MathModule/Vector2.js';
 import Transform from './Transform.js';
+import Camera from '../GraphicsModule/Camera.js';
 import Mathematics from '../MathModule/Mathematics.js';
 import Graphics from '../GraphicsModule/Graphics.js';
 
@@ -39,21 +40,25 @@ export default class Mesh extends Component {
   }
 
   /**
-   * Draw this GameObject appearance on the Game Canvas
+   * Draw this GameItem appearance on the Game Canvas
    * based on rotation and current state of the animation cycle
    *
    * @param ctx the Canvas that needs to be drawn upon each cycle
-   * @param transform ---
+   * @param transform The Transform of the GameItem
+   * @param camera The Camera of the Level
    */
-  public draw(ctx: CanvasRenderingContext2D, transform: Transform): void {
+  public draw(ctx: CanvasRenderingContext2D, transform: Transform, camera?: Camera): void {
     // Creating a backup of the Game Canvas rendering context in the absolute coordinate system
     ctx.save();
 
     // Switching the Game Canvas rendering context to the relative coordinate system
-    // Moving the origin of the coordinate system to the center of the future GameObject appearance
-    ctx.translate(transform.position.x, transform.position.y);
-    // Rotating coordinate system to correspond with this GameObject rotation
-    ctx.rotate(Mathematics.radians(transform.rotation));
+    // Moving the origin of the coordinate system to the center of the future GameItem appearance
+    ctx.translate(
+      transform.position.x - (camera != undefined ? camera.transform.position.x - camera.frameDimensions.x / 2 : 0),
+      transform.position.y - (camera != undefined ? camera.transform.position.y - camera.frameDimensions.y / 2 : 0)
+    );
+    // Rotating coordinate system to correspond with this GameItem rotation
+    ctx.rotate(Mathematics.radians(transform.rotation + (camera != undefined ? camera.transform.rotation : 0)));
 
     // Drawing the Mesh to the Game Canvas
     ctx.drawImage(
@@ -66,7 +71,8 @@ export default class Mesh extends Component {
       // The position of the Mesh on the Game Canvas
       -this.dimensions.x / 2, -this.dimensions.y / 2,
       // The dimensions of the Mesh on the Game Canvas
-      this.dimensions.x, this.dimensions.y);
+      this.dimensions.x, this.dimensions.y
+    );
 
     // Returning the Game Canvas rendering context to the absolute coordinate system
     ctx.restore();

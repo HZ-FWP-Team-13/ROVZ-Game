@@ -12,10 +12,10 @@ export default class Mesh extends Component {
         this.dimensions = dimensions;
         this.animationState = animationState;
     }
-    draw(ctx, transform) {
+    draw(ctx, transform, camera) {
         ctx.save();
-        ctx.translate(transform.position.x, transform.position.y);
-        ctx.rotate(Mathematics.radians(transform.rotation));
+        ctx.translate(transform.position.x - (camera != undefined ? camera.transform.position.x - camera.frameDimensions.x / 2 : 0), transform.position.y - (camera != undefined ? camera.transform.position.y - camera.frameDimensions.y / 2 : 0));
+        ctx.rotate(Mathematics.radians(transform.rotation + (camera != undefined ? camera.transform.rotation : 0)));
         ctx.drawImage(this.sourceImage, this.dimensions.x * this.animationState, 0, this.dimensions.x, this.dimensions.y, -this.dimensions.x / 2, -this.dimensions.y / 2, this.dimensions.x, this.dimensions.y);
         ctx.restore();
     }

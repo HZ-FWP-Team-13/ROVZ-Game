@@ -12,6 +12,7 @@ import Input from '../InputModule/Input.js';
 export default abstract class Scene {
   protected readonly game: Game;
 
+  // The Input matrix of the Scene
   protected input: Input;
 
   /**

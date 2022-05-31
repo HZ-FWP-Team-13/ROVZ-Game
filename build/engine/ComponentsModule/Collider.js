@@ -12,11 +12,11 @@ export default class Collider extends Component {
         this.updatedPoints = [];
         this.overlap = false;
     }
-    draw(ctx) {
+    draw(ctx, camera) {
         let vertSize = 8;
         this.updatedPoints.forEach(point => {
             ctx.fillStyle = 'blue';
-            ctx.fillRect(point.x - vertSize / 2, point.y - vertSize / 2, vertSize, vertSize);
+            ctx.fillRect(point.x - vertSize / 2 - camera.transform.position.x - camera.frameDimensions.x, point.y - vertSize / 2 - camera.transform.position.y - camera.frameDimensions.y, vertSize, vertSize);
         });
         console.log('DRAW');
     }

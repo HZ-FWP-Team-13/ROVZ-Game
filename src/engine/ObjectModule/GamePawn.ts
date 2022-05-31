@@ -3,7 +3,7 @@ import Transform from "../ComponentsModule/Transform.js";
 import Mesh from "../ComponentsModule/Mesh.js";
 import Collider from "../ComponentsModule/Collider.js";
 
-export default abstract class GamePawn extends GameItem {
+export default class GamePawn extends GameItem {
   // The collider of the GamePawn
   private _collider: Collider;
 

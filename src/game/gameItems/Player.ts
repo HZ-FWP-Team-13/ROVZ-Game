@@ -35,8 +35,8 @@ export default class Player extends GamePawn {
   /**
    * Move this Player across the Game Canvas in response to the Player Input
    *
-   * @param input of the keys when moving
-   * @param elapsed the time in seconds that has been elapsed since the previous frame
+   * @param input The Input matrix of this Level
+   * @param elapsed The time in seconds that has been elapsed since the previous frame
    */
   public control(input: Input, elapsed: number): void {
     // Read the Input of the Vertical InputAxis

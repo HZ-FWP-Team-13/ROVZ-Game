@@ -1,4 +1,5 @@
 import Component from "../CoreModule/Component.js";
+import Camera from "../GraphicsModule/Camera.js";
 import GameItem from "../ObjectModule/GameItem.js";
 import Mathematics from "../MathModule/Mathematics.js";
 import Vector2 from "../MathModule/Vector2.js";
@@ -22,11 +23,14 @@ export default class Collider extends Component {
   }
 
 
-  public draw(ctx: CanvasRenderingContext2D) {
+  public draw(ctx: CanvasRenderingContext2D, camera: Camera) {
     let vertSize = 8;
     this.updatedPoints.forEach(point => {
       ctx.fillStyle = 'blue';
-      ctx.fillRect(point.x - vertSize / 2, point.y - vertSize / 2, vertSize, vertSize);
+      ctx.fillRect(
+        point.x - vertSize / 2 - camera.transform.position.x - camera.frameDimensions.x,
+        point.y - vertSize / 2 - camera.transform.position.y - camera.frameDimensions.y,
+        vertSize, vertSize);
     });
 
     console.log('DRAW');

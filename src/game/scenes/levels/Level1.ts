@@ -1,4 +1,5 @@
 import Level from '../../../engine/SceneModule/Level.js';
+import GameItem from '../../../engine/ObjectModule/GameItem.js';
 import Player from '../../gameItems/Player.js';
 import FovOverlay from '../../gameItems/FovOverlay.js';
 import Game from '../../../engine/CoreModule/Game.js';
@@ -9,6 +10,8 @@ import Collider from '../../../engine/ComponentsModule/Collider.js';
 import Scene from '../../../engine/SceneModule/Scene.js';
 
 export default class Level1 extends Level {
+  private background: GameItem;
+
   // Player Character
   private player: Player;
 
@@ -23,22 +26,38 @@ export default class Level1 extends Level {
   public constructor(game: Game) {
     super(game);
 
-    let sceneCentre: Vector2 = new Vector2(game.canvas.width / 2, game.canvas.height / 2);
+    // Spawning the Background
+    this.background = new GameItem(
+      // The id of the GameObject
+      "background",
+      // The Transform of the GameObject
+      new Transform(),
+      // The Transform of the GameItem
+      new Mesh(
+        // The path to the Source Image of the GameItem Mesh
+        './assets/img/background.png',
+        // The dimensions of the GameItem Mesh
+        new Vector2 (1386, 980)
+      )
+    );
 
     // Spawning the Player
     this.player = new Player(
       // The id of the GameObject
       "player",
+      // The Transform of the GameObject
       new Transform(
         // The coordinates of the Player Transform
-        sceneCentre
+        new Vector2(game.canvas.width / 2, game.canvas.height / 2)
       ),
+      // The Mesh of the GameItem
       new Mesh(
-        // The path to the Source Image of the Player Mesh
+        // The path to the Source Image of the GameItem Mesh
         './assets/img/testplayer-old.png',
-        // The dimensions of the Player Mesh
+        // The dimensions of the GameItem Mesh
         new Vector2 (32, 32)
       ),
+      // The Collider of the GamePawn
       new Collider()
     );
 
@@ -46,10 +65,9 @@ export default class Level1 extends Level {
     this.fov = new FovOverlay(
       // The id of the GameObject
       "fov",
-      new Transform(
-        // The position of the FovOverlay Transform
-        sceneCentre
-      ),
+      // The Transform of the GameObject
+      new Transform(),
+      // The Mesh of the GameItem
       new Mesh(
         // The path to the Source Image of the FovOverlay Mesh
         './assets/img/fov.png',
@@ -82,8 +100,10 @@ export default class Level1 extends Level {
     this.player.collider.updatePoints(this.player.transform);
 
     // Providing Player Control over the FovOverlay
-    this.fov.control(this.input, elapsed);
+    this.fov.control(this.input, elapsed, this.camera);
 
+    // Preserving the position of the Camera relative to the Player Character
+    this.camera.transform.position = this.player.transform.position;
     // Preserving the position of the FovOverlay relative to the Player Character
     this.fov.transform.position = this.player.transform.position;
 
@@ -100,10 +120,25 @@ export default class Level1 extends Level {
     // Clearing the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
 
+    // Drawing the Background to the Game Canvas
+    this.game.ctx.drawImage(
+      // The Source Image of the Background
+      this.background.mesh.sourceImage,
+      // The position of the frame within the Source Image
+      this.camera.transform.position.x - this.camera.frameDimensions.x / 2,
+      this.camera.transform.position.y - this.camera.frameDimensions.y / 2,
+      // The dimensions of the frame within the Source Image
+      this.camera.frameDimensions.x, this.camera.frameDimensions.y,
+      // The position of the frame on the Game Canvas
+      0, 0,
+      // The dimensions of the frame on the Game Canvas
+      this.camera.frameDimensions.x, this.camera.frameDimensions.y
+    );
+
     // Drawing the Player Character on the Game Canvas
-    this.player.mesh.draw(this.game.ctx, this.player.transform);
-    this.player.collider.draw(this.game.ctx);
+    this.player.mesh.draw(this.game.ctx, this.player.transform, this.camera);
+    this.player.collider.draw(this.game.ctx, this.camera);
     // Drawing the FovOverlay on the Game Canvas
-    this.fov.mesh.draw(this.game.ctx, this.fov.transform);
+    this.fov.mesh.draw(this.game.ctx, this.fov.transform, this.camera);
   }
 }
