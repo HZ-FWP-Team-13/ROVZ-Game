@@ -39,8 +39,7 @@ export default abstract class Scene {
    * In other words, by returning a Scene object, you can set the next scene to
    * animate.
    *
-   * @param elapsed the time in ms that has been elapsed since the previous
-   *   call
+   * @param elapsed the time in seconds that has been elapsed since the previous frame
    * @returns a new `Scene` object if the game should start animating that scene
    *   on the next animation frame. If the game should just continue with the
    *   current scene, just return `null`

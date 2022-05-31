@@ -1,6 +1,6 @@
 import Vector2 from "../MathModule/Vector2.js";
 export default class MouseListener {
-    _mousePosition = new Vector2();
+    _mousePosition = Vector2.zero;
     _mouseButtons;
     _mouseInAction = false;
     constructor() {

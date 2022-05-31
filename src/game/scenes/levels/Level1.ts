@@ -67,19 +67,20 @@ export default class Level1 extends Level {
    * In other words, by returning a Scene object, you can set the next scene to
    * animate.
    *
+   * @param elapsed the time in seconds that has been elapsed since the previous frame
    * @returns a new `Scene` object if the game should start animating that scene
    *   on the next animation frame. If the game should just continue with the
    *   current scene, just return `null`
    */
-  public update(): Scene {
+  public update(elapsed: number): Scene {
     // Providing Player Control over the Player Character
-    this.player.control(this.input);
+    this.player.control(this.input, elapsed);
 
     // We should probably do an update method in GameItem and just update all GameItems
     this.player.collider.updatePoints(this.player.transform);
 
     // Providing Player Control over the FovOverlay
-    this.fov.control(this.input);
+    this.fov.control(this.input, elapsed);
 
     // Preserving the position of the FovOverlay relative to the Player Character
     this.fov.transform.position = this.player.transform.position;

@@ -8,16 +8,9 @@ export default class Mesh extends Component {
     _animationState;
     constructor(sourceImagePath, dimensions, animationState = 0) {
         super("mesh");
-        this.loadNewImage(sourceImagePath);
+        this.sourceImagePath = sourceImagePath;
         this.dimensions = dimensions;
         this.animationState = animationState;
-    }
-    loadNewImage(sourceImagePath = null) {
-        if (sourceImagePath == null) {
-            this.sourceImagePath = sourceImagePath;
-            return this.sourceImage = Graphics.loadNewImage(this.sourceImagePath);
-        }
-        return this.sourceImage = Graphics.loadNewImage(sourceImagePath);
     }
     draw(ctx, transform) {
         ctx.save();
@@ -29,26 +22,27 @@ export default class Mesh extends Component {
     get sourceImagePath() {
         return this._sourceImagePath;
     }
-    set sourceImagePath(sourceImagePath) {
-        this._sourceImagePath = sourceImagePath;
+    set sourceImagePath(value) {
+        this._sourceImagePath = value;
+        this.sourceImage = Graphics.loadNewImage(value);
     }
     get sourceImage() {
         return this._sourceImage;
     }
-    set sourceImage(sourceImage) {
-        this._sourceImage = sourceImage;
+    set sourceImage(value) {
+        this._sourceImage = value;
     }
     get dimensions() {
         return this._dimensions;
     }
-    set dimensions(dimensions) {
-        this._dimensions = dimensions;
+    set dimensions(value) {
+        this._dimensions = value;
     }
     get animationState() {
         return this._animationState;
     }
-    set animationState(animationState) {
-        this._animationState = animationState;
+    set animationState(value) {
+        this._animationState = value;
     }
 }
 //# sourceMappingURL=Mesh.js.map

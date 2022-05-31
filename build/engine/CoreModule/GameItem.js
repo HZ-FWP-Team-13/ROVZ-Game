@@ -8,8 +8,8 @@ export default class GameItem extends GameObject {
     get transform() {
         return this._transform;
     }
-    set transform(transform) {
-        this._transform = transform;
+    set transform(value) {
+        this._transform = value;
     }
 }
 //# sourceMappingURL=GameItem.js.map

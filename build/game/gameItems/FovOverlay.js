@@ -9,7 +9,7 @@ export default class FovOverlay extends GameItem {
         this.mesh = mesh;
         this.rotationSpeed = 1;
     }
-    control(input) {
+    control(input, elapsed) {
         let toCursor = new Vector2(0, -1);
         if (input.mouse.mouseInAction) {
             toCursor = Vector2.vectorDifference(this.transform.position, input.mouse.mousePosition);
@@ -21,8 +21,8 @@ export default class FovOverlay extends GameItem {
     get mesh() {
         return this._mesh;
     }
-    set mesh(mesh) {
-        this._mesh = mesh;
+    set mesh(value) {
+        this._mesh = value;
     }
 }
 //# sourceMappingURL=FovOverlay.js.map

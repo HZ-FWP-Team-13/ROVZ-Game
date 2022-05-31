@@ -13,10 +13,10 @@ export default class Level1 extends Level {
         this.player = new Player("player", new Transform(sceneCentre), new Mesh('./assets/img/testplayer-old.png', new Vector2(32, 32)));
         this.fov = new FovOverlay("fov", new Transform(sceneCentre), new Mesh('./assets/img/fov.png', new Vector2(6000, 6000)));
     }
-    update() {
-        this.player.control(this.input);
+    update(elapsed) {
+        this.player.control(this.input, elapsed);
         this.player.collider.updatePoints(this.player.transform);
-        this.fov.control(this.input);
+        this.fov.control(this.input, elapsed);
         this.fov.transform.position = this.player.transform.position;
         this.fov.transform.rotate(this.player.lastFrameRotationDifference);
         return null;

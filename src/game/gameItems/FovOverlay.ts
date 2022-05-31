@@ -30,8 +30,9 @@ export default class FovOverlay extends GameItem {
    * Rotate this FovOverlay in response to the Player Input
    *
    * @param input of the keys when moving
+   * @param elapsed the time in seconds that has been elapsed since the previous frame
    */
-  public control(input: Input): void {
+  public control(input: Input, elapsed: number): void {
 
     // Calculating a Vector2 from the Player towards the Cursor
     let toCursor = new Vector2(0, -1);

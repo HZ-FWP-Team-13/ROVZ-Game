@@ -12,22 +12,23 @@ export default class Player extends GameItem {
         this.mesh = mesh;
         this.collider = new Collider();
         this.collider.generateRectCollider(this.mesh.dimensions.x, this.mesh.dimensions.y);
-        this.movementSpeed = 1;
-        this.rotationSpeed = 1;
+        this.movementSpeed = 150;
+        this.rotationSpeed = 100;
     }
-    control(input) {
+    control(input, elapsed) {
         const traction = input.readAxisPressed('verticalMovement');
         const steering = input.readAxisPressed('horizontalMovement');
         if (traction != 0) {
-            this.transform.translate(new Vector2(0, traction * this.movementSpeed));
+            this.transform.translate(new Vector2(0, traction * this.movementSpeed * elapsed));
         }
-        this.transform.rotate(this.lastFrameRotationDifference = steering * this.rotationSpeed * traction);
+        this.lastFrameRotationDifference = steering * this.rotationSpeed * elapsed * traction;
+        this.transform.rotate(this.lastFrameRotationDifference);
     }
     get mesh() {
         return this._mesh;
     }
-    set mesh(mesh) {
-        this._mesh = mesh;
+    set mesh(value) {
+        this._mesh = value;
     }
     get collider() {
         return this._collider;

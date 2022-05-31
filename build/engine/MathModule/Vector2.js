@@ -37,14 +37,14 @@ export default class Vector2 {
     get x() {
         return this._x;
     }
-    set x(x) {
-        this._x = x;
+    set x(value) {
+        this._x = value;
     }
     get y() {
         return this._y;
     }
-    set y(y) {
-        this._y = y;
+    set y(value) {
+        this._y = value;
     }
 }
 //# sourceMappingURL=Vector2.js.map

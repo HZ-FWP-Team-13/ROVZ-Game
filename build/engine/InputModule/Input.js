@@ -16,20 +16,20 @@ export default class Input {
             this.axises = axises;
         }
     }
-    getAxis(axisName) {
+    axis(axisName) {
         return this.axises.get(axisName);
     }
     readAxisPressed(axisName) {
-        return this.getAxis(axisName).readPressed();
+        return this.axis(axisName).readPressed();
     }
     readAxisTyped(axisName) {
-        return this.getAxis(axisName).readTyped();
+        return this.axis(axisName).readTyped();
     }
     get axises() {
         return this._axises;
     }
-    set axises(axises) {
-        this._axises = axises;
+    set axises(value) {
+        this._axises = value;
     }
     get mouse() {
         return this._mouse;

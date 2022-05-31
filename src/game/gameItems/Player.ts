@@ -34,27 +34,31 @@ export default class Player extends GameItem {
     this.collider = new Collider();
     this.collider.generateRectCollider(this.mesh.dimensions.x, this.mesh.dimensions.y);
 
-    this.movementSpeed = 1;
-    this.rotationSpeed = 1;
+    this.movementSpeed = 150;
+    this.rotationSpeed = 100;
   }
 
   /**
    * Move this Player across the Game Canvas in response to the Player Input
    *
    * @param input of the keys when moving
+   * @param elapsed the time in seconds that has been elapsed since the previous frame
    */
-  public control(input: Input): void {
+  public control(input: Input, elapsed: number): void {
     // Read the Input of the Vertical InputAxis
     const traction = input.readAxisPressed('verticalMovement');
     // Read the Input of the Horizontal InputAxis
     const steering = input.readAxisPressed('horizontalMovement');
 
-    // Traction TODO: Bind to fps
+    // Traction
     if (traction != 0) {
-      this.transform.translate(new Vector2(0, traction * this.movementSpeed)); // TODO: this.transform.translate(Vector2.up * traction * this.movementSpeed);
+      // TODO: this.transform.translate(Vector2.up * traction * this.movementSpeed * elapsed);
+      this.transform.translate(new Vector2(0, traction * this.movementSpeed * elapsed));
     }
-    // Steering TODO: Bind to fps
-    this.transform.rotate(this.lastFrameRotationDifference = steering * this.rotationSpeed * traction);
+
+    // Steering
+    this.lastFrameRotationDifference = steering * this.rotationSpeed * elapsed * traction;
+    this.transform.rotate(this.lastFrameRotationDifference);
   }
 
   /**

@@ -6,8 +6,8 @@ export default class Component {
     get type() {
         return this._type;
     }
-    set type(type) {
-        this._type = type;
+    set type(value) {
+        this._type = value;
     }
 }
 //# sourceMappingURL=Component.js.map

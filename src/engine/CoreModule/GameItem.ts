@@ -21,8 +21,9 @@ export default abstract class GameItem extends GameObject {
    * Process the Player Input to modify this GameItem
    *
    * @param input of the keys when moving
+   * @param elapsed the time in ms that has been elapsed since the previous frame
    */
-  public abstract control(input: Input): void;
+  public abstract control(input: Input, elapsed: number): void;
 
   /**
    * Get the Transform of this GameItem
