@@ -1,7 +1,7 @@
+import Scene from './Scene.js';
 import Game from '../CoreModule/Game.js';
 import InputAxis from '../InputModule/InputAxis.js';
 import KeyListener from '../InputModule/KeyListener.js';
-import Scene from './Scene.js';
 
 export default abstract class Screen extends Scene {
   /**

@@ -1,16 +1,11 @@
-import GameItem from '../../engine/CoreModule/GameItem.js';
+import GamePawn from '../../engine/ObjectModule/GamePawn.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
-import Collider from '../../engine/ComponentsModule/Collider.js';
-export default class Player extends GameItem {
-    _mesh;
-    _collider;
+export default class Player extends GamePawn {
     movementSpeed;
     rotationSpeed;
     lastFrameRotationDifference;
-    constructor(id, transform, mesh) {
-        super(id, transform);
-        this.mesh = mesh;
-        this.collider = new Collider();
+    constructor(id, transform, mesh, collider) {
+        super(id, transform, mesh, collider);
         this.collider.generateRectCollider(this.mesh.dimensions.x, this.mesh.dimensions.y);
         this.movementSpeed = 150;
         this.rotationSpeed = 100;
@@ -23,18 +18,6 @@ export default class Player extends GameItem {
         }
         this.lastFrameRotationDifference = steering * this.rotationSpeed * elapsed * traction;
         this.transform.rotate(this.lastFrameRotationDifference);
-    }
-    get mesh() {
-        return this._mesh;
-    }
-    set mesh(value) {
-        this._mesh = value;
-    }
-    get collider() {
-        return this._collider;
-    }
-    set collider(value) {
-        this._collider = value;
     }
 }
 //# sourceMappingURL=Player.js.map

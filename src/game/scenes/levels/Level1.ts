@@ -5,6 +5,7 @@ import Game from '../../../engine/CoreModule/Game.js';
 import Vector2 from '../../../engine/MathModule/Vector2.js';
 import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../../engine/ComponentsModule/Mesh.js';
+import Collider from '../../../engine/ComponentsModule/Collider.js';
 import Scene from '../../../engine/SceneModule/Scene.js';
 
 export default class Level1 extends Level {
@@ -37,7 +38,8 @@ export default class Level1 extends Level {
         './assets/img/testplayer-old.png',
         // The dimensions of the Player Mesh
         new Vector2 (32, 32)
-      )
+      ),
+      new Collider()
     );
 
     // Spawning the FovOverlay

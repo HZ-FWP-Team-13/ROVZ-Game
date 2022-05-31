@@ -1,6 +1,6 @@
+import Scene from './Scene.js';
 import InputAxis from '../InputModule/InputAxis.js';
 import KeyListener from '../InputModule/KeyListener.js';
-import Scene from './Scene.js';
 export default class Level extends Scene {
     constructor(game) {
         super(game);

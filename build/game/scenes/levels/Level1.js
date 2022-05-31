@@ -4,13 +4,14 @@ import FovOverlay from '../../gameItems/FovOverlay.js';
 import Vector2 from '../../../engine/MathModule/Vector2.js';
 import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../../engine/ComponentsModule/Mesh.js';
+import Collider from '../../../engine/ComponentsModule/Collider.js';
 export default class Level1 extends Level {
     player;
     fov;
     constructor(game) {
         super(game);
         let sceneCentre = new Vector2(game.canvas.width / 2, game.canvas.height / 2);
-        this.player = new Player("player", new Transform(sceneCentre), new Mesh('./assets/img/testplayer-old.png', new Vector2(32, 32)));
+        this.player = new Player("player", new Transform(sceneCentre), new Mesh('./assets/img/testplayer-old.png', new Vector2(32, 32)), new Collider());
         this.fov = new FovOverlay("fov", new Transform(sceneCentre), new Mesh('./assets/img/fov.png', new Vector2(6000, 6000)));
     }
     update(elapsed) {

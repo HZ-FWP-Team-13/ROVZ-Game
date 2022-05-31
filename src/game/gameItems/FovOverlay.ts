@@ -1,4 +1,4 @@
-import GameItem from '../../engine/CoreModule/GameItem.js';
+import GameItem from '../../engine/ObjectModule/GameItem.js';
 import Transform from '../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../engine/ComponentsModule/Mesh.js';
 import Input from '../../engine/InputModule/Input.js';
@@ -6,9 +6,6 @@ import Vector2 from '../../engine/MathModule/Vector2.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
 
 export default class FovOverlay extends GameItem {
-  // The Mesh of the GameItem
-  private _mesh: Mesh;
-
   // The speed of the FovOverlay rotation measured in degrees per second
   public rotationSpeed: number;
 
@@ -16,12 +13,11 @@ export default class FovOverlay extends GameItem {
    * Create a new FovOverlay instance
    *
    * @param id The id of the GameObject
-   * @param transform The Transform of the FovOverlay
-   * @param mesh The Mesh of the FovOverlay
+   * @param transform The Transform of the GameItem
+   * @param mesh The Mesh of the GameItem
    */
   public constructor(id: string, transform: Transform, mesh: Mesh) {
-    super(id, transform);
-    this.mesh = mesh;
+    super(id, transform, mesh);
 
     this.rotationSpeed = 1;
   }
@@ -46,22 +42,5 @@ export default class FovOverlay extends GameItem {
 
     // Looking around TODO: Bind to fps
     this.transform.rotation = toCursorSlope;
-  }
-
-  /**
-   * Get the Mesh of this FovOverlay
-   *
-   * @returns The Mesh of this FovOverlay
-   */
-  public get mesh(): Mesh {
-    return this._mesh;
-  }
-  /**
-   * Set the Mesh of this FovOverlay
-   *
-   * @param value The Mesh of this FovOverlay
-   */
-  public set mesh(value: Mesh) {
-    this._mesh = value;
   }
 }

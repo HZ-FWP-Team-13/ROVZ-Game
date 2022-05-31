@@ -1,5 +1,5 @@
 import Component from "../CoreModule/Component.js";
-import GameItem from "../CoreModule/GameItem.js";
+import GameItem from "../ObjectModule/GameItem.js";
 import Mathematics from "../MathModule/Mathematics.js";
 import Vector2 from "../MathModule/Vector2.js";
 import Transform from "./Transform.js";

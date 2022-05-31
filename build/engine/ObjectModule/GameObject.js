@@ -1,9 +1,15 @@
-import GameObject from "./GameObject.js";
-export default class GameItem extends GameObject {
+export default class GameObject {
+    _id;
     _transform;
     constructor(id, transform) {
-        super(id);
+        this.id = id;
         this.transform = transform;
+    }
+    get id() {
+        return this._id;
+    }
+    set id(value) {
+        this._id = value;
     }
     get transform() {
         return this._transform;
@@ -12,4 +18,4 @@ export default class GameItem extends GameObject {
         this._transform = value;
     }
 }
-//# sourceMappingURL=GameItem.js.map
+//# sourceMappingURL=GameObject.js.map
