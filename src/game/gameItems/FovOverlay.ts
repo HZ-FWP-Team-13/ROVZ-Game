@@ -31,20 +31,29 @@ export default class FovOverlay extends GameItem {
    * @param camera The Camera of this Level
    */
   public control(input: Input, elapsed: number, camera: Camera): void {
-
     // Calculating a Vector2 from the Player towards the Cursor
     let toCursor = new Vector2(0, -1);
-    if (input.mouse.mouseInAction) {
-      toCursor = Vector2.vectorsSum(input.mouse.mousePosition, camera.transform.position);
-      toCursor = Vector2.vectorDifference(toCursor, new Vector2(camera.frameDimensions.x / 2, camera.frameDimensions.y / 2));
-      toCursor = Vector2.vectorDifference(this.transform.position, toCursor);
-      toCursor.y *= -1;
+    if (input.getMouse().getMouseInAction()) {
+      toCursor = Vector2.vectorsSum(
+        input.getMouse().getMousePosition(),
+        camera.getTransform().getPosition(),
+      );
+
+      toCursor = Vector2.vectorDifference(
+        toCursor,
+        new Vector2(
+          camera.getFrameDimensions().getX() / 2, camera.getFrameDimensions().getY() / 2,
+        ),
+      );
+      toCursor = Vector2.vectorDifference(this.getTransform().getPosition(), toCursor);
+      toCursor.setY(toCursor.getY() * -1);
     }
 
     // Calculating the slope of the mentioned vector
-    const toCursorSlope = Mathematics.degrees(Math.atan(toCursor.x / toCursor.y)) + (toCursor.y > 0 ? 180 : 0);
+    const toCursorSlope = Mathematics.degrees(
+      Math.atan(toCursor.getX() / toCursor.getY())) + (toCursor.getY() > 0 ? 180 : 0);
 
     // Looking around TODO: Bind to fps
-    this.transform.rotation = toCursorSlope;
+    this.getTransform().setRotation(toCursorSlope);
   }
 }

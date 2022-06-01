@@ -1,6 +1,6 @@
 export default class Vector2 {
-    _x;
-    _y;
+    x;
+    y;
     static zero = new Vector2(0, 0);
     static one = new Vector2(1, 1);
     static up = new Vector2(0, -1);
@@ -34,17 +34,17 @@ export default class Vector2 {
     static dotProduct(a, b) {
         return a.x * b.x + a.y * b.y;
     }
-    get x() {
-        return this._x;
+    getX() {
+        return this.x;
     }
-    set x(value) {
-        this._x = value;
+    setX(value) {
+        this.x = value;
     }
-    get y() {
-        return this._y;
+    getY() {
+        return this.y;
     }
-    set y(value) {
-        this._y = value;
+    setY(value) {
+        this.y = value;
     }
 }
 //# sourceMappingURL=Vector2.js.map

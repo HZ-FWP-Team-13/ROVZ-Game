@@ -2,47 +2,48 @@ import Component from '../CoreModule/Component.js';
 import Mathematics from '../MathModule/Mathematics.js';
 import Graphics from '../GraphicsModule/Graphics.js';
 export default class Mesh extends Component {
-    _sourceImagePath;
-    _sourceImage;
-    _dimensions;
-    _animationState;
+    sourceImagePath;
+    sourceImage;
+    dimensions;
+    animationState;
     constructor(sourceImagePath, dimensions, animationState = 0) {
-        super("mesh");
+        super('mesh');
         this.sourceImagePath = sourceImagePath;
+        this.setSourceImage(Graphics.loadNewImage(this.sourceImagePath));
         this.dimensions = dimensions;
         this.animationState = animationState;
     }
     draw(ctx, transform, camera) {
         ctx.save();
-        ctx.translate(transform.position.x - (camera != undefined ? camera.transform.position.x - camera.frameDimensions.x / 2 : 0), transform.position.y - (camera != undefined ? camera.transform.position.y - camera.frameDimensions.y / 2 : 0));
-        ctx.rotate(Mathematics.radians(transform.rotation + (camera != undefined ? camera.transform.rotation : 0)));
-        ctx.drawImage(this.sourceImage, this.dimensions.x * this.animationState, 0, this.dimensions.x, this.dimensions.y, -this.dimensions.x / 2, -this.dimensions.y / 2, this.dimensions.x, this.dimensions.y);
+        ctx.translate(transform.getPosition().getX() - (camera !== undefined ? camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2 : 0), transform.getPosition().getY() - (camera !== undefined ? camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2 : 0));
+        ctx.rotate(Mathematics.radians(transform.getRotation() + (camera !== undefined ? camera.getTransform().getRotation() : 0)));
+        ctx.drawImage(this.sourceImage, this.dimensions.getX() * this.animationState, 0, this.dimensions.getX(), this.dimensions.getY(), -this.dimensions.getX() / 2, -this.dimensions.getY() / 2, this.dimensions.getX(), this.dimensions.getY());
         ctx.restore();
     }
-    get sourceImagePath() {
-        return this._sourceImagePath;
+    getSourceImagePath() {
+        return this.sourceImagePath;
     }
-    set sourceImagePath(value) {
-        this._sourceImagePath = value;
+    setSourceImagePath(value) {
+        this.sourceImagePath = value;
         this.sourceImage = Graphics.loadNewImage(value);
     }
-    get sourceImage() {
-        return this._sourceImage;
+    getSourceImage() {
+        return this.sourceImage;
     }
-    set sourceImage(value) {
-        this._sourceImage = value;
+    setSourceImage(value) {
+        this.sourceImage = value;
     }
-    get dimensions() {
-        return this._dimensions;
+    getDimensions() {
+        return this.dimensions;
     }
-    set dimensions(value) {
-        this._dimensions = value;
+    setDimensions(value) {
+        this.dimensions = value;
     }
-    get animationState() {
-        return this._animationState;
+    getAnimationState() {
+        return this.animationState;
     }
-    set animationState(value) {
-        this._animationState = value;
+    setAnimationState(value) {
+        this.animationState = value;
     }
 }
 //# sourceMappingURL=Mesh.js.map

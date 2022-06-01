@@ -1,59 +1,58 @@
-import Component from "../CoreModule/Component.js";
-import Camera from "../GraphicsModule/Camera.js";
-import GameItem from "../ObjectModule/GameItem.js";
-import Mathematics from "../MathModule/Mathematics.js";
-import Vector2 from "../MathModule/Vector2.js";
-import Transform from "./Transform.js";
+import Component from '../CoreModule/Component.js';
+import Camera from '../GraphicsModule/Camera.js';
+import Mathematics from '../MathModule/Mathematics.js';
+import Vector2 from '../MathModule/Vector2.js';
+import Transform from './Transform.js';
+import GamePawn from '../ObjectModule/GamePawn.js';
 
 export default class Collider extends Component {
+  // Contains the original points of the collider, defining it's "shape" of the collider.
+  // These points are relative to the origin of the Game Item.
+  private points: Vector2[];
 
-  private points: Vector2[]; // Contains the original points of the collider, defining it's "shape" of the collider. These points are relative to the origin of the Game Item.
+  // Contains the updated points of the mesh collider,
+  // i.e. the points when the collider is moved / rotated.
+  private updatedPoints: Vector2[];
 
-  private _updatedPoints: Vector2[]; // Contains the updated points of the mesh collider, i.e. the points when the collider is moved / rotated.
-  public get updatedPoints(): Vector2[] {
-    return this._updatedPoints;
-  }
-  public set updatedPoints(value: Vector2[]) {
-    this._updatedPoints = value;
-  }
+  private previousFrameRotation: number;
 
-  previousFrameRotation: number;
   public overlap: boolean;
 
   public constructor() {
-    super("collider");
+    super('collider');
     this.points = [];
     this.updatedPoints = [];
 
     this.overlap = false;
   }
 
-
   public draw(ctx: CanvasRenderingContext2D, camera: Camera) {
-    let vertSize = 8;
-    this.updatedPoints.forEach(point => {
+    const vertSize = 8;
+    this.updatedPoints.forEach((point) => {
+      console.log(point.getX, point.getY());
       ctx.fillStyle = 'blue';
       ctx.fillRect(
-        point.x - vertSize / 2 - camera.transform.position.x + camera.frameDimensions.x / 2,
-        point.y - vertSize / 2 - camera.transform.position.y + camera.frameDimensions.y / 2,
-        vertSize, vertSize);
+        point.getX() - vertSize / 2 - camera.getTransform().getPosition().getX() + camera.getFrameDimensions().getX() / 2,
+        point.getY() - vertSize / 2 - camera.getTransform().getPosition().getY() + camera.getFrameDimensions().getY() / 2,
+        vertSize, vertSize,
+      );
     });
 
     console.log('DRAW');
   }
 
   /**
-   * Update the positions of the points in World (Absolute) space.
+   * Update the positions of the points in the World (Absolute) space.
    *
    *
    */
   public updatePoints(transform: Transform) {
     for (let i = 0; i < this.points.length; i++) {
-      this.updatedPoints[i].x = (this.points[i].x * Math.cos(Mathematics.radians(transform.rotation))) -
-      (this.points[i].y * Math.sin(Mathematics.radians(transform.rotation))) + transform.position.x;
+      this.updatedPoints[i].setX((this.points[i].getX() * Math.cos(Mathematics.radians(transform.getRotation()))) -
+      (this.points[i].getY()* Math.sin(Mathematics.radians(transform.getRotation())) + transform.getPosition().getX()));
 
-      this.updatedPoints[i].y = (this.points[i].x * Math.sin(Mathematics.radians(transform.rotation))) +
-      (this.points[i].y * Math.cos(Mathematics.radians(transform.rotation))) + transform.position.y;
+      this.updatedPoints[i].setY((this.points[i].getX() * Math.sin(Mathematics.radians(transform.getRotation()))) +
+      (this.points[i].getY() * Math.cos(Mathematics.radians(transform.getRotation())) + transform.getPosition().getY()));
     }
   }
 
@@ -71,95 +70,101 @@ export default class Collider extends Component {
 
   /**
    * Check for collision between two colliders using SAT (Seperating Axis Theorem)
+   *
    * @param gi1 The first GameItem
    * @param gi2 The other GameItem
-   * @returns
+   * @returns boolean
    */
-  public static checkCollision(gi1: GameItem, collider1: Collider, gi2: GameItem, collider2: Collider) {
-    let g1 = gi1;
-    let c1 = collider1;
+  public static checkCollision(
+    gi1: GamePawn,
+    gi2: GamePawn,
+  ): boolean {
+    let c1 = gi1.getCollider();
 
-    let g2 = gi2;
-    let c2 = collider2;
+    let c2 = gi2.getCollider();
 
-    // TODO: perhaps find / create a static function that quickly allows us to use the Pythagorean theorem (something like: Math.pythAC(AB, BC))
+    // TODO: perhaps find/create a static function that allows to use the Pythagorean theorem
+    // (something like: Math.pythAC(AB, BC))
     // Also, it might be a good idea to make the distance check a seperate
 
-    // Before performing SAT calculations, we will first check if the colliders are anywhere near one another.
+    // Before performing SAT calculations,
+    // we will first check if the colliders are anywhere near one another.
     // First, find the 'radii' for both Colliders
 
     // Radius for collider 1
 
-    let r1 = -Infinity
+    let r1 = -Infinity;
 
-    for (let i = 0; i<c1.points.length; i++) {
-      let r = Math.sqrt(Math.pow(c1.points[i].x, 2) + Math.pow(c1.points[i].y, 2));
+    for (let i = 0; i < c1.points.length; i++) {
+      const r = Math.sqrt((c1.points[i].getX() ** 2) + (c1.points[i].getY() ** 2));
       r1 = Math.max(r1, r);
     }
 
-     // Radius of collider 2
+    // Radius of collider 2
 
-    let r2 = -Infinity
+    let r2 = -Infinity;
 
-    for (let i = 0; i<c2.points.length; i++) {
-      let r = Math.sqrt(Math.pow(c2.points[i].x, 2) + Math.pow(c2.points[i].y, 2));
+    for (let i = 0; i < c2.points.length; i++) {
+      const r = Math.sqrt((c2.points[i].getX() ** 2) + (c2.points[i].getX() ** 2));
       r2 = Math.max(r2, r);
     }
 
     // Next, find the distance between the position of the GameItems
-    let d = Math.sqrt(
-      Math.pow(gi2.transform.position.x - gi1.transform.position.x, 2)
-       + Math.pow(gi2.transform.position.y - gi1.transform.position.y, 2)
+    const d = Math.sqrt(
+      ((gi2.getTransform().getPosition().getX() - gi1.getTransform().getPosition().getX()) ** 2)
+       + ((gi2.getTransform().getPosition().getX() - gi1.getTransform().getPosition().getX() ** 2)),
     );
 
-    // If the distance between the centers is larger than their radii combined, they are not close enough to collide.
-    if (d > r1+r2) {
+    // If the distance between the centers is larger than their radii combined,
+    // they are not close enough to collide.
+    if (d > r1 + r2) {
       return false;
     }
 
     // If the the distance is smaller than the radii combined, proceed to SAT
 
     for (let shape = 0; shape < 2; shape++) {
-      // Once the test has been performed using the axes of the first shape, perform the test using the axes of the second shape.
-      if (shape == 1) {
-        g1 = gi2;
-        c1 = collider2;
+      // Once the test has been performed using the axes of the first shape,
+      // perform the test using the axes of the second shape.
+      if (shape === 1) {
+        c1 = gi2.getCollider();
 
-        g2 = gi1;
-        c2 = collider1;
+        c2 = gi1.getCollider();
       }
 
       for (let a = 0; a < c1.updatedPoints.length; a++) {
-
         // Obtain the 'next' point
-        let b = (a + 1) % c1.updatedPoints.length;
+        const b = (a + 1) % c1.updatedPoints.length;
 
         // Obtain edge normals
-        let axisProj = new Vector2(-(c1.updatedPoints[b].y - c1.updatedPoints[a].y), c1.updatedPoints[b].x - c1.updatedPoints[a].x);
+        const axisProj = new Vector2(
+          -(c1.updatedPoints[b].getY() - c1.updatedPoints[a].getY()),
+          c1.updatedPoints[b].getX() - c1.updatedPoints[a].getX(),
+        );
 
         // Work out min and max 1D points of p1
-        let min_p1 = Infinity;
-        let max_p1 = -Infinity;
+        let minP1 = Infinity;
+        let maxP1 = -Infinity;
 
         // Iterate through all the points of p1
         for (let p = 0; p < c1.updatedPoints.length; p++) {
-          let dot = Vector2.dotProduct(c1.updatedPoints[p], axisProj);
-          min_p1 = Math.min(min_p1, dot);
-          max_p1 = Math.max(max_p1, dot);
+          const dot = Vector2.dotProduct(c1.updatedPoints[p], axisProj);
+          minP1 = Math.min(minP1, dot);
+          maxP1 = Math.max(maxP1, dot);
         }
 
         // Work out min and max 1D points of p2
-        let min_c2 = Infinity;
-        let max_c2 = -Infinity;
+        let minC2 = Infinity;
+        let maxC2 = -Infinity;
 
         // Iterate through all the points of p2
         for (let p = 0; p < c2.updatedPoints.length; p++) {
-          let dot = Vector2.dotProduct(c2.updatedPoints[p], axisProj);
-          min_c2 = Math.min(min_c2, dot);
-          max_c2 = Math.max(max_c2, dot);
+          const dot = Vector2.dotProduct(c2.updatedPoints[p], axisProj);
+          minC2 = Math.min(minC2, dot);
+          maxC2 = Math.max(maxC2, dot);
         }
 
-        if (!(max_c2 >= min_p1 && max_p1 >= min_c2)) {
+        if (!(maxC2 >= minP1 && maxP1 >= minC2)) {
           c1.overlap = false;
           return false;
         }
@@ -169,7 +174,6 @@ export default class Collider extends Component {
     // console.log(true);
     return true;
   }
-
 
   /**
    * Clears all points from the Collider
@@ -191,5 +195,13 @@ export default class Collider extends Component {
     this.addNewPoint(width / 2, -height / 2);
     this.addNewPoint(width / 2, height / 2);
     this.addNewPoint(-width / 2, height / 2);
+  }
+
+  public getUpdatedPoints(): Vector2[] {
+    return this.updatedPoints;
+  }
+
+  public setUpdatedPoints(value: Vector2[]): void {
+    this.updatedPoints = value;
   }
 }

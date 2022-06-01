@@ -1,11 +1,11 @@
-import Transform from "../ComponentsModule/Transform.js";
+import Transform from '../ComponentsModule/Transform.js';
 
 export default abstract class GameObject {
   // The id of the GameObject
-  private _id: string;
+  private id: string;
 
   // The Transform of the GameObject
-  private _transform: Transform;
+  private transform: Transform;
 
   /**
    * Create a new GameObject instance
@@ -23,16 +23,17 @@ export default abstract class GameObject {
    *
    * @returns The id of the GameObject
    */
-  public get id(): string {
-    return this._id;
+  public getId(): string {
+    return this.id;
   }
+
   /**
    * Set the id of the GameObject
    *
    * @param value The id of the GameObject
    */
-  public set id(value: string) {
-    this._id = value;
+  public setId(value: string): void {
+    this.id = value;
   }
 
   /**
@@ -40,15 +41,16 @@ export default abstract class GameObject {
    *
    * @returns The Transform of this GameObject
    */
-  public get transform(): Transform {
-    return this._transform;
+  public getTransform(): Transform {
+    return this.transform;
   }
+
   /**
    * Set the Transform of this GameObject
    *
    * @param value The Transform of this GameObject
    */
-  public set transform(value: Transform) {
-    this._transform = value;
+  public setTransform(value: Transform): void {
+    this.transform = value;
   }
 }

@@ -1,12 +1,12 @@
-import GameObject from "./GameObject.js";
-import Transform from "../ComponentsModule/Transform.js";
-import Mesh from "../ComponentsModule/Mesh.js";
-import Input from "../InputModule/Input.js";
-import Camera from "../GraphicsModule/Camera.js";
+import GameObject from './GameObject.js';
+import Transform from '../ComponentsModule/Transform.js';
+import Mesh from '../ComponentsModule/Mesh.js';
+import Input from '../InputModule/Input.js';
+import Camera from '../GraphicsModule/Camera.js';
 
 export default class GameItem extends GameObject {
   // The Mesh of the GameItem
-  private _mesh: Mesh;
+  private mesh: Mesh;
 
   /**
    * Create a new GameItem instance
@@ -27,9 +27,10 @@ export default class GameItem extends GameObject {
    * @param input The Input matrix of the Scene
    * @param elapsed The time in seconds that has been elapsed since the previous frame
    * @param camera The Camera of the Level
+   * @returns null
    */
   public control(input: Input, elapsed: number, camera?: Camera): void {
-
+    return null;
   }
 
   /**
@@ -37,15 +38,16 @@ export default class GameItem extends GameObject {
    *
    * @returns The Mesh of this GameItem
    */
-  public get mesh(): Mesh {
-    return this._mesh;
+  public getMesh(): Mesh {
+    return this.mesh;
   }
+
   /**
    * Set the Mesh of this GameItem
    *
    * @param value The Mesh of this GameItem
    */
-  public set mesh(value: Mesh) {
-    this._mesh = value;
+  public setMesh(value: Mesh): void {
+    this.mesh = value;
   }
 }

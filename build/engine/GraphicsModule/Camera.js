@@ -1,16 +1,16 @@
-import GameObject from "../ObjectModule/GameObject.js";
-import Transform from "../ComponentsModule/Transform.js";
+import GameObject from '../ObjectModule/GameObject.js';
+import Transform from '../ComponentsModule/Transform.js';
 export default class Camera extends GameObject {
-    _frameDimensions;
+    frameDimensions;
     constructor(id, frameDimensions, transform = new Transform()) {
         super(id, transform);
         this.frameDimensions = frameDimensions;
     }
-    get frameDimensions() {
-        return this._frameDimensions;
+    getFrameDimensions() {
+        return this.frameDimensions;
     }
-    set frameDimensions(value) {
-        this._frameDimensions = value;
+    setFrameDimensions(value) {
+        this.frameDimensions = value;
     }
 }
 //# sourceMappingURL=Camera.js.map

@@ -6,18 +6,18 @@ export default class Player extends GamePawn {
     lastFrameRotationDifference;
     constructor(id, transform, mesh, collider) {
         super(id, transform, mesh, collider);
-        this.collider.generateRectCollider(this.mesh.dimensions.x, this.mesh.dimensions.y);
+        this.getCollider().generateRectCollider(this.getMesh().getDimensions().getX(), this.getMesh().getDimensions().getY());
         this.movementSpeed = 150;
         this.rotationSpeed = 100;
     }
     control(input, elapsed) {
         const traction = input.readAxisPressed('verticalMovement');
         const steering = input.readAxisPressed('horizontalMovement');
-        if (traction != 0) {
-            this.transform.translate(new Vector2(0, traction * this.movementSpeed * elapsed));
+        if (traction !== 0) {
+            this.getTransform().translate(new Vector2(0, traction * this.movementSpeed * elapsed));
         }
         this.lastFrameRotationDifference = steering * this.rotationSpeed * elapsed * traction;
-        this.transform.rotate(this.lastFrameRotationDifference);
+        this.getTransform().rotate(this.lastFrameRotationDifference);
     }
 }
 //# sourceMappingURL=Player.js.map

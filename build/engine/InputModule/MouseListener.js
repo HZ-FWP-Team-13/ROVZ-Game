@@ -1,25 +1,25 @@
-import Vector2 from "../MathModule/Vector2.js";
+import Vector2 from '../MathModule/Vector2.js';
 export default class MouseListener {
-    _mousePosition = Vector2.zero;
-    _mouseButtons;
-    _mouseInAction = false;
+    mousePosition = Vector2.zero;
+    mouseButtons;
+    mouseInAction = false;
     constructor() {
         window.addEventListener('mousemove', (event) => {
-            this._mousePosition = new Vector2(event.clientX, event.clientY);
-            if (this._mousePosition.x != 0 || this._mousePosition.y != 0) {
-                this._mouseInAction = true;
+            this.mousePosition = new Vector2(event.clientX, event.clientY);
+            if (this.mousePosition.getX() !== 0 || this.mousePosition.getY() !== 0) {
+                this.mouseInAction = true;
             }
-            this._mouseButtons = event.buttons;
+            this.mouseButtons = event.buttons;
         });
     }
-    get mousePosition() {
-        return this._mousePosition;
+    getMousePosition() {
+        return this.mousePosition;
     }
-    get mouseButtons() {
-        return this._mouseButtons;
+    getMouseButtons() {
+        return this.mouseButtons;
     }
-    get mouseInAction() {
-        return this._mouseInAction;
+    getMouseInAction() {
+        return this.mouseInAction;
     }
 }
 //# sourceMappingURL=MouseListener.js.map

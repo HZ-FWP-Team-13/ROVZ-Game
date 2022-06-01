@@ -1,18 +1,18 @@
 import KeyListener from './KeyListener.js';
 export default class InputAxis {
     keyListener;
-    _value = 0;
-    _positiveDescription;
+    value = 0;
+    positiveDescription;
     positiveKey;
-    _negativeDescription;
+    negativeDescription;
     negativeKey;
     positiveKeyAlt;
     negativeKeyAlt;
     constructor(positiveDescription, positiveKey, negativeDescription = '', negativeKey = 0, positiveKeyAlt = 0, negativeKeyAlt = 0) {
         this.keyListener = new KeyListener();
-        this._positiveDescription = positiveDescription;
+        this.positiveDescription = positiveDescription;
         this.positiveKey = positiveKey;
-        this._negativeDescription = negativeDescription;
+        this.negativeDescription = negativeDescription;
         this.negativeKey = negativeKey;
         this.positiveKeyAlt = positiveKeyAlt;
         this.negativeKeyAlt = negativeKeyAlt;
@@ -25,7 +25,7 @@ export default class InputAxis {
     }
     positivePressedInput() {
         let positiveDownInput = 0;
-        if (this.positiveKeyAlt != 0) {
+        if (this.positiveKeyAlt !== 0) {
             positiveDownInput = Math.max(this.pressedKeyValue(this.positiveKey), this.pressedKeyValue(this.positiveKeyAlt));
         }
         else {
@@ -35,7 +35,7 @@ export default class InputAxis {
     }
     positiveTypedInput() {
         let positiveTypedInput = 0;
-        if (this.positiveKeyAlt != 0) {
+        if (this.positiveKeyAlt !== 0) {
             positiveTypedInput = Math.max(this.typedKeyValue(this.positiveKey), this.typedKeyValue(this.positiveKeyAlt));
         }
         else {
@@ -45,10 +45,10 @@ export default class InputAxis {
     }
     negativePressedInput() {
         let negativeDownInput = 0;
-        if (this.negativeKeyAlt != 0) {
+        if (this.negativeKeyAlt !== 0) {
             negativeDownInput = Math.max(this.pressedKeyValue(this.negativeKey), this.pressedKeyValue(this.negativeKeyAlt));
         }
-        else if (this.negativeKey != 0) {
+        else if (this.negativeKey !== 0) {
             negativeDownInput = this.pressedKeyValue(this.negativeKey);
         }
         else {
@@ -58,10 +58,10 @@ export default class InputAxis {
     }
     negativeTypedInput() {
         let negativeTypedInput = 0;
-        if (this.negativeKeyAlt != 0) {
+        if (this.negativeKeyAlt !== 0) {
             negativeTypedInput = Math.max(this.typedKeyValue(this.negativeKey), this.typedKeyValue(this.negativeKeyAlt));
         }
-        else if (this.negativeKey != 0) {
+        else if (this.negativeKey !== 0) {
             negativeTypedInput = this.typedKeyValue(this.negativeKey);
         }
         else {
@@ -70,19 +70,21 @@ export default class InputAxis {
         return negativeTypedInput;
     }
     readPressed() {
-        return this._value = this.positivePressedInput() - this.negativePressedInput();
+        this.value = this.positivePressedInput() - this.negativePressedInput();
+        return this.value;
     }
     readTyped() {
-        return this._value = this.positiveTypedInput() - this.negativeTypedInput();
+        this.value = this.positiveTypedInput() - this.negativeTypedInput();
+        return this.value;
     }
-    get value() {
-        return this._value;
+    getValue() {
+        return this.value;
     }
-    get positiveDescription() {
-        return this._positiveDescription;
+    getPositiveDescription() {
+        return this.positiveDescription;
     }
-    get negativeDescription() {
-        return this._negativeDescription;
+    getNegativeDescription() {
+        return this.negativeDescription;
     }
 }
 //# sourceMappingURL=InputAxis.js.map

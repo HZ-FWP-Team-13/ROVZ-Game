@@ -7,7 +7,7 @@ import Vector2 from '../MathModule/Vector2.js';
 
 export default abstract class Level extends Scene {
   // The Camera of the Level
-  private _camera: Camera;
+  private camera: Camera;
 
   /**
    * Create a new Level instance
@@ -17,7 +17,7 @@ export default abstract class Level extends Scene {
   public constructor(game: Game) {
     super(game);
 
-    this.camera = new Camera("camera", new Vector2(game.canvas.width, game.canvas.height));
+    this.camera = new Camera('camera', new Vector2(game.canvas.width, game.canvas.height));
 
     // The default Level Input Axises
     this.input.editAxises(
@@ -26,17 +26,17 @@ export default abstract class Level extends Scene {
           'horizontalMovement',
           new InputAxis(
             'Move Right', KeyListener.KEY_D,
-            'Move Left', KeyListener.KEY_A
-          )
+            'Move Left', KeyListener.KEY_A,
+          ),
         ],
         [
           'verticalMovement',
           new InputAxis(
             'Move Up', KeyListener.KEY_W,
-            'Move Down', KeyListener.KEY_S
-          )
-        ]
-      ])
+            'Move Down', KeyListener.KEY_S,
+          ),
+        ],
+      ]),
     );
   }
 
@@ -45,15 +45,16 @@ export default abstract class Level extends Scene {
    *
    * @returns The Camera of this Level
    */
-   public get camera(): Camera {
-    return this._camera;
+  public getCamera(): Camera {
+    return this.camera;
   }
+
   /**
    * Set the Camera of this Level
    *
    * @param value The Camera of this Level
    */
-  public set camera(value: Camera) {
-    this._camera = value;
+  public setCamera(value: Camera): void {
+    this.camera = value;
   }
 }

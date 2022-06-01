@@ -1,15 +1,15 @@
-import GameItem from "./GameItem.js";
+import GameItem from './GameItem.js';
 export default class GamePawn extends GameItem {
-    _collider;
+    collider;
     constructor(id, transform, mesh, collider) {
         super(id, transform, mesh);
         this.collider = collider;
     }
-    get collider() {
-        return this._collider;
+    getCollider() {
+        return this.collider;
     }
-    set collider(value) {
-        this._collider = value;
+    setCollider(value) {
+        this.collider = value;
     }
 }
 //# sourceMappingURL=GamePawn.js.map

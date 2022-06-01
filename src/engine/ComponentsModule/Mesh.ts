@@ -7,16 +7,16 @@ import Graphics from '../GraphicsModule/Graphics.js';
 
 export default class Mesh extends Component {
   // The path to the Source Image of the Mesh
-  private _sourceImagePath: string;
+  private sourceImagePath: string;
 
   // The Source Image of the Mesh
-  private _sourceImage: HTMLImageElement;
+  private sourceImage: HTMLImageElement;
 
   // The dimensions of the Mesh
-  private _dimensions: Vector2;
+  private dimensions: Vector2;
 
   // The current animation state of the Mesh
-  private _animationState: number;
+  private animationState: number;
 
   /**
    * Create a new Mesh instance
@@ -33,8 +33,9 @@ export default class Mesh extends Component {
     // The current animation state of the Mesh
     animationState: number = 0,
   ) {
-    super("mesh");
+    super('mesh');
     this.sourceImagePath = sourceImagePath;
+    this.setSourceImage(Graphics.loadNewImage(this.sourceImagePath));
     this.dimensions = dimensions;
     this.animationState = animationState;
   }
@@ -54,24 +55,28 @@ export default class Mesh extends Component {
     // Switching the Game Canvas rendering context to the relative coordinate system
     // Moving the origin of the coordinate system to the center of the future GameItem appearance
     ctx.translate(
-      transform.position.x - (camera != undefined ? camera.transform.position.x - camera.frameDimensions.x / 2 : 0),
-      transform.position.y - (camera != undefined ? camera.transform.position.y - camera.frameDimensions.y / 2 : 0)
+      transform.getPosition().getX() - (camera !== undefined ? camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2 : 0),
+      transform.getPosition().getY() - (camera !== undefined ? camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2 : 0),
     );
     // Rotating coordinate system to correspond with this GameItem rotation
-    ctx.rotate(Mathematics.radians(transform.rotation + (camera != undefined ? camera.transform.rotation : 0)));
+    ctx.rotate(
+      Mathematics.radians(
+        transform.getRotation() + (camera !== undefined ? camera.getTransform().getRotation() : 0),
+      ),
+    );
 
     // Drawing the Mesh to the Game Canvas
     ctx.drawImage(
       // The Source Image of the Mesh
       this.sourceImage,
       // The position of the Mesh within the Source Image
-      this.dimensions.x * this.animationState, 0,
+      this.dimensions.getX() * this.animationState, 0,
       // The dimensions of the Mesh within the Source Image
-      this.dimensions.x, this.dimensions.y,
+      this.dimensions.getX(), this.dimensions.getY(),
       // The position of the Mesh on the Game Canvas
-      -this.dimensions.x / 2, -this.dimensions.y / 2,
+      -this.dimensions.getX() / 2, -this.dimensions.getY() / 2,
       // The dimensions of the Mesh on the Game Canvas
-      this.dimensions.x, this.dimensions.y
+      this.dimensions.getX(), this.dimensions.getY(),
     );
 
     // Returning the Game Canvas rendering context to the absolute coordinate system
@@ -83,17 +88,18 @@ export default class Mesh extends Component {
    *
    * @returns The path to the Source Image of this Mesh
    */
-  public get sourceImagePath(): string {
-    return this._sourceImagePath;
+  public getSourceImagePath(): string {
+    return this.sourceImagePath;
   }
+
   /**
    * Set the path to the Source Image of this Mesh
    *
    * @param value The path to the Source Image of this Mesh
    */
-  public set sourceImagePath(value: string) {
-    this._sourceImagePath = value;
-    this.sourceImage = Graphics.loadNewImage(value)
+  public setSourceImagePath(value: string): void {
+    this.sourceImagePath = value;
+    this.sourceImage = Graphics.loadNewImage(value);
   }
 
   /**
@@ -101,16 +107,17 @@ export default class Mesh extends Component {
    *
    * @returns The Source Image of this Mesh
    */
-  public get sourceImage(): HTMLImageElement {
-    return this._sourceImage;
+  public getSourceImage(): HTMLImageElement {
+    return this.sourceImage;
   }
+
   /**
    * Set the Source Image of this Mesh
    *
    * @param value The Source Image of this Mesh
    */
-  public set sourceImage(value: HTMLImageElement) {
-    this._sourceImage = value;
+  public setSourceImage(value: HTMLImageElement): void {
+    this.sourceImage = value;
   }
 
   /**
@@ -118,16 +125,17 @@ export default class Mesh extends Component {
    *
    * @returns The dimensions of this Mesh
    */
-  public get dimensions(): Vector2 {
-    return this._dimensions;
+  public getDimensions(): Vector2 {
+    return this.dimensions;
   }
+
   /**
    * Set the dimensions of this Mesh
    *
    * @param value The width of this Mesh
    */
-  public set dimensions(value: Vector2) {
-    this._dimensions = value;
+  public setDimensions(value: Vector2): void {
+    this.dimensions = value;
   }
 
   /**
@@ -135,15 +143,16 @@ export default class Mesh extends Component {
    *
    * @returns The current animation state of this Mesh
    */
-  public get animationState(): number {
-    return this._animationState;
+  public getAnimationState(): number {
+    return this.animationState;
   }
+
   /**
    * Set the current animation state of this Mesh
    *
    * @param value The current animation state of this Mesh
    */
-  public set animationState(value: number) {
-    this._animationState = value;
+  public setAnimationState(value: number): void {
+    this.animationState = value;
   }
 }

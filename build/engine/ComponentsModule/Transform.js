@@ -1,24 +1,24 @@
-import Component from "../CoreModule/Component.js";
-import Vector2 from "../MathModule/Vector2.js";
-import Mathematics from "../MathModule/Mathematics.js";
+import Component from '../CoreModule/Component.js';
+import Vector2 from '../MathModule/Vector2.js';
+import Mathematics from '../MathModule/Mathematics.js';
 export default class Transform extends Component {
-    _position;
-    _rotation;
-    _scale;
+    position;
+    rotation;
+    scale;
     constructor(position = Vector2.zero, rotation = 0, scale = Vector2.one) {
-        super("transform");
+        super('transform');
         this.position = position;
         this.rotation = rotation;
         this.scale = scale;
     }
     translate(vectorDRel = Vector2.zero) {
-        const dist = Math.sqrt(vectorDRel.x ** 2 + vectorDRel.y ** 2);
-        const moveSlopeRel = Math.atan(vectorDRel.x / vectorDRel.y);
+        const dist = Math.sqrt(vectorDRel.getX() ** 2 + vectorDRel.getY() ** 2);
+        const moveSlopeRel = Math.atan(vectorDRel.getX() / vectorDRel.getY());
         const moveSlopeAbs = moveSlopeRel + Mathematics.radians(this.rotation);
         const dXAbs = dist * Math.sin(moveSlopeAbs);
         const dYAbs = -dist * Math.cos(moveSlopeAbs);
-        let vectorDAbs = new Vector2(dXAbs, dYAbs);
-        if (vectorDRel.y < 0) {
+        const vectorDAbs = new Vector2(dXAbs, dYAbs);
+        if (vectorDRel.getY() < 0) {
             vectorDAbs.negate();
         }
         this.moveAbsolute(vectorDAbs);
@@ -29,23 +29,23 @@ export default class Transform extends Component {
     rotate(dR = 0) {
         this.rotation += dR;
     }
-    get position() {
-        return this._position;
+    getPosition() {
+        return this.position;
     }
-    set position(value) {
-        this._position = value;
+    setPosition(value) {
+        this.position = value;
     }
-    get rotation() {
-        return this._rotation;
+    getRotation() {
+        return this.rotation;
     }
-    set rotation(value) {
-        this._rotation = value;
+    setRotation(value) {
+        this.rotation = value;
     }
-    get scale() {
-        return this._scale;
+    getScale() {
+        return this.scale;
     }
-    set scale(value) {
-        this._scale = value;
+    setScale(value) {
+        this.scale = value;
     }
 }
 //# sourceMappingURL=Transform.js.map

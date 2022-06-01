@@ -3,9 +3,10 @@ import MouseListener from './MouseListener.js';
 
 export default class Input {
   // The map of InputAxises
-  private _axises: Map<string, InputAxis>;
+  private axises: Map<string, InputAxis>;
+
   // The MouseListener
-  private _mouse: MouseListener;
+  private mouse: MouseListener;
 
   /**
    * Create a new Input instance
@@ -17,7 +18,7 @@ export default class Input {
       this.editAxises(axises);
     }
 
-    this._mouse = new MouseListener();
+    this.mouse = new MouseListener();
   }
 
   /**
@@ -68,16 +69,17 @@ export default class Input {
    *
    * @returns All InputAxis of this Input
    */
-  public get axises(): Map<string, InputAxis> {
-    return this._axises;
+  public getAxises(): Map<string, InputAxis> {
+    return this.axises;
   }
+
   /**
    * Set all InputAxis of this Input
    *
    * @param value All InputAxis of this Input
    */
-  public set axises(value: Map<string, InputAxis>) {
-    this._axises = value;
+  public setAxises(value: Map<string, InputAxis>): void {
+    this.axises = value;
   }
 
   /**
@@ -85,7 +87,7 @@ export default class Input {
    *
    * @returns The Mouse
    */
-  public get mouse(): MouseListener {
-    return this._mouse;
+  public getMouse(): MouseListener {
+    return this.mouse;
   }
 }
