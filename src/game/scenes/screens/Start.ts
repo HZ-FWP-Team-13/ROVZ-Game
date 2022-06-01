@@ -2,9 +2,14 @@ import Screen from '../../../engine/SceneModule/Screen.js';
 import Game from '../../../engine/CoreModule/Game.js';
 import Scene from '../../../engine/SceneModule/Scene.js';
 import Level1 from '../levels/Level1.js';
-import Graphics from '../../../engine/GraphicsModule/Graphics.js';
+import StartMenu from '../../gameItems/menus/StartMenu.js';
+import Transform from '../../../engine/ComponentsModule/Transform.js';
+import Mesh from '../../../engine/ComponentsModule/Mesh.js';
+import Vector2 from '../../../engine/MathModule/Vector2.js';
 
 export default class Start extends Screen {
+  private startMenu: StartMenu;
+
   /**
    * Create a new Start Screen instance
    *
@@ -13,6 +18,15 @@ export default class Start extends Screen {
   public constructor(game: Game) {
     super(game);
     game.reset();
+
+    this.startMenu = new StartMenu(
+      'startmenu',
+      new Transform(),
+      new Mesh(
+        './assets/img/startscreen.png',
+        new Vector2(this.game.canvas.width, this.game.canvas.height),
+      ),
+    );
   }
 
   /**
@@ -30,6 +44,7 @@ export default class Start extends Screen {
    *   current scene, just return `null`
    */
   public update(): Scene {
+    // this.startMenu.getTransform().setPosition(this.startMenu.getTransform().setPosition());
     // TODO: The start menu
     if (this.input.readAxisTyped('Select')) {
       return new Level1(this.game);
@@ -44,7 +59,9 @@ export default class Start extends Screen {
     // Clearing the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
     // Showing the score
-    this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/startscreen.png'),
-      0, 0, this.game.canvas.width, this.game.canvas.height);
+    // this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/startscreen.png'),
+    //   0, 0, this.game.canvas.width, this.game.canvas.height);
+
+    this.startMenu.getMesh().drawMenu(this.game.ctx, this.startMenu.getTransform());
   }
 }

@@ -20,6 +20,9 @@ export default class Mesh extends Component {
         ctx.drawImage(this.sourceImage, this.dimensions.getX() * this.animationState, 0, this.dimensions.getX(), this.dimensions.getY(), -this.dimensions.getX() / 2, -this.dimensions.getY() / 2, this.dimensions.getX(), this.dimensions.getY());
         ctx.restore();
     }
+    drawMenu(ctx, positions) {
+        ctx.drawImage(this.sourceImage, positions.getPosition().getX(), positions.getPosition().getY(), this.dimensions.getX(), this.dimensions.getY());
+    }
     getSourceImagePath() {
         return this.sourceImagePath;
     }

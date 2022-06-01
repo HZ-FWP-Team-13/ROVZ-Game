@@ -84,6 +84,22 @@ export default class Mesh extends Component {
   }
 
   /**
+   * function to draw menu
+   *
+   * @param ctx canvas
+   * @param positions the x pos
+   */
+  public drawMenu(ctx: CanvasRenderingContext2D, positions: Transform): void {
+    ctx.drawImage(
+      this.sourceImage,
+      positions.getPosition().getX(),
+      positions.getPosition().getY(),
+      this.dimensions.getX(),
+      this.dimensions.getY(),
+    );
+  }
+
+  /**
    * Get the path to the Source Image of this Mesh
    *
    * @returns The path to the Source Image of this Mesh
