@@ -8,6 +8,7 @@ import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 import Collider from '../../../engine/ComponentsModule/Collider.js';
 import Scene from '../../../engine/SceneModule/Scene.js';
+import Car from '../../gameItems/Car.js';
 
 export default class Level1 extends Level {
   private background: GameItem;
@@ -17,6 +18,9 @@ export default class Level1 extends Level {
 
   // FovOverlay
   private fov: FovOverlay;
+
+  // Car
+  private car: Car;
 
   /**
    * Create a new Level1 Level instance
@@ -75,6 +79,10 @@ export default class Level1 extends Level {
         new Vector2(6000, 6000),
       ),
     );
+
+    // Spawning the Car // TODO: Refactor to make it easier to spawn many cars very quickly
+    // Without having to write long lines of code like this for a single car.
+    this.car = new Car('car', new Transform(new Vector2(100, 100), 0, new Vector2(1, 1)), new Mesh('./assets/img/car_placeholder.png', new Vector2(64, 142)), new Collider());
   }
 
   /**
@@ -96,8 +104,10 @@ export default class Level1 extends Level {
     // Providing Player Control over the Player Character
     this.player.control(this.input, elapsed);
 
+    this.car.update(elapsed);
     // We should probably do an update method in GameItem and just update all GameItems
     this.player.getCollider().updatePoints(this.player.getTransform());
+    this.car.getCollider().updatePoints(this.car.getTransform());
 
     // Providing Player Control over the FovOverlay
     this.fov.control(this.input, elapsed, this.getCamera());
@@ -126,8 +136,10 @@ export default class Level1 extends Level {
       // The Source Image of the Background
       this.background.getMesh().getSourceImage(),
       // The position of the frame within the Source Image
-      this.getCamera().getTransform().getPosition().getX() - this.getCamera().getFrameDimensions().getX() / 2,
-      this.getCamera().getTransform().getPosition().getY() - this.getCamera().getFrameDimensions().getY() / 2,
+      this.getCamera().getTransform().getPosition().getX()
+      - this.getCamera().getFrameDimensions().getX() / 2,
+      this.getCamera().getTransform().getPosition().getY()
+      - this.getCamera().getFrameDimensions().getY() / 2,
       // The dimensions of the frame within the Source Image
       this.getCamera().getFrameDimensions().getX(), this.getCamera().getFrameDimensions().getY(),
       // The position of the frame on the Game Canvas
@@ -139,6 +151,10 @@ export default class Level1 extends Level {
     // Drawing the Player Character on the Game Canvas
     this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), this.getCamera());
     this.player.getCollider().draw(this.game.ctx, this.getCamera());
+
+    this.car.getMesh().draw(this.game.ctx, this.car.getTransform(), this.getCamera());
+    this.car.getCollider().draw(this.game.ctx, this.getCamera());
+
     // Drawing the FovOverlay on the Game Canvas
     this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), this.getCamera());
   }
