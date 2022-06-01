@@ -3,7 +3,13 @@ import Mathematics from "../MathModule/Mathematics.js";
 import Vector2 from "../MathModule/Vector2.js";
 export default class Collider extends Component {
     points;
-    updatedPoints;
+    _updatedPoints;
+    get updatedPoints() {
+        return this._updatedPoints;
+    }
+    set updatedPoints(value) {
+        this._updatedPoints = value;
+    }
     previousFrameRotation;
     overlap;
     constructor() {
@@ -16,7 +22,7 @@ export default class Collider extends Component {
         let vertSize = 8;
         this.updatedPoints.forEach(point => {
             ctx.fillStyle = 'blue';
-            ctx.fillRect(point.x - vertSize / 2 - camera.transform.position.x - camera.frameDimensions.x, point.y - vertSize / 2 - camera.transform.position.y - camera.frameDimensions.y, vertSize, vertSize);
+            ctx.fillRect(point.x - vertSize / 2 - camera.transform.position.x + camera.frameDimensions.x / 2, point.y - vertSize / 2 - camera.transform.position.y + camera.frameDimensions.y / 2, vertSize, vertSize);
         });
         console.log('DRAW');
     }

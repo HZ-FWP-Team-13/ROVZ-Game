@@ -9,7 +9,13 @@ export default class Collider extends Component {
 
   private points: Vector2[]; // Contains the original points of the collider, defining it's "shape" of the collider. These points are relative to the origin of the Game Item.
 
-  private updatedPoints: Vector2[]; // Contains the updated points of the mesh collider, i.e. the points when the collider is moved / rotated.
+  private _updatedPoints: Vector2[]; // Contains the updated points of the mesh collider, i.e. the points when the collider is moved / rotated.
+  public get updatedPoints(): Vector2[] {
+    return this._updatedPoints;
+  }
+  public set updatedPoints(value: Vector2[]) {
+    this._updatedPoints = value;
+  }
 
   previousFrameRotation: number;
   public overlap: boolean;
@@ -28,8 +34,8 @@ export default class Collider extends Component {
     this.updatedPoints.forEach(point => {
       ctx.fillStyle = 'blue';
       ctx.fillRect(
-        point.x - vertSize / 2 - camera.transform.position.x - camera.frameDimensions.x,
-        point.y - vertSize / 2 - camera.transform.position.y - camera.frameDimensions.y,
+        point.x - vertSize / 2 - camera.transform.position.x + camera.frameDimensions.x / 2,
+        point.y - vertSize / 2 - camera.transform.position.y + camera.frameDimensions.y / 2,
         vertSize, vertSize);
     });
 
