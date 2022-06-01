@@ -3,9 +3,10 @@ import MouseListener from './MouseListener.js';
 
 export default class Input {
   // The map of InputAxises
-  private _axises: Map<string, InputAxis>;
+  private axises: Map<string, InputAxis>;
+
   // The MouseListener
-  private _mouse: MouseListener;
+  private mouse: MouseListener;
 
   /**
    * Create a new Input instance
@@ -17,7 +18,7 @@ export default class Input {
       this.editAxises(axises);
     }
 
-    this._mouse = new MouseListener();
+    this.mouse = new MouseListener();
   }
 
   /**
@@ -39,7 +40,7 @@ export default class Input {
    * @param axisName The given InputAxis name
    * @returns The InputAxis with the given name
    */
-  public getAxis(axisName: string): InputAxis {
+  public axis(axisName: string): InputAxis {
     return this.axises.get(axisName);
   }
 
@@ -50,7 +51,7 @@ export default class Input {
    * @returns The Pressed value of the InputAxis with the given name
    */
   public readAxisPressed(axisName: string): number {
-    return this.getAxis(axisName).readPressed();
+    return this.axis(axisName).readPressed();
   }
 
   /**
@@ -60,7 +61,7 @@ export default class Input {
    * @returns The Typed value of the InputAxis with the given name
    */
   public readAxisTyped(axisName: string): number {
-    return this.getAxis(axisName).readTyped();
+    return this.axis(axisName).readTyped();
   }
 
   /**
@@ -68,17 +69,17 @@ export default class Input {
    *
    * @returns All InputAxis of this Input
    */
-  get axises(): Map<string, InputAxis> {
-    return this._axises;
+  public getAxises(): Map<string, InputAxis> {
+    return this.axises;
   }
 
   /**
    * Set all InputAxis of this Input
    *
-   * @param axises All InputAxis of this Input
+   * @param value All InputAxis of this Input
    */
-  set axises(axises: Map<string, InputAxis>) {
-    this._axises = axises;
+  public setAxises(value: Map<string, InputAxis>): void {
+    this.axises = value;
   }
 
   /**
@@ -86,7 +87,7 @@ export default class Input {
    *
    * @returns The Mouse
    */
-  get mouse(): MouseListener {
-    return this._mouse;
+  public getMouse(): MouseListener {
+    return this.mouse;
   }
 }

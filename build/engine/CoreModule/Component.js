@@ -1,13 +1,13 @@
 export default class Component {
-    _type;
+    type;
     constructor(type) {
         this.type = type;
     }
-    get type() {
-        return this._type;
+    getType() {
+        return this.type;
     }
-    set type(type) {
-        this._type = type;
+    setType(value) {
+        this.type = value;
     }
 }
 //# sourceMappingURL=Component.js.map

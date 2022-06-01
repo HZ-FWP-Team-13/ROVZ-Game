@@ -1,6 +1,6 @@
 export default abstract class Component {
   // The type of the Component
-  private _type: string;
+  private type: string;
 
   /**
    * Create a new Component instance
@@ -16,16 +16,16 @@ export default abstract class Component {
    *
    * @returns The type of the Component
    */
-  get type(): string {
-    return this._type;
+  public getType(): string {
+    return this.type;
   }
 
   /**
    * Set the type of the Component
    *
-   * @param type The type of the Component
+   * @param value The type of the Component
    */
-  set type(type: string) {
-    this._type = type;
+  public setType(value: string): void {
+    this.type = value;
   }
 }

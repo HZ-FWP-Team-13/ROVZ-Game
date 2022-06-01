@@ -1,82 +1,79 @@
-import Component from "../CoreModule/Component.js";
-import Mathematics from "../MathModule/Mathematics.js";
-import Vector2 from "../MathModule/Vector2.js";
+import Component from '../CoreModule/Component.js';
+import Mathematics from '../MathModule/Mathematics.js';
+import Vector2 from '../MathModule/Vector2.js';
 export default class Collider extends Component {
     points;
     updatedPoints;
     previousFrameRotation;
     overlap;
     constructor() {
-        super("collider");
+        super('collider');
         this.points = [];
         this.updatedPoints = [];
         this.overlap = false;
     }
-    draw(ctx) {
-        let vertSize = 8;
-        this.updatedPoints.forEach(point => {
+    draw(ctx, camera) {
+        const vertSize = 8;
+        this.updatedPoints.forEach((point) => {
+            console.log(point.getX, point.getY());
             ctx.fillStyle = 'blue';
-            ctx.fillRect(point.x - vertSize / 2, point.y - vertSize / 2, vertSize, vertSize);
+            ctx.fillRect(point.getX() - vertSize / 2 - camera.getTransform().getPosition().getX() + camera.getFrameDimensions().getX() / 2, point.getY() - vertSize / 2 - camera.getTransform().getPosition().getY() + camera.getFrameDimensions().getY() / 2, vertSize, vertSize);
         });
         console.log('DRAW');
     }
     updatePoints(transform) {
         for (let i = 0; i < this.points.length; i++) {
-            this.updatedPoints[i].x = (this.points[i].x * Math.cos(Mathematics.radians(transform.rotation))) -
-                (this.points[i].y * Math.sin(Mathematics.radians(transform.rotation))) + transform.position.x;
-            this.updatedPoints[i].y = (this.points[i].x * Math.sin(Mathematics.radians(transform.rotation))) +
-                (this.points[i].y * Math.cos(Mathematics.radians(transform.rotation))) + transform.position.y;
+            this.updatedPoints[i].setX((this.points[i].getX() * Math.cos(Mathematics.radians(transform.getRotation()))) -
+                (this.points[i].getY() * Math.sin(Mathematics.radians(transform.getRotation())) + transform.getPosition().getX()));
+            this.updatedPoints[i].setY((this.points[i].getX() * Math.sin(Mathematics.radians(transform.getRotation()))) +
+                (this.points[i].getY() * Math.cos(Mathematics.radians(transform.getRotation())) + transform.getPosition().getY()));
         }
     }
     addNewPoint(x, y) {
         this.points.push(new Vector2(x, y));
         this.updatedPoints.push(new Vector2(x, y));
     }
-    static checkCollision(gi1, collider1, gi2, collider2) {
-        let g1 = gi1;
-        let c1 = collider1;
-        let g2 = gi2;
-        let c2 = collider2;
+    static checkCollision(gi1, gi2) {
+        let c1 = gi1.getCollider();
+        let c2 = gi2.getCollider();
         let r1 = -Infinity;
         for (let i = 0; i < c1.points.length; i++) {
-            let r = Math.sqrt(Math.pow(c1.points[i].x, 2) + Math.pow(c1.points[i].y, 2));
+            const r = Math.sqrt((c1.points[i].getX() ** 2) + (c1.points[i].getY() ** 2));
             r1 = Math.max(r1, r);
         }
         let r2 = -Infinity;
         for (let i = 0; i < c2.points.length; i++) {
-            let r = Math.sqrt(Math.pow(c2.points[i].x, 2) + Math.pow(c2.points[i].y, 2));
+            const r = Math.sqrt((c2.points[i].getX() ** 2) + (c2.points[i].getX() ** 2));
             r2 = Math.max(r2, r);
         }
-        let d = Math.sqrt(Math.pow(gi2.transform.position.x - gi1.transform.position.x, 2)
-            + Math.pow(gi2.transform.position.y - gi1.transform.position.y, 2));
+        const d = Math.sqrt(((gi2.getTransform().getPosition().getX() - gi1.getTransform().getPosition().getX()) ** 2)
+            + ((gi2.getTransform().getPosition().getX() - gi1.getTransform().getPosition().getX() ** 2)));
         if (d > r1 + r2) {
             return false;
         }
         for (let shape = 0; shape < 2; shape++) {
-            if (shape == 1) {
-                g1 = gi2;
-                c1 = collider2;
-                g2 = gi1;
-                c2 = collider1;
+            if (shape === 1) {
+                c1 = gi2.getCollider();
+                c2 = gi1.getCollider();
             }
             for (let a = 0; a < c1.updatedPoints.length; a++) {
-                let b = (a + 1) % c1.updatedPoints.length;
-                let axisProj = new Vector2(-(c1.updatedPoints[b].y - c1.updatedPoints[a].y), c1.updatedPoints[b].x - c1.updatedPoints[a].x);
-                let min_p1 = Infinity;
-                let max_p1 = -Infinity;
+                const b = (a + 1) % c1.updatedPoints.length;
+                const axisProj = new Vector2(-(c1.updatedPoints[b].getY() - c1.updatedPoints[a].getY()), c1.updatedPoints[b].getX() - c1.updatedPoints[a].getX());
+                let minP1 = Infinity;
+                let maxP1 = -Infinity;
                 for (let p = 0; p < c1.updatedPoints.length; p++) {
-                    let dot = Vector2.dotProduct(c1.updatedPoints[p], axisProj);
-                    min_p1 = Math.min(min_p1, dot);
-                    max_p1 = Math.max(max_p1, dot);
+                    const dot = Vector2.dotProduct(c1.updatedPoints[p], axisProj);
+                    minP1 = Math.min(minP1, dot);
+                    maxP1 = Math.max(maxP1, dot);
                 }
-                let min_c2 = Infinity;
-                let max_c2 = -Infinity;
+                let minC2 = Infinity;
+                let maxC2 = -Infinity;
                 for (let p = 0; p < c2.updatedPoints.length; p++) {
-                    let dot = Vector2.dotProduct(c2.updatedPoints[p], axisProj);
-                    min_c2 = Math.min(min_c2, dot);
-                    max_c2 = Math.max(max_c2, dot);
+                    const dot = Vector2.dotProduct(c2.updatedPoints[p], axisProj);
+                    minC2 = Math.min(minC2, dot);
+                    maxC2 = Math.max(maxC2, dot);
                 }
-                if (!(max_c2 >= min_p1 && max_p1 >= min_c2)) {
+                if (!(maxC2 >= minP1 && maxP1 >= minC2)) {
                     c1.overlap = false;
                     return false;
                 }
@@ -95,6 +92,12 @@ export default class Collider extends Component {
         this.addNewPoint(width / 2, -height / 2);
         this.addNewPoint(width / 2, height / 2);
         this.addNewPoint(-width / 2, height / 2);
+    }
+    getUpdatedPoints() {
+        return this.updatedPoints;
+    }
+    setUpdatedPoints(value) {
+        this.updatedPoints = value;
     }
 }
 //# sourceMappingURL=Collider.js.map

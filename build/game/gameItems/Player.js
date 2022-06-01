@@ -1,39 +1,23 @@
-import GameItem from '../../engine/CoreModule/GameItem.js';
+import GamePawn from '../../engine/ObjectModule/GamePawn.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
-import Collider from '../../engine/ComponentsModule/Collider.js';
-export default class Player extends GameItem {
-    _mesh;
-    _collider;
+export default class Player extends GamePawn {
     movementSpeed;
     rotationSpeed;
     lastFrameRotationDifference;
-    constructor(id, transform, mesh) {
-        super(id, transform);
-        this.mesh = mesh;
-        this.collider = new Collider();
-        this.collider.generateRectCollider(this.mesh.dimensions.x, this.mesh.dimensions.y);
-        this.movementSpeed = 1;
-        this.rotationSpeed = 1;
+    constructor(id, transform, mesh, collider) {
+        super(id, transform, mesh, collider);
+        this.getCollider().generateRectCollider(this.getMesh().getDimensions().getX(), this.getMesh().getDimensions().getY());
+        this.movementSpeed = 150;
+        this.rotationSpeed = 100;
     }
-    control(input) {
+    control(input, elapsed) {
         const traction = input.readAxisPressed('verticalMovement');
         const steering = input.readAxisPressed('horizontalMovement');
-        if (traction != 0) {
-            this.transform.translate(new Vector2(0, traction * this.movementSpeed));
+        if (traction !== 0) {
+            this.getTransform().translate(new Vector2(0, traction * this.movementSpeed * elapsed));
         }
-        this.transform.rotate(this.lastFrameRotationDifference = steering * this.rotationSpeed * traction);
-    }
-    get mesh() {
-        return this._mesh;
-    }
-    set mesh(mesh) {
-        this._mesh = mesh;
-    }
-    get collider() {
-        return this._collider;
-    }
-    set collider(value) {
-        this._collider = value;
+        this.lastFrameRotationDifference = steering * this.rotationSpeed * elapsed * traction;
+        this.getTransform().rotate(this.lastFrameRotationDifference);
     }
 }
 //# sourceMappingURL=Player.js.map

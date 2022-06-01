@@ -1,13 +1,18 @@
 export default class Vector2 {
+  private x : number;
 
-  private _x : number;
-  private _y : number;
+  private y : number;
 
   public static readonly zero = new Vector2(0, 0);
+
   public static readonly one = new Vector2(1, 1);
+
   public static readonly up = new Vector2(0, -1);
+
   public static readonly down = new Vector2(0, 1);
+
   public static readonly left = new Vector2(-1, 0);
+
   public static readonly right = new Vector2(1, 0);
 
   /**
@@ -27,7 +32,7 @@ export default class Vector2 {
    * @param b Vector b
    * @returns The sum of vector a and vector b
    */
-  public static vectorsSum(a : Vector2 , b : Vector2) : Vector2 {
+  public static vectorsSum(a : Vector2, b : Vector2) : Vector2 {
     return new Vector2(a.x + b.x, a.y + b.y);
   }
 
@@ -37,27 +42,29 @@ export default class Vector2 {
    * @param b Vector b
    * @returns The difference of vector a and vector b
    */
-  public static vectorDifference(a : Vector2 , b : Vector2) : Vector2  {
+  public static vectorDifference(a : Vector2, b : Vector2) : Vector2 {
     return new Vector2(a.x - b.x, a.y - b.y);
   }
 
   /**
    * Calculate the product of 2 given Vector2 (MULTIPLICATION)
+   *
    * @param a Vector a
    * @param b Vector b
    * @returns The product of vector a and vector b
    */
-  public static vectorProduct(a : Vector2 , b : Vector2) : Vector2  {
+  public static vectorProduct(a : Vector2, b : Vector2) : Vector2 {
     return new Vector2(a.x * b.x, a.y * b.y);
   }
 
   /**
    * Calculate the quotient of 2 given Vector2 (DIVISION)
+   *
    * @param a Vector a
    * @param b Vector b
    * @returns The quotient of vector a and vector b
    */
-  public static vectorQuotient(a : Vector2 , b : Vector2) : Vector2  {
+  public static vectorQuotient(a : Vector2, b : Vector2) : Vector2 {
     return new Vector2(a.x - b.x, a.y - b.y);
   }
 
@@ -82,7 +89,7 @@ export default class Vector2 {
     return new Vector2(-a.x, -a.y);
   }
 
-  public static dotProduct(a: Vector2, b: Vector2) {
+  public static dotProduct(a: Vector2, b: Vector2): number {
     return a.x * b.x + a.y * b.y;
   }
 
@@ -91,17 +98,17 @@ export default class Vector2 {
    *
    * @returns The X value of this Vector2
    */
-  get x(): number {
-    return this._x;
+  public getX(): number {
+    return this.x;
   }
 
   /**
    * Set the X value of this Vector2
    *
-   * @param x The X value of this Vector2
+   * @param value The X value of this Vector2
    */
-  set x(x: number) {
-    this._x = x;
+  public setX(value: number): void {
+    this.x = value;
   }
 
   /**
@@ -109,19 +116,16 @@ export default class Vector2 {
    *
    * @returns The Y value of this Vector2
    */
-  get y(): number {
-    return this._y;
+  public getY(): number {
+    return this.y;
   }
 
   /**
    * Set the Y value of this Vector2
    *
-   * @param y The Y value of this Vector2
+   * @param value The Y value of this Vector2
    */
-  set y(y: number) {
-    this._y = y;
+  public setY(value: number): void {
+    this.y = value;
   }
-
-
-
 }

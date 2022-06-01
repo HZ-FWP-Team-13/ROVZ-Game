@@ -1,17 +1,11 @@
-import GameItem from '../../engine/CoreModule/GameItem.js';
+import GamePawn from '../../engine/ObjectModule/GamePawn.js';
 import Transform from '../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../engine/ComponentsModule/Mesh.js';
+import Collider from '../../engine/ComponentsModule/Collider.js';
 import Input from '../../engine/InputModule/Input.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
-import Collider from '../../engine/ComponentsModule/Collider.js';
 
-export default class Player extends GameItem {
-  // The Mesh of the Player
-  private _mesh: Mesh;
-
-  // The collider of the Player
-  private _collider: Collider;
-
+export default class Player extends GamePawn {
   // The speed of the Player movement measured in pixels per second
   public movementSpeed: number;
 
@@ -25,71 +19,42 @@ export default class Player extends GameItem {
    * Create a new Player instance
    *
    * @param id The id of the GameObject
-   * @param transform The Transform of the Player
-   * @param mesh The Mesh of the Player
+   * @param transform The Transform of the GameObject
+   * @param mesh The Mesh of the GameItem
+   * @param collider The Collider of the GamePawn
    */
-  public constructor(id: string, transform: Transform, mesh: Mesh) {
-    super(id, transform);
-    this.mesh = mesh;
-    this.collider = new Collider();
-    this.collider.generateRectCollider(this.mesh.dimensions.x, this.mesh.dimensions.y);
+  public constructor(id: string, transform: Transform, mesh: Mesh, collider: Collider) {
+    super(id, transform, mesh, collider);
 
-    this.movementSpeed = 1;
-    this.rotationSpeed = 1;
+    this.getCollider().generateRectCollider(
+      this.getMesh().getDimensions().getX(),
+      this.getMesh().getDimensions().getY(),
+    );
+
+    this.movementSpeed = 150;
+    this.rotationSpeed = 100;
   }
 
   /**
    * Move this Player across the Game Canvas in response to the Player Input
    *
-   * @param input of the keys when moving
+   * @param input The Input matrix of this Level
+   * @param elapsed The time in seconds that has been elapsed since the previous frame
    */
-  public control(input: Input): void {
+  public control(input: Input, elapsed: number): void {
     // Read the Input of the Vertical InputAxis
     const traction = input.readAxisPressed('verticalMovement');
     // Read the Input of the Horizontal InputAxis
     const steering = input.readAxisPressed('horizontalMovement');
 
-    // Traction TODO: Bind to fps
-    if (traction != 0) {
-      this.transform.translate(new Vector2(0, traction * this.movementSpeed)); // TODO: this.transform.translate(Vector2.up * traction * this.movementSpeed);
+    // Traction
+    if (traction !== 0) {
+      // TODO: this.transform.translate(Vector2.up * traction * this.movementSpeed * elapsed);
+      this.getTransform().translate(new Vector2(0, traction * this.movementSpeed * elapsed));
     }
-    // Steering TODO: Bind to fps
-    this.transform.rotate(this.lastFrameRotationDifference = steering * this.rotationSpeed * traction);
-  }
 
-  /**
-   * Get the Mesh of this Player
-   *
-   * @returns The Mesh of this Player
-   */
-  get mesh(): Mesh {
-    return this._mesh;
-  }
-
-  /**
-   * Set the Mesh of this Player
-   *
-   * @param mesh The Mesh of this Player
-   */
-  set mesh(mesh: Mesh) {
-    this._mesh = mesh;
-  }
-
-  /**
-   * Get the Collider of this Player
-   *
-   * @returns The Collider of this Player
-   */
-  public get collider(): Collider {
-    return this._collider;
-  }
-
-  /**
-   * Set the Collider of this Player
-   *
-   * @param collider The Collider of this Player
-   */
-  public set collider(value: Collider) {
-    this._collider = value;
+    // Steering
+    this.lastFrameRotationDifference = steering * this.rotationSpeed * elapsed * traction;
+    this.getTransform().rotate(this.lastFrameRotationDifference);
   }
 }

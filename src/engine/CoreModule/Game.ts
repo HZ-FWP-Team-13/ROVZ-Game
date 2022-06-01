@@ -1,6 +1,6 @@
+import UserData from '../../UserData.js';
 import GameLoop from './GameLoop.js';
 import Start from '../../game/scenes/screens/Start.js';
-import UserData from '../../UserData.js';
 
 export default class Game {
   // Necessary canvas attributes
@@ -8,9 +8,9 @@ export default class Game {
 
   public readonly ctx: CanvasRenderingContext2D;
 
-  private playerStats: UserData;
+  private _playerStats: UserData;
 
-  private gameLoop: GameLoop;
+  private _gameLoop: GameLoop;
 
   /**
    * Initialize the game
@@ -31,19 +31,44 @@ export default class Game {
   }
 
   /**
-   * getUser
-   *
-   * @returns the user data
-   */
-  public getPlayerStats(): UserData {
-    return this.playerStats;
-  }
-
-  /**
    * Resets the game to the starting state.
    */
   public reset(): void {
     // Initialising the player's stats
     this.playerStats = new UserData(1, 3, 2);
+  }
+
+  /**
+   * Get the Player Stats of this Game
+   *
+   * @returns The Player Stats of this Game
+   */
+  public get playerStats(): UserData {
+    return this._playerStats;
+  }
+  /**
+   * Set the Player Stats of this Game
+   *
+   * @param value The Player Stats of this Game
+   */
+  public set playerStats(value: UserData) {
+    this._playerStats = value;
+  }
+
+  /**
+   * Get the GameLoop of this Game
+   *
+   * @returns The GameLoop of this Game
+   */
+  public get gameLoop(): GameLoop {
+    return this._gameLoop;
+  }
+  /**
+   * Set the GameLoop of this Game
+   *
+   * @param value The GameLoop of this Game
+   */
+  public set gameLoop(value: GameLoop) {
+    this._gameLoop = value;
   }
 }

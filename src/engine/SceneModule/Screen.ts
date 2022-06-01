@@ -1,7 +1,7 @@
+import Scene from './Scene.js';
 import Game from '../CoreModule/Game.js';
 import InputAxis from '../InputModule/InputAxis.js';
 import KeyListener from '../InputModule/KeyListener.js';
-import Scene from './Scene.js';
 
 export default abstract class Screen extends Scene {
   /**
@@ -19,23 +19,23 @@ export default abstract class Screen extends Scene {
           'horizontalMenuSelect',
           new InputAxis(
             'Select Right', KeyListener.KEY_RIGHT,
-            'Select Left', KeyListener.KEY_LEFT
-          )
+            'Select Left', KeyListener.KEY_LEFT,
+          ),
         ],
         [
           'verticalMenuSelect',
           new InputAxis(
             'Select Up', KeyListener.KEY_UP,
-            'Select Down', KeyListener.KEY_DOWN
-          )
+            'Select Down', KeyListener.KEY_DOWN,
+          ),
         ],
         [
           'Select',
           new InputAxis(
-            'Select', KeyListener.KEY_ENTER
-          )
-        ]
-      ])
+            'Select', KeyListener.KEY_ENTER,
+          ),
+        ],
+      ]),
     );
   }
 }

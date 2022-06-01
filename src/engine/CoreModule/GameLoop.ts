@@ -182,12 +182,12 @@ export default class GameLoop {
     if (this.mode === GameLoop.PLAY_CATCH_UP) {
       const step = 1;
       while (this.previousElapsed < timestamp && !nextScene) {
-        nextScene = this.currentScene.update(step);
+        nextScene = this.currentScene.update(step / 1000);
         this.previousElapsed += step;
       }
     } else {
       const elapsed = timestamp - this.previousElapsed;
-      nextScene = this.currentScene.update(elapsed);
+      nextScene = this.currentScene.update(elapsed / 1000);
       this.previousElapsed = timestamp;
     }
 

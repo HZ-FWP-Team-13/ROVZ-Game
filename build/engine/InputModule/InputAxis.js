@@ -1,77 +1,68 @@
 import KeyListener from './KeyListener.js';
 export default class InputAxis {
     keyListener;
-    _value = 0;
-    _positiveDescription;
+    value = 0;
+    positiveDescription;
     positiveKey;
-    _negativeDescription;
+    negativeDescription;
     negativeKey;
     positiveKeyAlt;
     negativeKeyAlt;
     constructor(positiveDescription, positiveKey, negativeDescription = '', negativeKey = 0, positiveKeyAlt = 0, negativeKeyAlt = 0) {
         this.keyListener = new KeyListener();
-        this._positiveDescription = positiveDescription;
+        this.positiveDescription = positiveDescription;
         this.positiveKey = positiveKey;
-        this._negativeDescription = negativeDescription;
+        this.negativeDescription = negativeDescription;
         this.negativeKey = negativeKey;
         this.positiveKeyAlt = positiveKeyAlt;
         this.negativeKeyAlt = negativeKeyAlt;
     }
-    get value() {
-        return this._value;
-    }
-    get positiveDescription() {
-        return this._positiveDescription;
-    }
-    get negativeDescription() {
-        return this._negativeDescription;
-    }
-    getPressedKeyValue(keyCode) {
+    pressedKeyValue(keyCode) {
         return Number(this.keyListener.isKeyDown(keyCode));
     }
-    getTypedKeyValue(keyCode) {
+    typedKeyValue(keyCode) {
         return Number(this.keyListener.isKeyTyped(keyCode));
     }
-    getPositivePressedInput() {
+    positivePressedInput() {
         let positiveDownInput = 0;
-        if (this.positiveKeyAlt != 0) {
-            positiveDownInput = Math.max(this.getPressedKeyValue(this.positiveKey), this.getPressedKeyValue(this.positiveKeyAlt));
+        if (this.positiveKeyAlt !== 0) {
+            positiveDownInput = Math.max(this.pressedKeyValue(this.positiveKey), this.pressedKeyValue(this.positiveKeyAlt));
         }
         else {
-            positiveDownInput = this.getPressedKeyValue(this.positiveKey);
+            positiveDownInput = this.pressedKeyValue(this.positiveKey);
         }
         return positiveDownInput;
     }
-    getPositiveTypedInput() {
+    positiveTypedInput() {
         let positiveTypedInput = 0;
-        if (this.positiveKeyAlt != 0) {
-            positiveTypedInput = Math.max(this.getTypedKeyValue(this.positiveKey), this.getTypedKeyValue(this.positiveKeyAlt));
+        if (this.positiveKeyAlt !== 0) {
+            positiveTypedInput = Math.max(this.typedKeyValue(this.positiveKey), this.typedKeyValue(this.positiveKeyAlt));
         }
         else {
-            positiveTypedInput = this.getTypedKeyValue(this.positiveKey);
+            positiveTypedInput = this.typedKeyValue(this.positiveKey);
         }
         return positiveTypedInput;
     }
-    getNegativePressedInput() {
+    negativePressedInput() {
         let negativeDownInput = 0;
-        if (this.negativeKeyAlt != 0) {
-            negativeDownInput = Math.max(this.getPressedKeyValue(this.negativeKey), this.getPressedKeyValue(this.negativeKeyAlt));
+        if (this.negativeKeyAlt !== 0) {
+            negativeDownInput = Math.max(this.pressedKeyValue(this.negativeKey), this.pressedKeyValue(this.negativeKeyAlt));
         }
-        else if (this.negativeKey != 0) {
-            negativeDownInput = this.getPressedKeyValue(this.negativeKey);
+        else if (this.negativeKey !== 0) {
+            negativeDownInput = this.pressedKeyValue(this.negativeKey);
         }
         else {
             negativeDownInput = 0;
         }
         return negativeDownInput;
     }
-    getNegativeTypedInput() {
+    negativeTypedInput() {
         let negativeTypedInput = 0;
-        if (this.negativeKeyAlt != 0) {
-            negativeTypedInput = Math.max(this.getTypedKeyValue(this.negativeKey), this.getTypedKeyValue(this.negativeKeyAlt));
+        if (this.negativeKeyAlt !== 0) {
+            negativeTypedInput = Math.max(this.typedKeyValue(this.negativeKey), this.typedKeyValue(this.negativeKeyAlt));
         }
-        else if (this.negativeKey != 0) {
-            negativeTypedInput = this.getTypedKeyValue(this.negativeKey);
+        else if (this.negativeKey !== 0) {
+            negativeTypedInput = this.typedKeyValue(this.negativeKey);
         }
         else {
             negativeTypedInput = 0;
@@ -79,10 +70,21 @@ export default class InputAxis {
         return negativeTypedInput;
     }
     readPressed() {
-        return this._value = this.getPositivePressedInput() - this.getNegativePressedInput();
+        this.value = this.positivePressedInput() - this.negativePressedInput();
+        return this.value;
     }
     readTyped() {
-        return this._value = this.getPositiveTypedInput() - this.getNegativeTypedInput();
+        this.value = this.positiveTypedInput() - this.negativeTypedInput();
+        return this.value;
+    }
+    getValue() {
+        return this.value;
+    }
+    getPositiveDescription() {
+        return this.positiveDescription;
+    }
+    getNegativeDescription() {
+        return this.negativeDescription;
     }
 }
 //# sourceMappingURL=InputAxis.js.map

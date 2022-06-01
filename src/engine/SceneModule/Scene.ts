@@ -4,8 +4,7 @@ import Input from '../InputModule/Input.js';
 /**
  * A superclass for objects that must be able to be animated by a `GameLoop`.
  *
- * Implementing classes must override the three methods `processInput()`,
- * `update(elapsed)` and `render()`.
+ * Implementing classes must override the three methods `update(elapsed)` and `render()`.
  *
  * @see GameLoop
  * @author BugSlayer
@@ -13,6 +12,7 @@ import Input from '../InputModule/Input.js';
 export default abstract class Scene {
   protected readonly game: Game;
 
+  // The Input matrix of the Scene
   protected input: Input;
 
   /**
@@ -40,8 +40,7 @@ export default abstract class Scene {
    * In other words, by returning a Scene object, you can set the next scene to
    * animate.
    *
-   * @param elapsed the time in ms that has been elapsed since the previous
-   *   call
+   * @param elapsed the time in seconds that has been elapsed since the previous frame
    * @returns a new `Scene` object if the game should start animating that scene
    *   on the next animation frame. If the game should just continue with the
    *   current scene, just return `null`

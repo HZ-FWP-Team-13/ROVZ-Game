@@ -1,6 +1,6 @@
-import Graphics from '../../../engine/GraphicsModule/Graphics.js';
 import Screen from '../../../engine/SceneModule/Screen.js';
 import Level1 from '../levels/Level1.js';
+import Graphics from '../../../engine/GraphicsModule/Graphics.js';
 export default class Start extends Screen {
     constructor(game) {
         super(game);
