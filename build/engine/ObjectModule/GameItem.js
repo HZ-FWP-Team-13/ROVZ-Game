@@ -5,9 +5,6 @@ export default class GameItem extends GameObject {
         super(id, transform);
         this.mesh = mesh;
     }
-    control(input, elapsed, camera) {
-        return null;
-    }
     getMesh() {
         return this.mesh;
     }

@@ -15,18 +15,22 @@ export default class Collider extends Component {
     draw(ctx, camera) {
         const vertSize = 8;
         this.updatedPoints.forEach((point) => {
-            console.log(point.getX, point.getY());
             ctx.fillStyle = 'blue';
-            ctx.fillRect(point.getX() - vertSize / 2 - camera.getTransform().getPosition().getX() + camera.getFrameDimensions().getX() / 2, point.getY() - vertSize / 2 - camera.getTransform().getPosition().getY() + camera.getFrameDimensions().getY() / 2, vertSize, vertSize);
+            const cameraPosition = camera.getTransform().getPosition();
+            const cameraDimensions = camera.getFrameDimensions();
+            ctx.fillRect(point.getX() - vertSize / 2 - cameraPosition.getX() + cameraDimensions.getX() / 2, point.getY() - vertSize / 2 - cameraPosition.getY() + cameraDimensions.getY() / 2, vertSize, vertSize);
         });
         console.log('DRAW');
     }
     updatePoints(transform) {
         for (let i = 0; i < this.points.length; i++) {
-            this.updatedPoints[i].setX((this.points[i].getX() * Math.cos(Mathematics.radians(transform.getRotation()))) -
-                (this.points[i].getY() * Math.sin(Mathematics.radians(transform.getRotation())) + transform.getPosition().getX()));
-            this.updatedPoints[i].setY((this.points[i].getX() * Math.sin(Mathematics.radians(transform.getRotation()))) +
-                (this.points[i].getY() * Math.cos(Mathematics.radians(transform.getRotation())) + transform.getPosition().getY()));
+            const transformRotation = -Mathematics.radians(transform.getRotation());
+            let newX = (this.points[i].getX() * Math.cos(transformRotation));
+            newX -= this.points[i].getY() * Math.sin(transformRotation) + transform.getPosition().getX();
+            let newY = (this.points[i].getX() * Math.sin(transformRotation));
+            newY += this.points[i].getY() * Math.cos(transformRotation) + transform.getPosition().getY();
+            this.updatedPoints[i].setX(-newX);
+            this.updatedPoints[i].setY(newY);
         }
     }
     addNewPoint(x, y) {

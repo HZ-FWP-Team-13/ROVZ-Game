@@ -26,11 +26,12 @@ export default class Level1 extends Level {
         return null;
     }
     render() {
+        const camera = this.getCamera();
         this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-        this.game.ctx.drawImage(this.background.getMesh().getSourceImage(), this.getCamera().getTransform().getPosition().getX() - this.getCamera().getFrameDimensions().getX() / 2, this.getCamera().getTransform().getPosition().getY() - this.getCamera().getFrameDimensions().getY() / 2, this.getCamera().getFrameDimensions().getX(), this.getCamera().getFrameDimensions().getY(), 0, 0, this.getCamera().getFrameDimensions().getX(), this.getCamera().getFrameDimensions().getY());
-        this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), this.getCamera());
-        this.player.getCollider().draw(this.game.ctx, this.getCamera());
-        this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), this.getCamera());
+        this.game.ctx.drawImage(this.background.getMesh().getSourceImage(), camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2, camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2, camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(), 0, 0, camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY());
+        this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
+        this.player.getCollider().draw(this.game.ctx, camera);
+        this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);
     }
 }
 //# sourceMappingURL=Level1.js.map

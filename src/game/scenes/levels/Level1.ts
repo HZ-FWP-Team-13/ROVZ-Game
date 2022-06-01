@@ -117,6 +117,7 @@ export default class Level1 extends Level {
    * Render this Level Scene to the Game Canvas
    */
   public render(): void {
+    const camera = this.getCamera();
     // Clearing the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
     // console.log(this.getCamera().getTransform().getPosition().getX());
@@ -126,20 +127,20 @@ export default class Level1 extends Level {
       // The Source Image of the Background
       this.background.getMesh().getSourceImage(),
       // The position of the frame within the Source Image
-      this.getCamera().getTransform().getPosition().getX() - this.getCamera().getFrameDimensions().getX() / 2,
-      this.getCamera().getTransform().getPosition().getY() - this.getCamera().getFrameDimensions().getY() / 2,
+      camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2,
+      camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2,
       // The dimensions of the frame within the Source Image
-      this.getCamera().getFrameDimensions().getX(), this.getCamera().getFrameDimensions().getY(),
+      camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
       // The position of the frame on the Game Canvas
       0, 0,
       // The dimensions of the frame on the Game Canvas
-      this.getCamera().getFrameDimensions().getX(), this.getCamera().getFrameDimensions().getY(),
+      camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
     );
 
     // Drawing the Player Character on the Game Canvas
-    this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), this.getCamera());
-    this.player.getCollider().draw(this.game.ctx, this.getCamera());
+    this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
+    this.player.getCollider().draw(this.game.ctx, camera);
     // Drawing the FovOverlay on the Game Canvas
-    this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), this.getCamera());
+    this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);
   }
 }

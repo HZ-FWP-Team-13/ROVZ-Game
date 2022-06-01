@@ -18,6 +18,9 @@ export default class Collider extends Component {
 
   public overlap: boolean;
 
+  /**
+   * Create a new Collider instance
+   */
   public constructor() {
     super('collider');
     this.points = [];
@@ -26,14 +29,21 @@ export default class Collider extends Component {
     this.overlap = false;
   }
 
-  public draw(ctx: CanvasRenderingContext2D, camera: Camera) {
+  /**
+   * Draw this Collider vertices on the Game Canvas for debugging
+   *
+   * @param ctx
+   * @param camera
+   */
+  public draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
     const vertSize = 8;
     this.updatedPoints.forEach((point) => {
-      console.log(point.getX, point.getY());
       ctx.fillStyle = 'blue';
+      const cameraPosition = camera.getTransform().getPosition();
+      const cameraDimensions = camera.getFrameDimensions();
       ctx.fillRect(
-        point.getX() - vertSize / 2 - camera.getTransform().getPosition().getX() + camera.getFrameDimensions().getX() / 2,
-        point.getY() - vertSize / 2 - camera.getTransform().getPosition().getY() + camera.getFrameDimensions().getY() / 2,
+        point.getX() - vertSize / 2 - cameraPosition.getX() + cameraDimensions.getX() / 2,
+        point.getY() - vertSize / 2 - cameraPosition.getY() + cameraDimensions.getY() / 2,
         vertSize, vertSize,
       );
     });
@@ -48,11 +58,17 @@ export default class Collider extends Component {
    */
   public updatePoints(transform: Transform) {
     for (let i = 0; i < this.points.length; i++) {
-      this.updatedPoints[i].setX((this.points[i].getX() * Math.cos(Mathematics.radians(transform.getRotation()))) -
-      (this.points[i].getY()* Math.sin(Mathematics.radians(transform.getRotation())) + transform.getPosition().getX()));
+      const transformRotation = -Mathematics.radians(transform.getRotation());
 
-      this.updatedPoints[i].setY((this.points[i].getX() * Math.sin(Mathematics.radians(transform.getRotation()))) +
-      (this.points[i].getY() * Math.cos(Mathematics.radians(transform.getRotation())) + transform.getPosition().getY()));
+      let newX = (this.points[i].getX() * Math.cos(transformRotation));
+      newX -= this.points[i].getY() * Math.sin(transformRotation) + transform.getPosition().getX();
+
+      let newY = (this.points[i].getX() * Math.sin(transformRotation));
+      newY += this.points[i].getY() * Math.cos(transformRotation) + transform.getPosition().getY();
+
+      this.updatedPoints[i].setX(-newX);
+
+      this.updatedPoints[i].setY(newY);
     }
   }
 
@@ -197,10 +213,18 @@ export default class Collider extends Component {
     this.addNewPoint(-width / 2, height / 2);
   }
 
+  /**
+   *
+   * @returns
+   */
   public getUpdatedPoints(): Vector2[] {
     return this.updatedPoints;
   }
 
+  /**
+   *
+   * @param value
+   */
   public setUpdatedPoints(value: Vector2[]): void {
     this.updatedPoints = value;
   }

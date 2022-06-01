@@ -28,6 +28,7 @@ export default class Vector2 {
 
   /**
    * Calculate the sum of 2 given Vector2 (ADDITION)
+   *
    * @param a Vector a
    * @param b Vector b
    * @returns The sum of vector a and vector b
@@ -38,6 +39,7 @@ export default class Vector2 {
 
   /**
    * Calculate the difference between 2 given Vector2 (SUBTRACTION)
+   *
    * @param a Vector a
    * @param b Vector b
    * @returns The difference of vector a and vector b
@@ -89,6 +91,13 @@ export default class Vector2 {
     return new Vector2(-a.x, -a.y);
   }
 
+  /**
+   * Calculate the dot product of 2 given Vector2
+   *
+   * @param a Vector a
+   * @param b Vector b
+   * @returns The dot product of 2 given Vector2
+   */
   public static dotProduct(a: Vector2, b: Vector2): number {
     return a.x * b.x + a.y * b.y;
   }
