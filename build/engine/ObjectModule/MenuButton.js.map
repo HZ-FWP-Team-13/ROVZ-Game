@@ -1,0 +1,1 @@
+{"version":3,"file":"MenuButton.js","sourceRoot":"","sources":["../../../src/engine/ObjectModule/MenuButton.ts"],"names":[],"mappings":"AAGA,OAAO,QAAQ,MAAM,eAAe,CAAC;AAErC,MAAM,CAAC,OAAO,OAAO,UAAW,SAAQ,QAAQ;IAW9C,YAAmB,EAAU,EAAE,SAAoB,EAAE,IAAU,EAAE,QAAkB;QACjF,KAAK,CAAC,EAAE,EAAE,SAAS,EAAE,IAAI,EAAE,QAAQ,CAAC,CAAC;IACvC,CAAC;CACF"}

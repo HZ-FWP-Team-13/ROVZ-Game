@@ -87,7 +87,7 @@ export default class Mesh extends Component {
    * function to draw menu
    *
    * @param ctx canvas
-   * @param positions the x pos
+   * @param positions the positions of the gameitem
    */
   public drawMenu(ctx: CanvasRenderingContext2D, positions: Transform): void {
     ctx.drawImage(
