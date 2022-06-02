@@ -2,9 +2,12 @@ import Transform from '../ComponentsModule/Transform.js';
 import Mesh from '../ComponentsModule/Mesh.js';
 import Collider from '../ComponentsModule/Collider.js';
 import GamePawn from './GamePawn.js';
+import MouseCollider from '../ComponentsModule/MouseCollider';
 
 export default class MenuButton extends GamePawn {
   // The collider of the GamePawn
+
+  private mouseCollider : MouseCollider;
 
   /**
    * Create a new GameItem instance
@@ -16,5 +19,15 @@ export default class MenuButton extends GamePawn {
    */
   public constructor(id: string, transform: Transform, mesh: Mesh, collider: Collider) {
     super(id, transform, mesh, collider);
+    this.mouseCollider = new MouseCollider();
+  }
+
+  /**
+   * Get the Collider of this GamePawn
+   *
+   * @returns The Collider of this GamePawn
+   */
+  public getMouseCollider(): MouseCollider {
+    return this.mouseCollider;
   }
 }

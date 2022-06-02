@@ -7,12 +7,15 @@ import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 import Vector2 from '../../../engine/MathModule/Vector2.js';
 import MenuButton from '../../../engine/ObjectModule/MenuButton.js';
-import Collider from '../../../engine/ComponentsModule/Collider.js';
+import MouseCollider from '../../../engine/ComponentsModule/MouseCollider.js';
+import MouseListener from '../../../engine/InputModule/MouseListener.js';
 
 export default class Start extends Screen {
   private startMenu: StartMenu;
 
   private menuButton : MenuButton;
+
+  private mouseListener : MouseListener;
 
   /**
    * Create a new Start Screen instance
@@ -37,8 +40,10 @@ export default class Start extends Screen {
       new Transform(),
       new Mesh('./assets/img/playbutton.png',
         new Vector2(512, 512)),
-      new Collider(),
+      new MouseCollider(),
     );
+
+    this.mouseListener = new MouseListener()
   }
 
   /**
@@ -61,7 +66,7 @@ export default class Start extends Screen {
     if (this.input.readAxisTyped('Select')) {
       return new Level1(this.game);
     }
-    if (this.startMenu.logClicks()) {
+    if (this.startMenu.logClicks()) && (this.menuButton.getMouseCollider().mouseCollider(this.menuButton, this.mouseListener)); {
       return new Level1(this.game);
     }
     return null;
