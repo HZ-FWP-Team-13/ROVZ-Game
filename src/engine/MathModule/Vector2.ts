@@ -103,6 +103,16 @@ export default class Vector2 {
   }
 
   /**
+   * Obtain the magnitude of a given vector
+   *
+   * @param vector The vector you want to obtain the magnitude of
+   * @returns The magnitude of a vector
+   */
+  public static magnitude(vector: Vector2) : number {
+    return Math.sqrt((vector.getX() ** 2) + (vector.getY() ** 2));
+  }
+
+  /**
    * Get the X value of this Vector2
    *
    * @returns The X value of this Vector2

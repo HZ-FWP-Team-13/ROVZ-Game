@@ -15,5 +15,8 @@ export default class Path {
     addPoint(point) {
         this.points.push(point);
     }
+    getPoints() {
+        return this.points;
+    }
 }
 //# sourceMappingURL=Path.js.map

@@ -7,19 +7,25 @@ import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 import Collider from '../../../engine/ComponentsModule/Collider.js';
 import Car from '../../gameItems/Car.js';
+import Path from '../../../engine/AIModule/Path.js';
 export default class Level1 extends Level {
     background;
     player;
     fov;
     cars;
-    carTriggers;
+    path;
     constructor(game) {
         super(game);
         this.background = new GameItem('background', new Transform(), new Mesh('./assets/img/background.png', new Vector2(1386, 980)));
         this.player = new Player('player', new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2)), new Mesh('./assets/img/testplayer-old.png', new Vector2(32, 32)), new Collider());
         this.fov = new FovOverlay('fov', new Transform(), new Mesh('./assets/img/fov.png', new Vector2(6000, 6000)));
+        this.path = new Path();
+        let p = this.path;
+        p.addPoint(new Vector2(0, 200));
+        p.addPoint(new Vector2(600, 300));
+        p.addPoint(new Vector2(-100, 500));
         this.cars = [];
-        this.cars.push(new Car('car1', new Transform(new Vector2(300, 300), 180, new Vector2(1, 1)), new Mesh('', new Vector2(100, 100), 0), new Collider()));
+        this.cars.push(new Car('car1', this.path, 0, new Mesh('assets/img/car_placeholder.png', new Vector2(60, 133), 0), new Collider()));
     }
     update(elapsed) {
         this.player.update(elapsed);
@@ -40,6 +46,7 @@ export default class Level1 extends Level {
         this.cars.forEach((car) => {
             car.getMesh().draw(this.game.ctx, car.getTransform(), camera);
         });
+        this.path.draw(this.game.ctx, camera);
         this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
         this.player.getCollider().draw(this.game.ctx, camera);
         this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);

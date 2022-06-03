@@ -9,7 +9,7 @@ import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 import Collider from '../../../engine/ComponentsModule/Collider.js';
 import Scene from '../../../engine/SceneModule/Scene.js';
 import Car from '../../gameItems/Car.js';
-import CarTrigger from '../../gameItems/CarTrigger.js';
+import Path from '../../../engine/AIModule/Path.js';
 
 export default class Level1 extends Level {
   private background: GameItem;
@@ -23,8 +23,8 @@ export default class Level1 extends Level {
   // Car Array
   private cars: Car[];
 
-  // Trigger Array
-  private carTriggers: CarTrigger[];
+  // Path
+  private path: Path;
 
   /**
    * Create a new Level1 Level instance
@@ -84,11 +84,19 @@ export default class Level1 extends Level {
       ),
     );
 
+    this.path = new Path();
+
+    // Car path
+    let p = this.path;
+    p.addPoint(new Vector2(0, 200));
+    p.addPoint(new Vector2(600, 300));
+    p.addPoint(new Vector2(-100, 500));
+
     // Create cars
     this.cars = [];
-    this.cars.push(new Car('car1', new Transform(new Vector2(300, 300), 180, new Vector2(1, 1)), new Mesh('', new Vector2(100, 100), 0), new Collider()));
-
-    // Car triggers
+    this.cars.push(
+      new Car('car1', this.path, 0, new Mesh('assets/img/car_placeholder.png', new Vector2(60, 133), 0), new Collider()),
+    );
   }
 
   /**
@@ -153,9 +161,13 @@ export default class Level1 extends Level {
       camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
     );
 
+    // Draw the car
     this.cars.forEach((car) => {
       car.getMesh().draw(this.game.ctx, car.getTransform(), camera);
     });
+
+    // Draw the path
+    this.path.draw(this.game.ctx, camera);
 
     // Drawing the Player Character on the Game Canvas
     this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);

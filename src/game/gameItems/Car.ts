@@ -26,8 +26,10 @@ export default class Car extends GamePawn {
    * @param collider The Collider of the GamePawn
    */
   public constructor(id: string, path: Path, startPoint: number, mesh: Mesh, collider: Collider) {
-    let transform = new Transform(path.getPoints()[startPoint], );
+    const transform = new Transform(path.getPoints()[startPoint], 0, new Vector2(1, 1));
     super(id, transform, mesh, collider);
+
+    this.path = path;
 
     this.getCollider().generateRectCollider(
       this.getMesh().getDimensions().getX(),
@@ -44,17 +46,29 @@ export default class Car extends GamePawn {
   /* eslint-disable */
 
   /**
-   * AGFFE
-   * @param elapsed AAA
+   *
+   * @param elapsed
    */
   public update(elapsed: number) {
 
     let points = this.path.getPoints();
     for (let i = 0; i < points.length; i++) {
-      if(this.getTransform())
+      if(this.getTransform().getPosition() === points[i]) {
+        // Set the rotation of the car to align with the edge between this point and the next
 
+        // First, get the vector of the edge between this point and the next
+        let u = new Vector2(points[i+1].getX() - points[i].getX(), points[i+1].getY() - points[i].getY());
+
+        // Next, create a vector from the current point going up
+        let v = new Vector2(0, points[i+1].getY() - points[i].getY());
+
+        let angle = Math.acos(Vector2.dotProduct(u, v) / (Vector2.magnitude(u) * Vector2.magnitude(v)))
+
+        this.getTransform().setRotation(angle);
+      }
     }
 
+    this.getTransform().translate(new Vector2(0, 1));
   }
 
 
