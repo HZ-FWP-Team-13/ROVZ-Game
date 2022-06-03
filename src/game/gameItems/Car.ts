@@ -53,18 +53,27 @@ export default class Car extends GamePawn {
 
     let points = this.path.getPoints();
     for (let i = 0; i < points.length; i++) {
-      if(this.getTransform().getPosition() === points[i]) {
+
+      let tx = this.getTransform().getPosition().getX();
+      let ty = this.getTransform().getPosition().getY();
+      let px = points[i].getX();
+      let py = points[i].getY();
+
+      if(
+        (tx >= px-5 && tx <= px+5) && (ty <= py+5 && ty >= py-5)
+      ) {
         // Set the rotation of the car to align with the edge between this point and the next
 
         // First, get the vector of the edge between this point and the next
         let u = new Vector2(points[i+1].getX() - points[i].getX(), points[i+1].getY() - points[i].getY());
 
         // Next, create a vector from the current point going up
-        let v = new Vector2(0, points[i+1].getY() - points[i].getY());
+        let v = new Vector2(0, -(points[i+1].getY() - points[i].getY()));
 
         let angle = Math.acos(Vector2.dotProduct(u, v) / (Vector2.magnitude(u) * Vector2.magnitude(v)))
 
-        this.getTransform().setRotation(angle);
+        this.getTransform().setRotation(Mathematics.degrees(angle));
+        console.log(angle);
       }
     }
 
