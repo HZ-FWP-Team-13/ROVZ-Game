@@ -8,6 +8,8 @@ import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 import Collider from '../../../engine/ComponentsModule/Collider.js';
 import Scene from '../../../engine/SceneModule/Scene.js';
+import Car from '../../gameItems/Car.js';
+import CarTrigger from '../../gameItems/CarTrigger.js';
 
 export default class Level1 extends Level {
   private background: GameItem;
@@ -17,6 +19,12 @@ export default class Level1 extends Level {
 
   // FovOverlay
   private fov: FovOverlay;
+
+  // Car Array
+  private cars: Car[];
+
+  // Trigger Array
+  private carTriggers: CarTrigger[];
 
   /**
    * Create a new Level1 Level instance
@@ -75,6 +83,12 @@ export default class Level1 extends Level {
         new Vector2(6000, 6000),
       ),
     );
+
+    // Create cars
+    this.cars = [];
+    this.cars.push(new Car('car1', new Transform(new Vector2(300, 300), 180, new Vector2(1, 1)), new Mesh('', new Vector2(100, 100), 0), new Collider()));
+
+    // Car triggers
   }
 
   /**
@@ -93,13 +107,10 @@ export default class Level1 extends Level {
    *   current scene, just return `null`
    */
   public update(elapsed: number): Scene {
-    // Providing Player Control over the Player Character
+    this.player.update(elapsed);
+
+    // Providing Player Control over the Player Character and FOV
     this.player.control(this.input, elapsed);
-
-    // We should probably do an update method in GameItem and just update all GameItems
-    this.player.getCollider().updatePoints(this.player.getTransform());
-
-    // Providing Player Control over the FovOverlay
     this.fov.control(this.input, elapsed, this.getCamera());
 
     // Preserving the position of the Camera relative to the Player Character
@@ -109,6 +120,11 @@ export default class Level1 extends Level {
 
     // Preserving the rotation of the FovOverlay relative to the Player Character
     this.fov.getTransform().rotate(this.player.lastFrameRotationDifference);
+
+    // Update all cars
+    this.cars.forEach((car) => {
+      car.update(elapsed);
+    });
 
     return null;
   }
@@ -136,6 +152,10 @@ export default class Level1 extends Level {
       // The dimensions of the frame on the Game Canvas
       camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
     );
+
+    this.cars.forEach((car) => {
+      car.getMesh().draw(this.game.ctx, car.getTransform(), camera);
+    });
 
     // Drawing the Player Character on the Game Canvas
     this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
