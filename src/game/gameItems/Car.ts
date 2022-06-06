@@ -39,7 +39,7 @@ export default class Car extends GamePawn {
     // TODO: All of this should be able to be changed on a per-car basis.
     // TODO: Values are assigned for testing purposes, this should be changed later.
     this.speedRange = new Vector2(-50, 150);
-    this.speed = 150;
+    this.speed = 300;
     this.targetSpeed = 150;
     this.acceleration = 20;
   }
@@ -70,8 +70,8 @@ export default class Car extends GamePawn {
         // First, get the vector of the edge between this point and the next
         let u = new Vector2(points[b].getX() - points[i].getX(), points[b].getY() - points[i].getY());
 
-        // Next, create a vector from the current point going up
-        let v = new Vector2(0, -(points[b].getY() - points[i].getY()));
+        // Next, create a vector that goes up (or is it down???)
+        let v = new Vector2(0, -1);
 
         let angle = Mathematics.degrees(Math.acos(Vector2.dotProduct(u, v) / (Vector2.magnitude(u) * Vector2.magnitude(v))));
 
@@ -81,7 +81,7 @@ export default class Car extends GamePawn {
       }
     }
 
-    this.getTransform().translate(new Vector2(0, 1));
+    this.getTransform().translate(new Vector2(0, this.speed / 100));
   }
 
 

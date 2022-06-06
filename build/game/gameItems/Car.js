@@ -14,7 +14,7 @@ export default class Car extends GamePawn {
         this.path = path;
         this.getCollider().generateRectCollider(this.getMesh().getDimensions().getX(), this.getMesh().getDimensions().getY());
         this.speedRange = new Vector2(-50, 150);
-        this.speed = 150;
+        this.speed = 300;
         this.targetSpeed = 150;
         this.acceleration = 20;
     }
@@ -28,14 +28,14 @@ export default class Car extends GamePawn {
             if ((tx >= px - 5 && tx <= px + 5) && (ty <= py + 5 && ty >= py - 5)) {
                 const b = (i + 1) % points.length;
                 let u = new Vector2(points[b].getX() - points[i].getX(), points[b].getY() - points[i].getY());
-                let v = new Vector2(0, -(points[b].getY() - points[i].getY()));
+                let v = new Vector2(0, -1);
                 let angle = Mathematics.degrees(Math.acos(Vector2.dotProduct(u, v) / (Vector2.magnitude(u) * Vector2.magnitude(v))));
                 if (Vector2.crossProduct(u, v) > 0)
                     angle = 360 - angle;
                 this.getTransform().setRotation((angle));
             }
         }
-        this.getTransform().translate(new Vector2(0, 1));
+        this.getTransform().translate(new Vector2(0, this.speed / 100));
     }
 }
 //# sourceMappingURL=Car.js.map
