@@ -103,6 +103,17 @@ export default class Vector2 {
   }
 
   /**
+   * Calculate the cross product of 2 given Vector2
+   *
+   * @param a One Vector2
+   * @param b The other Vector2
+   * @returns The cross product of the 2 Vector2
+   */
+  public static crossProduct(a: Vector2, b: Vector2): number {
+    return a.x * b.y + a.y * b.x;
+  }
+
+  /**
    * Obtain the magnitude of a given vector
    *
    * @param vector The vector you want to obtain the magnitude of

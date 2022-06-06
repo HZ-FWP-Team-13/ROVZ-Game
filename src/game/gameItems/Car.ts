@@ -21,7 +21,8 @@ export default class Car extends GamePawn {
    * Create a new Player instance
    *
    * @param id The id of the GameObject
-   * @param transform The Transform of the GameObject
+   * @param path path to follow
+   * @param startPoint starting point on the path
    * @param mesh The Mesh of the GameItem
    * @param collider The Collider of the GamePawn
    */
@@ -62,18 +63,21 @@ export default class Car extends GamePawn {
       if(
         (tx >= px-5 && tx <= px+5) && (ty <= py+5 && ty >= py-5)
       ) {
+
+        const b = (i + 1) % points.length;
         // Set the rotation of the car to align with the edge between this point and the next
 
         // First, get the vector of the edge between this point and the next
-        let u = new Vector2(points[i+1].getX() - points[i].getX(), points[i+1].getY() - points[i].getY());
+        let u = new Vector2(points[b].getX() - points[i].getX(), points[b].getY() - points[i].getY());
 
         // Next, create a vector from the current point going up
-        let v = new Vector2(0, -(points[i+1].getY() - points[i].getY()));
+        let v = new Vector2(0, -(points[b].getY() - points[i].getY()));
 
-        let angle = Math.acos(Vector2.dotProduct(u, v) / (Vector2.magnitude(u) * Vector2.magnitude(v)))
+        let angle = Mathematics.degrees(Math.acos(Vector2.dotProduct(u, v) / (Vector2.magnitude(u) * Vector2.magnitude(v))));
 
-        this.getTransform().setRotation(Mathematics.degrees(angle));
-        console.log(angle);
+        if (Vector2.crossProduct(u, v) > 0) angle = 360 - angle
+
+        this.getTransform().setRotation((angle));
       }
     }
 

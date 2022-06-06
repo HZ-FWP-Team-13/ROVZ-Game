@@ -26,11 +26,13 @@ export default class Car extends GamePawn {
             let px = points[i].getX();
             let py = points[i].getY();
             if ((tx >= px - 5 && tx <= px + 5) && (ty <= py + 5 && ty >= py - 5)) {
-                let u = new Vector2(points[i + 1].getX() - points[i].getX(), points[i + 1].getY() - points[i].getY());
-                let v = new Vector2(0, -(points[i + 1].getY() - points[i].getY()));
-                let angle = Math.acos(Vector2.dotProduct(u, v) / (Vector2.magnitude(u) * Vector2.magnitude(v)));
-                this.getTransform().setRotation(Mathematics.degrees(angle));
-                console.log(angle);
+                const b = (i + 1) % points.length;
+                let u = new Vector2(points[b].getX() - points[i].getX(), points[b].getY() - points[i].getY());
+                let v = new Vector2(0, -(points[b].getY() - points[i].getY()));
+                let angle = Mathematics.degrees(Math.acos(Vector2.dotProduct(u, v) / (Vector2.magnitude(u) * Vector2.magnitude(v))));
+                if (Vector2.crossProduct(u, v) > 0)
+                    angle = 360 - angle;
+                this.getTransform().setRotation((angle));
             }
         }
         this.getTransform().translate(new Vector2(0, 1));
