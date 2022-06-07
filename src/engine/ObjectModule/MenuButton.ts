@@ -2,7 +2,7 @@ import Transform from '../ComponentsModule/Transform.js';
 import Mesh from '../ComponentsModule/Mesh.js';
 import Collider from '../ComponentsModule/Collider.js';
 import GamePawn from './GamePawn.js';
-import MouseCollider from '../ComponentsModule/MouseCollider';
+import MouseCollider from '../ComponentsModule/MouseCollider.js';
 
 export default class MenuButton extends GamePawn {
   // The collider of the GamePawn

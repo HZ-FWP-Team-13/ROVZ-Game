@@ -1,5 +1,5 @@
 import GamePawn from './GamePawn.js';
-import MouseCollider from '../ComponentsModule/MouseCollider';
+import MouseCollider from '../ComponentsModule/MouseCollider.js';
 export default class MenuButton extends GamePawn {
     mouseCollider;
     constructor(id, transform, mesh, collider) {

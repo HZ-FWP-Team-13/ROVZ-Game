@@ -15,7 +15,7 @@ export default class Start extends Screen {
         super(game);
         game.reset();
         this.startMenu = new StartMenu('startmenu', new Transform(), new Mesh('./assets/img/startscreen.png', new Vector2(this.game.canvas.width, this.game.canvas.height)));
-        this.menuButton = new MenuButton('menubutton', new Transform(), new Mesh('./assets/img/playbutton.png', new Vector2(512, 512)), new MouseCollider());
+        this.menuButton = new MenuButton('menubutton', new Transform(), new Mesh('./assets/img/play.png', new Vector2(512, 512)), new MouseCollider());
         this.mouseListener = new MouseListener();
     }
     update() {

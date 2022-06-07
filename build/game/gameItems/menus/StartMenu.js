@@ -12,7 +12,7 @@ export default class StartMenu extends Menu {
     logClicks() {
         if (this.input.getMouse().getMouseButtons() === 1) {
             this.mouseListener.getMouseInAction();
-            console.log('yay you clocked');
+            console.log('yay you clicked');
             return true;
         }
         return false;

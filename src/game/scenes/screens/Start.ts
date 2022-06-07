@@ -38,7 +38,7 @@ export default class Start extends Screen {
     this.menuButton = new MenuButton(
       'menubutton',
       new Transform(),
-      new Mesh('./assets/img/playbutton.png',
+      new Mesh('./assets/img/play.png',
         new Vector2(512, 512)),
       new MouseCollider(),
     );
