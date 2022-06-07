@@ -43,7 +43,7 @@ export default class Start extends Screen {
       new MouseCollider(),
     );
 
-    this.mouseListener = new MouseListener()
+    this.mouseListener = new MouseListener();
   }
 
   /**
