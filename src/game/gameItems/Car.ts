@@ -85,5 +85,4 @@ export default class Car extends GamePawn {
   }
 
   // TODO: ACCESSORS
-  // TODO: INTERACTION WITH TRIGGERS
 }
