@@ -66,7 +66,8 @@ export default class Start extends Screen {
     if (this.input.readAxisTyped('Select')) {
       return new Level1(this.game);
     }
-    if (this.startMenu.logClicks()) && (this.menuButton.getMouseCollider().mouseCollider(this.menuButton, this.mouseListener)); {
+    if (this.startMenu.logClicks()
+    && (this.menuButton.getMouseCollider().mouseCollides(this.menuButton, this.mouseListener))) {
       return new Level1(this.game);
     }
     return null;

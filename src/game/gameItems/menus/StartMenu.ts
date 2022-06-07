@@ -3,7 +3,6 @@ import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 import Input from '../../../engine/InputModule/Input.js';
 import MouseListener from '../../../engine/InputModule/MouseListener.js';
-import MenuButton from '../../../engine/ObjectModule/MenuButton.js';
 
 export default class StartMenu extends Menu {
   private input: Input;
