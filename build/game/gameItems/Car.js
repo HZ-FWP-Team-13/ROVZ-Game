@@ -19,23 +19,25 @@ export default class Car extends GamePawn {
         this.acceleration = 20;
     }
     update(elapsed) {
-        let points = this.path.getPoints();
+        const points = this.path.getPoints();
         for (let i = 0; i < points.length; i++) {
-            let tx = this.getTransform().getPosition().getX();
-            let ty = this.getTransform().getPosition().getY();
-            let px = points[i].getX();
-            let py = points[i].getY();
+            const tx = this.getTransform().getPosition().getX();
+            const ty = this.getTransform().getPosition().getY();
+            const px = points[i].getX();
+            const py = points[i].getY();
             if ((tx >= px - 5 && tx <= px + 5) && (ty <= py + 5 && ty >= py - 5)) {
                 const b = (i + 1) % points.length;
-                let u = new Vector2(points[b].getX() - points[i].getX(), points[b].getY() - points[i].getY());
-                let v = new Vector2(0, -1);
-                let angle = Mathematics.degrees(Math.acos(Vector2.dotProduct(u, v) / (Vector2.magnitude(u) * Vector2.magnitude(v))));
-                if (Vector2.crossProduct(u, v) > 0)
+                const u = new Vector2(points[b].getX() - points[i].getX(), points[b].getY() - points[i].getY());
+                const v = new Vector2(0, -1);
+                let angle = Mathematics.degrees(Math.acos(Vector2.dotProduct(u, v)
+                    / (Vector2.magnitude(u) * Vector2.magnitude(v))));
+                if (Vector2.crossProduct(u, v) > 0) {
                     angle = 360 - angle;
+                }
                 this.getTransform().setRotation((angle));
             }
         }
-        this.getTransform().translate(new Vector2(0, this.speed / 100));
+        this.getTransform().translate(new Vector2(0, (this.speed * elapsed)));
     }
 }
 //# sourceMappingURL=Car.js.map
