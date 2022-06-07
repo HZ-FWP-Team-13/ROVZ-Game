@@ -87,7 +87,7 @@ export default class Level1 extends Level {
     this.path = new Path();
 
     // Car path
-    let p = this.path;
+    const p = this.path;
     p.addPoint(new Vector2(0, 200));
     p.addPoint(new Vector2(600, 300));
     p.addPoint(new Vector2(-100, 500));
@@ -95,7 +95,8 @@ export default class Level1 extends Level {
     // Create cars
     this.cars = [];
     this.cars.push(
-      new Car('car1', this.path, 0, new Mesh('assets/img/car_placeholder.png', new Vector2(60, 133), 0), new Collider()),
+      new Car('car1', this.path, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(115, 249), 0), new Collider()),
+      new Car('car2', this.path, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(114, 176), 0), new Collider()),
     );
   }
 
@@ -132,6 +133,8 @@ export default class Level1 extends Level {
     // Update all cars
     this.cars.forEach((car) => {
       car.update(elapsed);
+
+      Collider.checkCollision(car, this.player);
     });
 
     return null;
@@ -164,6 +167,7 @@ export default class Level1 extends Level {
     // Draw the car
     this.cars.forEach((car) => {
       car.getMesh().draw(this.game.ctx, car.getTransform(), camera);
+      car.getCollider().draw(this.game.ctx, camera);
     });
 
     // Draw the path

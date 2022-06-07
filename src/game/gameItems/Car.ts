@@ -18,7 +18,7 @@ export default class Car extends GamePawn {
   public path: Path; // Path the car follows
 
   /**
-   * Create a new Player instance
+   * Create a new Player instance //TODO SOME OF THIS STUFF HAS BECOME OBSOLETE
    *
    * @param id The id of the GameObject
    * @param path path to follow
@@ -50,6 +50,7 @@ export default class Car extends GamePawn {
    * @param elapsed Time elapsed since last call
    */
   public update(elapsed: number) : void {
+    this.getCollider().updatePoints(this.getTransform());
     const points = this.path.getPoints();
     for (let i = 0; i < points.length; i++) {
       const tx = this.getTransform().getPosition().getX();

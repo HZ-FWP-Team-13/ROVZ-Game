@@ -84,6 +84,7 @@ export default class Collider extends Component {
             }
         }
         c1.overlap = true;
+        console.log(true);
         return true;
     }
     clearPoints() {

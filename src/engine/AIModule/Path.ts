@@ -19,7 +19,7 @@ export default class Path {
   public draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
     const vertSize = 8;
     this.points.forEach((point) => {
-      ctx.fillStyle = 'blue';
+      ctx.fillStyle = 'green';
       const cameraPosition = camera.getTransform().getPosition();
       const cameraDimensions = camera.getFrameDimensions();
       ctx.fillRect(

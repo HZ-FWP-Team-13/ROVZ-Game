@@ -20,12 +20,12 @@ export default class Level1 extends Level {
         this.player = new Player('player', new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2)), new Mesh('./assets/img/testplayer-old.png', new Vector2(32, 32)), new Collider());
         this.fov = new FovOverlay('fov', new Transform(), new Mesh('./assets/img/fov.png', new Vector2(6000, 6000)));
         this.path = new Path();
-        let p = this.path;
+        const p = this.path;
         p.addPoint(new Vector2(0, 200));
         p.addPoint(new Vector2(600, 300));
         p.addPoint(new Vector2(-100, 500));
         this.cars = [];
-        this.cars.push(new Car('car1', this.path, 0, new Mesh('assets/img/car_placeholder.png', new Vector2(60, 133), 0), new Collider()));
+        this.cars.push(new Car('car1', this.path, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(115, 249), 0), new Collider()), new Car('car2', this.path, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(114, 176), 0), new Collider()));
     }
     update(elapsed) {
         this.player.update(elapsed);
@@ -36,6 +36,7 @@ export default class Level1 extends Level {
         this.fov.getTransform().rotate(this.player.lastFrameRotationDifference);
         this.cars.forEach((car) => {
             car.update(elapsed);
+            Collider.checkCollision(car, this.player);
         });
         return null;
     }
@@ -45,6 +46,7 @@ export default class Level1 extends Level {
         this.game.ctx.drawImage(this.background.getMesh().getSourceImage(), camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2, camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2, camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(), 0, 0, camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY());
         this.cars.forEach((car) => {
             car.getMesh().draw(this.game.ctx, car.getTransform(), camera);
+            car.getCollider().draw(this.game.ctx, camera);
         });
         this.path.draw(this.game.ctx, camera);
         this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);

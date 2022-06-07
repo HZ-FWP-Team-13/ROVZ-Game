@@ -19,6 +19,7 @@ export default class Car extends GamePawn {
         this.acceleration = 20;
     }
     update(elapsed) {
+        this.getCollider().updatePoints(this.getTransform());
         const points = this.path.getPoints();
         for (let i = 0; i < points.length; i++) {
             const tx = this.getTransform().getPosition().getX();
