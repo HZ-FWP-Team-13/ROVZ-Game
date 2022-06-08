@@ -18,20 +18,43 @@ export default class Path {
    */
   public draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
     const vertSize = 8;
+    const cameraPosition = camera.getTransform().getPosition();
+    const cameraDimensions = camera.getFrameDimensions();
+
+    // Probably not the right term for this and
+    // whether to use a positive or negative cameraPosition for this variable.
+    const normalizedCameraX = -cameraPosition.getX() + cameraDimensions.getX() / 2;
+    const normalizedCameraY = -cameraPosition.getY() + cameraDimensions.getY() / 2;
+
     this.points.forEach((point) => {
       ctx.fillStyle = 'green';
-      const cameraPosition = camera.getTransform().getPosition();
-      const cameraDimensions = camera.getFrameDimensions();
       ctx.fillRect(
-        point.getX() - vertSize / 2 - cameraPosition.getX() + cameraDimensions.getX() / 2,
-        point.getY() - vertSize / 2 - cameraPosition.getY() + cameraDimensions.getY() / 2,
+        point.getX() - vertSize / 2 + normalizedCameraX,
+        point.getY() - vertSize / 2 + normalizedCameraY,
         vertSize, vertSize,
       );
     });
+
+    // Draw a line from point to point
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    for (let i = 0; i < this.points.length; i++) {
+      ctx.lineTo(
+        this.points[i].getX() + normalizedCameraX,
+        this.points[i].getY() + normalizedCameraY,
+      );
+    }
+    ctx.lineTo(
+      this.points[0].getX() + normalizedCameraX,
+      this.points[0].getY() + normalizedCameraY,
+    );
+    ctx.stroke();
+    ctx.closePath();
   }
 
   /**
    * Add a point to the path
+   *
    * @param point The point to be added
    */
   public addPoint(point: Vector2): void {

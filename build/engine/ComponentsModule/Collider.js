@@ -14,12 +14,22 @@ export default class Collider extends Component {
     }
     draw(ctx, camera) {
         const vertSize = 8;
+        const cameraPosition = camera.getTransform().getPosition();
+        const cameraDimensions = camera.getFrameDimensions();
+        const normalizedCameraX = -cameraPosition.getX() + cameraDimensions.getX() / 2;
+        const normalizedCameraY = -cameraPosition.getY() + cameraDimensions.getY() / 2;
         this.updatedPoints.forEach((point) => {
             ctx.fillStyle = 'blue';
-            const cameraPosition = camera.getTransform().getPosition();
-            const cameraDimensions = camera.getFrameDimensions();
-            ctx.fillRect(point.getX() - vertSize / 2 - cameraPosition.getX() + cameraDimensions.getX() / 2, point.getY() - vertSize / 2 - cameraPosition.getY() + cameraDimensions.getY() / 2, vertSize, vertSize);
+            ctx.fillRect(point.getX() - vertSize / 2 + normalizedCameraX, point.getY() - vertSize / 2 + normalizedCameraY, vertSize, vertSize);
         });
+        ctx.strokeStyle = 'red';
+        ctx.beginPath();
+        for (let i = 0; i < this.updatedPoints.length; i++) {
+            ctx.lineTo(this.updatedPoints[i].getX() + normalizedCameraX, this.updatedPoints[i].getY() + normalizedCameraY);
+        }
+        ctx.lineTo(this.updatedPoints[0].getX() + normalizedCameraX, this.updatedPoints[0].getY() + normalizedCameraY);
+        ctx.stroke();
+        ctx.closePath();
         console.log('DRAW');
     }
     updatePoints(transform) {
