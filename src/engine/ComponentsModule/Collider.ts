@@ -38,7 +38,7 @@ export default class Collider extends Component {
   public draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
     const vertSize = 8;
     this.updatedPoints.forEach((point) => {
-      ctx.fillStyle = 'blue';
+      ctx.fillStyle = 'red';
       const cameraPosition = camera.getTransform().getPosition();
       const cameraDimensions = camera.getFrameDimensions();
       ctx.fillRect(
@@ -54,7 +54,7 @@ export default class Collider extends Component {
   /**
    * Update the positions of the points in the World (Absolute) space.
    *
-   *
+   * @param transform The Postitions of the points
    */
   public updatePoints(transform: Transform) {
     for (let i = 0; i < this.points.length; i++) {
@@ -74,6 +74,7 @@ export default class Collider extends Component {
 
   /**
    * Add a new vertex to the polygon
+   *
    * @param x X position of the vertex
    * @param y Y position of the vertex
    */

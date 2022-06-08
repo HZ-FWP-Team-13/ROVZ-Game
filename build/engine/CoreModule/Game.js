@@ -4,8 +4,8 @@ import Start from '../../game/scenes/screens/Start.js';
 export default class Game {
     canvas;
     ctx;
-    _playerStats;
-    _gameLoop;
+    playerStats;
+    gameLoop;
     constructor(canvas) {
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
@@ -17,17 +17,17 @@ export default class Game {
     reset() {
         this.playerStats = new UserData(1, 3, 2);
     }
-    get playerStats() {
-        return this._playerStats;
+    getPlayerStats() {
+        return this.playerStats;
     }
-    set playerStats(value) {
-        this._playerStats = value;
+    setPlayerStats(value) {
+        this.playerStats = value;
     }
-    get gameLoop() {
-        return this._gameLoop;
+    getGameLoop() {
+        return this.gameLoop;
     }
-    set gameLoop(value) {
-        this._gameLoop = value;
+    setGameLoop(value) {
+        this.gameLoop = value;
     }
 }
 //# sourceMappingURL=Game.js.map

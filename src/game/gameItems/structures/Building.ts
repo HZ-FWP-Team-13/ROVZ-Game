@@ -3,7 +3,7 @@ import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 import Transform from '../../../engine/ComponentsModule/Transform.js';
 import GamePawn from '../../../engine/ObjectModule/GamePawn.js';
 
-export default class Building1 extends GamePawn {
+export default class Building extends GamePawn {
   /**
    * Create a new Building instance
    *

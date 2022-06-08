@@ -15,7 +15,7 @@ export default class Collider extends Component {
     draw(ctx, camera) {
         const vertSize = 8;
         this.updatedPoints.forEach((point) => {
-            ctx.fillStyle = 'blue';
+            ctx.fillStyle = 'red';
             const cameraPosition = camera.getTransform().getPosition();
             const cameraDimensions = camera.getFrameDimensions();
             ctx.fillRect(point.getX() - vertSize / 2 - cameraPosition.getX() + cameraDimensions.getX() / 2, point.getY() - vertSize / 2 - cameraPosition.getY() + cameraDimensions.getY() / 2, vertSize, vertSize);

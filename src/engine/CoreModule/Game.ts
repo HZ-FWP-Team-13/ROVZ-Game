@@ -8,9 +8,9 @@ export default class Game {
 
   public readonly ctx: CanvasRenderingContext2D;
 
-  private _playerStats: UserData;
+  private playerStats: UserData;
 
-  private _gameLoop: GameLoop;
+  private gameLoop: GameLoop;
 
   /**
    * Initialize the game
@@ -43,16 +43,17 @@ export default class Game {
    *
    * @returns The Player Stats of this Game
    */
-  public get playerStats(): UserData {
-    return this._playerStats;
+  public getPlayerStats(): UserData {
+    return this.playerStats;
   }
+
   /**
    * Set the Player Stats of this Game
    *
    * @param value The Player Stats of this Game
    */
-  public set playerStats(value: UserData) {
-    this._playerStats = value;
+  public setPlayerStats(value: UserData): void {
+    this.playerStats = value;
   }
 
   /**
@@ -60,15 +61,16 @@ export default class Game {
    *
    * @returns The GameLoop of this Game
    */
-  public get gameLoop(): GameLoop {
-    return this._gameLoop;
+  public getGameLoop(): GameLoop {
+    return this.gameLoop;
   }
+
   /**
    * Set the GameLoop of this Game
    *
    * @param value The GameLoop of this Game
    */
-  public set gameLoop(value: GameLoop) {
-    this._gameLoop = value;
+  public setGameLoop(value: GameLoop): void {
+    this.gameLoop = value;
   }
 }
