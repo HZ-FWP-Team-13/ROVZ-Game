@@ -8,6 +8,7 @@ import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 import Collider from '../../../engine/ComponentsModule/Collider.js';
 import Car from '../../gameItems/Car.js';
 import Path from '../../../engine/AIModule/Path.js';
+import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
 export default class Level1 extends Level {
     background;
     player;
@@ -17,7 +18,7 @@ export default class Level1 extends Level {
     constructor(game) {
         super(game);
         this.background = new GameItem('background', new Transform(), new Mesh('./assets/img/background.png', new Vector2(1386, 980)));
-        this.player = new Player('player', new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2)), new Mesh('./assets/img/testplayer-old.png', new Vector2(32, 32)), new Collider());
+        this.player = new Player('player', new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2)), new Mesh('./assets/img/player/cyclist.png', new Vector2(28, 78)), new RectCollider(new Vector2(28, 78)));
         this.fov = new FovOverlay('fov', new Transform(), new Mesh('./assets/img/fov.png', new Vector2(6000, 6000)));
         this.path = new Path();
         const p = this.path;
@@ -25,7 +26,7 @@ export default class Level1 extends Level {
         p.addPoint(new Vector2(600, 300));
         p.addPoint(new Vector2(-100, 500));
         this.cars = [];
-        this.cars.push(new Car('car1', this.path, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(115, 249), 0), new Collider()), new Car('car2', this.path, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(114, 176), 0), new Collider()));
+        this.cars.push(new Car('car1', this.path, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))), new Car('car2', this.path, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))));
     }
     update(elapsed) {
         this.player.update(elapsed);

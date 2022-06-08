@@ -10,6 +10,7 @@ import Collider from '../../../engine/ComponentsModule/Collider.js';
 import Scene from '../../../engine/SceneModule/Scene.js';
 import Car from '../../gameItems/Car.js';
 import Path from '../../../engine/AIModule/Path.js';
+import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
 
 export default class Level1 extends Level {
   private background: GameItem;
@@ -61,12 +62,12 @@ export default class Level1 extends Level {
       // The Mesh of the GameItem
       new Mesh(
         // The path to the Source Image of the GameItem Mesh
-        './assets/img/testplayer-old.png',
+        './assets/img/player/cyclist.png',
         // The dimensions of the GameItem Mesh
-        new Vector2(32, 32),
+        new Vector2(28, 78),
       ),
       // The Collider of the GamePawn
-      new Collider(),
+      new RectCollider(new Vector2(28, 78)),
     );
 
     // Spawning the FovOverlay
@@ -95,8 +96,8 @@ export default class Level1 extends Level {
     // Create cars
     this.cars = [];
     this.cars.push(
-      new Car('car1', this.path, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(115, 249), 0), new Collider()),
-      new Car('car2', this.path, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(114, 176), 0), new Collider()),
+      new Car('car1', this.path, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
+      new Car('car2', this.path, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
     );
   }
 

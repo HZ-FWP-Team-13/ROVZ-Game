@@ -12,7 +12,6 @@ export default class Car extends GamePawn {
         const transform = new Transform(path.getPoints()[startPoint], 0, new Vector2(1, 1));
         super(id, transform, mesh, collider);
         this.path = path;
-        this.getCollider().generateRectCollider(this.getMesh().getDimensions().getX(), this.getMesh().getDimensions().getY());
         this.speedRange = new Vector2(-50, 150);
         this.speed = 300;
         this.targetSpeed = 150;

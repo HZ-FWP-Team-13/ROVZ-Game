@@ -4,6 +4,7 @@ import Mesh from '../../engine/ComponentsModule/Mesh.js';
 import Collider from '../../engine/ComponentsModule/Collider.js';
 import Input from '../../engine/InputModule/Input.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
+import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
 
 export default class Player extends GamePawn {
   // The speed of the Player movement measured in pixels per second
@@ -23,13 +24,8 @@ export default class Player extends GamePawn {
    * @param mesh The Mesh of the GameItem
    * @param collider The Collider of the GamePawn
    */
-  public constructor(id: string, transform: Transform, mesh: Mesh, collider: Collider) {
+  public constructor(id: string, transform: Transform, mesh: Mesh, collider: RectCollider) {
     super(id, transform, mesh, collider);
-
-    this.getCollider().generateRectCollider(
-      this.getMesh().getDimensions().getX(),
-      this.getMesh().getDimensions().getY(),
-    );
 
     this.movementSpeed = 150;
     this.rotationSpeed = 100;

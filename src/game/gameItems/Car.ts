@@ -5,6 +5,7 @@ import Collider from '../../engine/ComponentsModule/Collider.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
 import Path from '../../engine/AIModule/Path.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
+import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
 
 export default class Car extends GamePawn {
   public speed: number; // The current speed of the vehicle
@@ -26,16 +27,18 @@ export default class Car extends GamePawn {
    * @param mesh The Mesh of the GameItem
    * @param collider The Collider of the GamePawn
    */
-  public constructor(id: string, path: Path, startPoint: number, mesh: Mesh, collider: Collider) {
+  public constructor(
+    id: string,
+    path: Path,
+    startPoint: number,
+    mesh: Mesh,
+    collider: RectCollider,
+  ) {
     const transform = new Transform(path.getPoints()[startPoint], 0, new Vector2(1, 1));
     super(id, transform, mesh, collider);
 
     this.path = path;
 
-    this.getCollider().generateRectCollider(
-      this.getMesh().getDimensions().getX(),
-      this.getMesh().getDimensions().getY(),
-    );
     // TODO: All of this should be able to be changed on a per-car basis.
     // TODO: Values are assigned for testing purposes, this should be changed later.
     this.speedRange = new Vector2(-50, 150);

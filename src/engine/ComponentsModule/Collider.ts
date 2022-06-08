@@ -55,8 +55,9 @@ export default class Collider extends Component {
    * Update the positions of the points in the World (Absolute) space.
    *
    *
+   * @param transform Transform to update 'around'
    */
-  public updatePoints(transform: Transform) {
+  public updatePoints(transform: Transform) : void {
     for (let i = 0; i < this.points.length; i++) {
       const transformRotation = -Mathematics.radians(transform.getRotation());
 
@@ -74,6 +75,7 @@ export default class Collider extends Component {
 
   /**
    * Add a new vertex to the polygon
+   *
    * @param x X position of the vertex
    * @param y Y position of the vertex
    */

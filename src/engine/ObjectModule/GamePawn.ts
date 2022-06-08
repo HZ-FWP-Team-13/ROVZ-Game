@@ -1,6 +1,7 @@
 import GameItem from './GameItem.js';
 import Transform from '../ComponentsModule/Transform.js';
 import Mesh from '../ComponentsModule/Mesh.js';
+import RectCollider from '../ComponentsModule/RectCollider.js';
 import Collider from '../ComponentsModule/Collider.js';
 
 export default class GamePawn extends GameItem {
@@ -26,7 +27,7 @@ export default class GamePawn extends GameItem {
    *
    * @returns The Collider of this GamePawn
    */
-  public getCollider(): Collider {
+  public getCollider(): RectCollider {
     return this.collider;
   }
 
