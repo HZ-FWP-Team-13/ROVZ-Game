@@ -32,8 +32,8 @@ export default class Collider extends Component {
   /**
    * Draw this Collider vertices on the Game Canvas for debugging
    *
-   * @param ctx
-   * @param camera
+   * @param ctx The Canvas of the game
+   * @param camera The Camera of the player
    */
   public draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
     const vertSize = 8;
@@ -56,7 +56,7 @@ export default class Collider extends Component {
    *
    * @param transform The Postitions of the points
    */
-  public updatePoints(transform: Transform) {
+  public updatePoints(transform: Transform): void {
     for (let i = 0; i < this.points.length; i++) {
       const transformRotation = -Mathematics.radians(transform.getRotation());
 
@@ -202,6 +202,7 @@ export default class Collider extends Component {
 
   /**
    * Clears the points and generates a rectangular collider based on width and height
+   *
    * @param width The width of the collider
    * @param height The height of the collider
    */
@@ -215,16 +216,18 @@ export default class Collider extends Component {
   }
 
   /**
+   * Getter for the Updated Points
    *
-   * @returns
+   * @returns The Updated Points of the Collisions
    */
   public getUpdatedPoints(): Vector2[] {
     return this.updatedPoints;
   }
 
   /**
+   * Setter for the Updated Points
    *
-   * @param value
+   * @param value The new vector that needs to be set
    */
   public setUpdatedPoints(value: Vector2[]): void {
     this.updatedPoints = value;

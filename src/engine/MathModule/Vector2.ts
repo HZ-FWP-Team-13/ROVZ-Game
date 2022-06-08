@@ -89,6 +89,12 @@ export default class Vector2 {
     return new Vector2(-a.x, -a.y);
   }
 
+  /**
+   *
+   * @param a
+   * @param b
+   * @returns
+   */
   public static dotProduct(a: Vector2, b: Vector2): number {
     return a.x * b.x + a.y * b.y;
   }
