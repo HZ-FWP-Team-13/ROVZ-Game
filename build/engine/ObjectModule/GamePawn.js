@@ -5,6 +5,9 @@ export default class GamePawn extends GameItem {
         super(id, transform, mesh);
         this.collider = collider;
     }
+    createColliderPoints() {
+        this.getCollider().generateRectCollider(this.getMesh().getDimensions().getX(), this.getMesh().getDimensions().getY());
+    }
     getCollider() {
         return this.collider;
     }

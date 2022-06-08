@@ -26,10 +26,7 @@ export default class Player extends GamePawn {
   public constructor(id: string, transform: Transform, mesh: Mesh, collider: Collider) {
     super(id, transform, mesh, collider);
 
-    this.getCollider().generateRectCollider(
-      this.getMesh().getDimensions().getX(),
-      this.getMesh().getDimensions().getY(),
-    );
+    this.createColliderPoints();
 
     this.movementSpeed = 150;
     this.rotationSpeed = 100;

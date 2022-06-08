@@ -6,7 +6,7 @@ export default class Player extends GamePawn {
     lastFrameRotationDifference;
     constructor(id, transform, mesh, collider) {
         super(id, transform, mesh, collider);
-        this.getCollider().generateRectCollider(this.getMesh().getDimensions().getX(), this.getMesh().getDimensions().getY());
+        this.createColliderPoints();
         this.movementSpeed = 150;
         this.rotationSpeed = 100;
     }

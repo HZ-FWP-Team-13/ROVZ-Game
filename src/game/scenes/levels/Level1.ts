@@ -8,6 +8,7 @@ import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 import Collider from '../../../engine/ComponentsModule/Collider.js';
 import Scene from '../../../engine/SceneModule/Scene.js';
+import Building1 from '../../gameItems/structures/Building1.js';
 
 export default class Level1 extends Level {
   private background: GameItem;
@@ -17,6 +18,8 @@ export default class Level1 extends Level {
 
   // FovOverlay
   private fov: FovOverlay;
+
+  private building: Building1;
 
   /**
    * Create a new Level1 Level instance
@@ -75,6 +78,23 @@ export default class Level1 extends Level {
         new Vector2(6000, 6000),
       ),
     );
+
+    this.building = new Building1(
+      // The id of the GameObject
+      'building1',
+      // The Transform of the GameObject
+      new Transform(
+        new Vector2(600, 700),
+      ),
+      // The Mesh of the GameItem
+      new Mesh(
+        // The path to the Source Image of the FovOverlay Mesh
+        './assets/img/house.png',
+        // The dimensions of the GameItem Mesh
+        new Vector2(230, 240),
+      ),
+      new Collider(),
+    );
   }
 
   /**
@@ -98,6 +118,14 @@ export default class Level1 extends Level {
 
     // We should probably do an update method in GameItem and just update all GameItems
     this.player.getCollider().updatePoints(this.player.getTransform());
+
+    this.building.getCollider().updatePoints(this.building.getTransform());
+
+    console.log(Collider.checkCollision(this.player, this.building));
+    // Check to see if the building and the player are colliding
+    if (Collider.checkCollision(this.player, this.building)) {
+      console.log('COLLIDER DO SOMETHING PLEASE...');
+    }
 
     // Providing Player Control over the FovOverlay
     this.fov.control(this.input, elapsed, this.getCamera());
@@ -139,6 +167,9 @@ export default class Level1 extends Level {
     // Drawing the Player Character on the Game Canvas
     this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), this.getCamera());
     this.player.getCollider().draw(this.game.ctx, this.getCamera());
+
+    this.building.getMesh().draw(this.game.ctx, this.building.getTransform(), this.getCamera());
+
     // Drawing the FovOverlay on the Game Canvas
     this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), this.getCamera());
   }
