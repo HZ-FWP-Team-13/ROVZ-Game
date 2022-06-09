@@ -1,6 +1,7 @@
 import GameObject from '../ObjectModule/GameObject.js';
 import Vector2 from '../MathModule/Vector2.js';
 import Transform from '../ComponentsModule/Transform.js';
+import Mathematics from '../MathModule/Mathematics.js';
 
 export default class Camera extends GameObject {
   // The dimensions of the frame the Camera captures
@@ -17,6 +18,30 @@ export default class Camera extends GameObject {
     super(id, transform);
 
     this.frameDimensions = frameDimensions;
+  }
+
+  /**
+   * Calculate the position of the Top Left corner of the Camera Frame
+   *
+   * @returns The sought Vector2
+   */
+  public getTopLeftCornerPosition(): Vector2 {
+    // Accessing Camera rotation measured in radians
+    const cameraRotation: number = Mathematics.radians(this.getTransform().getRotation());
+    // Calculating projections of the Vector2 from Center of the Camera Frame to Top Left corner
+    // on the relative coordinate system
+    const relX: number = this.frameDimensions.getX() / 2;
+    const relY: number = this.frameDimensions.getY() / 2;
+    // Calculating projections of the Vector2 from Center of the Camera Frame to Top Left corner
+    // on the absolute coordinate system
+    const absX: number = relX * Math.cos(cameraRotation) - relY * Math.sin(cameraRotation);
+    const absY: number = relX * Math.sin(cameraRotation) + relY * Math.cos(cameraRotation);
+    // Calculating the sought Vector2
+    const topLeftCornerPosition: Vector2 = Vector2.vectorsSum(
+      this.getTransform().getPosition(),
+      new Vector2(absX, absY),
+    );
+    return topLeftCornerPosition;
   }
 
   /**

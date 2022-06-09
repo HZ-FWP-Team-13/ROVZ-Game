@@ -225,6 +225,7 @@ export default class Collider extends Component {
 
   /**
    * Clears the points and generates a rectangular collider based on width and height
+   *
    * @param width The width of the collider
    * @param height The height of the collider
    */
@@ -238,6 +239,7 @@ export default class Collider extends Component {
   }
 
   /**
+   * Get the array of updated Collider points
    *
    * @returns
    */
@@ -246,6 +248,7 @@ export default class Collider extends Component {
   }
 
   /**
+   * Set the array of updated Collider points
    *
    * @param value
    */
