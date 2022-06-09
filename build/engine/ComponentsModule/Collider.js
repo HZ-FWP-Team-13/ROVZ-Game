@@ -14,19 +14,33 @@ export default class Collider extends Component {
     }
     draw(ctx, camera) {
         const vertSize = 8;
+        const cameraPosition = camera.getTransform().getPosition();
+        const cameraDimensions = camera.getFrameDimensions();
+        const normalizedCameraX = -cameraPosition.getX() + cameraDimensions.getX() / 2;
+        const normalizedCameraY = -cameraPosition.getY() + cameraDimensions.getY() / 2;
         this.updatedPoints.forEach((point) => {
-            console.log(point.getX, point.getY());
             ctx.fillStyle = 'blue';
-            ctx.fillRect(point.getX() - vertSize / 2 - camera.getTransform().getPosition().getX() + camera.getFrameDimensions().getX() / 2, point.getY() - vertSize / 2 - camera.getTransform().getPosition().getY() + camera.getFrameDimensions().getY() / 2, vertSize, vertSize);
+            ctx.fillRect(point.getX() - vertSize / 2 + normalizedCameraX, point.getY() - vertSize / 2 + normalizedCameraY, vertSize, vertSize);
         });
+        ctx.strokeStyle = 'red';
+        ctx.beginPath();
+        for (let i = 0; i < this.updatedPoints.length; i++) {
+            ctx.lineTo(this.updatedPoints[i].getX() + normalizedCameraX, this.updatedPoints[i].getY() + normalizedCameraY);
+        }
+        ctx.lineTo(this.updatedPoints[0].getX() + normalizedCameraX, this.updatedPoints[0].getY() + normalizedCameraY);
+        ctx.stroke();
+        ctx.closePath();
         console.log('DRAW');
     }
     updatePoints(transform) {
         for (let i = 0; i < this.points.length; i++) {
-            this.updatedPoints[i].setX((this.points[i].getX() * Math.cos(Mathematics.radians(transform.getRotation()))) -
-                (this.points[i].getY() * Math.sin(Mathematics.radians(transform.getRotation())) + transform.getPosition().getX()));
-            this.updatedPoints[i].setY((this.points[i].getX() * Math.sin(Mathematics.radians(transform.getRotation()))) +
-                (this.points[i].getY() * Math.cos(Mathematics.radians(transform.getRotation())) + transform.getPosition().getY()));
+            const transformRotation = -Mathematics.radians(transform.getRotation());
+            let newX = (this.points[i].getX() * Math.cos(transformRotation));
+            newX -= this.points[i].getY() * Math.sin(transformRotation) + transform.getPosition().getX();
+            let newY = (this.points[i].getX() * Math.sin(transformRotation));
+            newY += this.points[i].getY() * Math.cos(transformRotation) + transform.getPosition().getY();
+            this.updatedPoints[i].setX(-newX);
+            this.updatedPoints[i].setY(newY);
         }
     }
     addNewPoint(x, y) {
@@ -80,6 +94,7 @@ export default class Collider extends Component {
             }
         }
         c1.overlap = true;
+        console.log(true);
         return true;
     }
     clearPoints() {

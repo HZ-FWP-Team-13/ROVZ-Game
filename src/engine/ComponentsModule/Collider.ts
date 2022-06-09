@@ -18,6 +18,9 @@ export default class Collider extends Component {
 
   public overlap: boolean;
 
+  /**
+   * Create a new Collider instance
+   */
   public constructor() {
     super('collider');
     this.points = [];
@@ -26,17 +29,46 @@ export default class Collider extends Component {
     this.overlap = false;
   }
 
-  public draw(ctx: CanvasRenderingContext2D, camera: Camera) {
+  /**
+   * Draw this Collider vertices on the Game Canvas for debugging
+   *
+   * @param ctx
+   * @param camera
+   */
+  public draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
     const vertSize = 8;
+    const cameraPosition = camera.getTransform().getPosition();
+    const cameraDimensions = camera.getFrameDimensions();
+
+    // Probably not the right term for this and
+    // whether to use a positive or negative cameraPosition for this variable.
+    const normalizedCameraX = -cameraPosition.getX() + cameraDimensions.getX() / 2;
+    const normalizedCameraY = -cameraPosition.getY() + cameraDimensions.getY() / 2;
+
     this.updatedPoints.forEach((point) => {
-      console.log(point.getX, point.getY());
       ctx.fillStyle = 'blue';
       ctx.fillRect(
-        point.getX() - vertSize / 2 - camera.getTransform().getPosition().getX() + camera.getFrameDimensions().getX() / 2,
-        point.getY() - vertSize / 2 - camera.getTransform().getPosition().getY() + camera.getFrameDimensions().getY() / 2,
+        point.getX() - vertSize / 2 + normalizedCameraX,
+        point.getY() - vertSize / 2 + normalizedCameraY,
         vertSize, vertSize,
       );
     });
+
+    // Draw a line from point to point
+    ctx.strokeStyle = 'red';
+    ctx.beginPath();
+    for (let i = 0; i < this.updatedPoints.length; i++) {
+      ctx.lineTo(
+        this.updatedPoints[i].getX() + normalizedCameraX,
+        this.updatedPoints[i].getY() + normalizedCameraY,
+      );
+    }
+    ctx.lineTo(
+      this.updatedPoints[0].getX() + normalizedCameraX,
+      this.updatedPoints[0].getY() + normalizedCameraY,
+    );
+    ctx.stroke();
+    ctx.closePath();
 
     console.log('DRAW');
   }
@@ -45,19 +77,27 @@ export default class Collider extends Component {
    * Update the positions of the points in the World (Absolute) space.
    *
    *
+   * @param transform Transform to update 'around'
    */
-  public updatePoints(transform: Transform) {
+  public updatePoints(transform: Transform) : void {
     for (let i = 0; i < this.points.length; i++) {
-      this.updatedPoints[i].setX((this.points[i].getX() * Math.cos(Mathematics.radians(transform.getRotation()))) -
-      (this.points[i].getY()* Math.sin(Mathematics.radians(transform.getRotation())) + transform.getPosition().getX()));
+      const transformRotation = -Mathematics.radians(transform.getRotation());
 
-      this.updatedPoints[i].setY((this.points[i].getX() * Math.sin(Mathematics.radians(transform.getRotation()))) +
-      (this.points[i].getY() * Math.cos(Mathematics.radians(transform.getRotation())) + transform.getPosition().getY()));
+      let newX = (this.points[i].getX() * Math.cos(transformRotation));
+      newX -= this.points[i].getY() * Math.sin(transformRotation) + transform.getPosition().getX();
+
+      let newY = (this.points[i].getX() * Math.sin(transformRotation));
+      newY += this.points[i].getY() * Math.cos(transformRotation) + transform.getPosition().getY();
+
+      this.updatedPoints[i].setX(-newX);
+
+      this.updatedPoints[i].setY(newY);
     }
   }
 
   /**
    * Add a new vertex to the polygon
+   *
    * @param x X position of the vertex
    * @param y Y position of the vertex
    */
@@ -171,7 +211,7 @@ export default class Collider extends Component {
       }
     }
     c1.overlap = true;
-    // console.log(true);
+    console.log(true);
     return true;
   }
 
@@ -197,10 +237,18 @@ export default class Collider extends Component {
     this.addNewPoint(-width / 2, height / 2);
   }
 
+  /**
+   *
+   * @returns
+   */
   public getUpdatedPoints(): Vector2[] {
     return this.updatedPoints;
   }
 
+  /**
+   *
+   * @param value
+   */
   public setUpdatedPoints(value: Vector2[]): void {
     this.updatedPoints = value;
   }

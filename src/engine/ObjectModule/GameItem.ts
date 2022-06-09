@@ -21,17 +21,17 @@ export default class GameItem extends GameObject {
     this.mesh = mesh;
   }
 
-  /**
-   * Process the Player Input to modify this GameItem
-   *
-   * @param input The Input matrix of the Scene
-   * @param elapsed The time in seconds that has been elapsed since the previous frame
-   * @param camera The Camera of the Level
-   * @returns null
-   */
-  public control(input: Input, elapsed: number, camera?: Camera): void {
-    return null;
-  }
+  // /**
+  //  * Process the Player Input to modify this GameItem
+  //  *
+  //  * @param input The Input matrix of the Scene
+  //  * @param elapsed The time in seconds that has been elapsed since the previous frame
+  //  * @param camera The Camera of the Level
+  //  * @returns null
+  //  */
+  // public control(input: Input, elapsed: number, camera?: Camera): void {
+  //   return null;
+  // }
 
   /**
    * Get the Mesh of this GameItem

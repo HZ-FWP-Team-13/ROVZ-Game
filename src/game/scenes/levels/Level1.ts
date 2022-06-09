@@ -8,6 +8,9 @@ import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 import Collider from '../../../engine/ComponentsModule/Collider.js';
 import Scene from '../../../engine/SceneModule/Scene.js';
+import Car from '../../gameItems/Car.js';
+import Path from '../../../engine/AIModule/Path.js';
+import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
 
 export default class Level1 extends Level {
   private background: GameItem;
@@ -17,6 +20,12 @@ export default class Level1 extends Level {
 
   // FovOverlay
   private fov: FovOverlay;
+
+  // Car Array
+  private cars: Car[];
+
+  // Path
+  private path: Path;
 
   /**
    * Create a new Level1 Level instance
@@ -53,12 +62,12 @@ export default class Level1 extends Level {
       // The Mesh of the GameItem
       new Mesh(
         // The path to the Source Image of the GameItem Mesh
-        './assets/img/testplayer-old.png',
+        './assets/img/player/cyclist.png',
         // The dimensions of the GameItem Mesh
-        new Vector2(32, 32),
+        new Vector2(28, 78),
       ),
       // The Collider of the GamePawn
-      new Collider(),
+      new RectCollider(new Vector2(28, 78)),
     );
 
     // Spawning the FovOverlay
@@ -74,6 +83,21 @@ export default class Level1 extends Level {
         // The dimensions of the FovOverlay Mesh
         new Vector2(6000, 6000),
       ),
+    );
+
+    this.path = new Path();
+
+    // Car path
+    const p = this.path;
+    p.addPoint(new Vector2(0, 200));
+    p.addPoint(new Vector2(600, 300));
+    p.addPoint(new Vector2(-100, 500));
+
+    // Create cars
+    this.cars = [];
+    this.cars.push(
+      new Car('car1', this.path, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
+      new Car('car2', this.path, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
     );
   }
 
@@ -93,13 +117,10 @@ export default class Level1 extends Level {
    *   current scene, just return `null`
    */
   public update(elapsed: number): Scene {
-    // Providing Player Control over the Player Character
+    this.player.update(elapsed);
+
+    // Providing Player Control over the Player Character and FOV
     this.player.control(this.input, elapsed);
-
-    // We should probably do an update method in GameItem and just update all GameItems
-    this.player.getCollider().updatePoints(this.player.getTransform());
-
-    // Providing Player Control over the FovOverlay
     this.fov.control(this.input, elapsed, this.getCamera());
 
     // Preserving the position of the Camera relative to the Player Character
@@ -110,6 +131,13 @@ export default class Level1 extends Level {
     // Preserving the rotation of the FovOverlay relative to the Player Character
     this.fov.getTransform().rotate(this.player.lastFrameRotationDifference);
 
+    // Update all cars
+    this.cars.forEach((car) => {
+      car.update(elapsed);
+
+      Collider.checkCollision(car, this.player);
+    });
+
     return null;
   }
 
@@ -117,6 +145,7 @@ export default class Level1 extends Level {
    * Render this Level Scene to the Game Canvas
    */
   public render(): void {
+    const camera = this.getCamera();
     // Clearing the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
     // console.log(this.getCamera().getTransform().getPosition().getX());
@@ -126,20 +155,29 @@ export default class Level1 extends Level {
       // The Source Image of the Background
       this.background.getMesh().getSourceImage(),
       // The position of the frame within the Source Image
-      this.getCamera().getTransform().getPosition().getX() - this.getCamera().getFrameDimensions().getX() / 2,
-      this.getCamera().getTransform().getPosition().getY() - this.getCamera().getFrameDimensions().getY() / 2,
+      camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2,
+      camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2,
       // The dimensions of the frame within the Source Image
-      this.getCamera().getFrameDimensions().getX(), this.getCamera().getFrameDimensions().getY(),
+      camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
       // The position of the frame on the Game Canvas
       0, 0,
       // The dimensions of the frame on the Game Canvas
-      this.getCamera().getFrameDimensions().getX(), this.getCamera().getFrameDimensions().getY(),
+      camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
     );
 
+    // Draw the car
+    this.cars.forEach((car) => {
+      car.getMesh().draw(this.game.ctx, car.getTransform(), camera);
+      car.getCollider().draw(this.game.ctx, camera);
+    });
+
+    // Draw the path
+    this.path.draw(this.game.ctx, camera);
+
     // Drawing the Player Character on the Game Canvas
-    this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), this.getCamera());
-    this.player.getCollider().draw(this.game.ctx, this.getCamera());
+    this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
+    this.player.getCollider().draw(this.game.ctx, camera);
     // Drawing the FovOverlay on the Game Canvas
-    this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), this.getCamera());
+    this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);
   }
 }
