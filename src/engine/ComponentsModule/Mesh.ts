@@ -44,7 +44,7 @@ export default class Mesh extends Component {
    * Draw this GameItem appearance on the Game Canvas
    * based on rotation and current state of the animation cycle
    *
-   * @param ctx the Canvas that needs to be drawn upon each cycle
+   * @param ctx The Canvas Rendering Context
    * @param transform The Transform of the GameItem
    * @param camera The Camera of the Level
    */

@@ -32,8 +32,8 @@ export default class Collider extends Component {
   /**
    * Draw this Collider vertices on the Game Canvas for debugging
    *
-   * @param ctx
-   * @param camera
+   * @param ctx The Canvas Rendering Context
+   * @param camera The Camera of the Level
    */
   public draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
     const vertSize = 8;
@@ -241,7 +241,7 @@ export default class Collider extends Component {
   /**
    * Get the array of updated Collider points
    *
-   * @returns
+   * @returns The array of updated Collider points
    */
   public getUpdatedPoints(): Vector2[] {
     return this.updatedPoints;
@@ -250,7 +250,7 @@ export default class Collider extends Component {
   /**
    * Set the array of updated Collider points
    *
-   * @param value
+   * @param value The array of updated Collider points
    */
   public setUpdatedPoints(value: Vector2[]): void {
     this.updatedPoints = value;
