@@ -13,9 +13,11 @@ export default class Player extends GamePawn {
         this.getCollider().updatePoints(this.getTransform());
     }
     control(input, elapsed) {
+        this.getMesh().setAnimationState(0);
         const traction = input.readAxisPressed('verticalMovement');
         const steering = input.readAxisPressed('horizontalMovement');
         if (traction !== 0) {
+            this.getMesh().setAnimationState(1);
             this.getTransform().translate(new Vector2(0, traction * this.movementSpeed * elapsed));
         }
         this.lastFrameRotationDifference = steering * this.rotationSpeed * elapsed * traction;

@@ -64,7 +64,7 @@ export default class Level1 extends Level {
         // The path to the Source Image of the GameItem Mesh
         './assets/img/player/cyclist.png',
         // The dimensions of the GameItem Mesh
-        new Vector2(28, 78),
+        new Vector2(28, 78), 4,
       ),
       // The Collider of the GamePawn
       new RectCollider(new Vector2(28, 78)),

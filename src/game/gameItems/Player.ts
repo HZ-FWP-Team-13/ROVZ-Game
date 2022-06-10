@@ -46,6 +46,8 @@ export default class Player extends GamePawn {
    * @param elapsed The time in seconds that has been elapsed since the previous frame
    */
   public control(input: Input, elapsed: number): void {
+    this.getMesh().setAnimationState(0);
+
     // Read the Input of the Vertical InputAxis
     const traction = input.readAxisPressed('verticalMovement');
     // Read the Input of the Horizontal InputAxis
@@ -53,6 +55,7 @@ export default class Player extends GamePawn {
 
     // Traction
     if (traction !== 0) {
+      this.getMesh().setAnimationState(1);
       // TODO: this.transform.translate(Vector2.up * traction * this.movementSpeed * elapsed);
       this.getTransform().translate(new Vector2(0, traction * this.movementSpeed * elapsed));
     }

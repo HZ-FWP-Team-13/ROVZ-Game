@@ -18,6 +18,10 @@ export default class Mesh extends Component {
   // The current animation state of the Mesh
   private animationState: number;
 
+  private framecount: number;
+
+  private currentFrame: number;
+
   /**
    * Create a new Mesh instance
    *
@@ -30,14 +34,16 @@ export default class Mesh extends Component {
     sourceImagePath: string,
     // The dimensions of the Mesh
     dimensions: Vector2,
-    // The current animation state of the Mesh
-    animationState: number = 0,
+    // Amount of frames in an animation
+    framecount: number = 0,
   ) {
     super('mesh');
     this.sourceImagePath = sourceImagePath;
     this.setSourceImage(Graphics.loadNewImage(this.sourceImagePath));
     this.dimensions = dimensions;
-    this.animationState = animationState;
+    this.animationState = 0;
+    this.framecount = framecount;
+    this.currentFrame = 0;
   }
 
   /**
@@ -49,6 +55,10 @@ export default class Mesh extends Component {
    * @param camera The Camera of the Level
    */
   public draw(ctx: CanvasRenderingContext2D, transform: Transform, camera?: Camera): void {
+    this.currentFrame += 0.1;
+    if (this.currentFrame > this.framecount - 1) {
+      this.currentFrame = 0;
+    }
     // Creating a backup of the Game Canvas rendering context in the absolute coordinate system
     ctx.save();
 
@@ -71,12 +81,17 @@ export default class Mesh extends Component {
       ),
     );
 
+    let f : number = this.currentFrame;
+    if (f % 1 !== 0) {
+      f = parseInt(Math.round(f).toFixed(0), 10);
+    }
+
     // Drawing the Mesh to the Game Canvas
     ctx.drawImage(
       // The Source Image of the Mesh
       this.sourceImage,
       // The position of the Mesh within the Source Image
-      this.dimensions.getX() * this.animationState, 0,
+      this.dimensions.getX() * f, this.dimensions.getY() * this.animationState,
       // The dimensions of the Mesh within the Source Image
       this.dimensions.getX(), this.dimensions.getY(),
       // The position of the Mesh on the Game Canvas
