@@ -20,10 +20,6 @@ export default class Level1 extends Level {
         this.buildings = Factory.buildingFactory(100, 600, 6);
     }
     update(elapsed) {
-        this.player.control(this.input, elapsed);
-        this.player.getHitbox().control(this.input, elapsed);
-        this.player.getCollider().updatePoints(this.player.getTransform());
-        this.player.getHitbox().getCollider().updatePoints(this.player.getHitbox().getTransform());
         this.buildings.forEach((building) => {
             building.getCollider().updatePoints(building.getTransform());
             if (Collider.checkCollision(this.player.getHitbox(), building)) {
@@ -33,6 +29,10 @@ export default class Level1 extends Level {
             this.player.setTransform(this.player.getHitbox().getTransform());
             return false;
         });
+        this.player.control(this.input, elapsed);
+        this.player.getHitbox().control(this.input, elapsed);
+        this.player.getCollider().updatePoints(this.player.getTransform());
+        this.player.getHitbox().getCollider().updatePoints(this.player.getHitbox().getTransform());
         this.fov.control(this.input, elapsed, this.getCamera());
         this.getCamera().getTransform().setPosition(this.player.getTransform().getPosition());
         this.fov.getTransform().setPosition(this.player.getTransform().getPosition());

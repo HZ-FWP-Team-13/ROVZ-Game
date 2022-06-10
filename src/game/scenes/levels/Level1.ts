@@ -101,13 +101,6 @@ export default class Level1 extends Level {
    *   current scene, just return `null`
    */
   public update(elapsed: number): Scene {
-    // Providing Player Control over the Player Character
-    this.player.control(this.input, elapsed);
-    this.player.getHitbox().control(this.input, elapsed);
-    // We should probably do an update method in GameItem and just update all GameItems
-    this.player.getCollider().updatePoints(this.player.getTransform());
-    this.player.getHitbox().getCollider().updatePoints(this.player.getHitbox().getTransform());
-
     // Check to see if the building and the player are colliding
     // And update the point on which the building is at
     this.buildings.forEach((building) => {
@@ -121,6 +114,12 @@ export default class Level1 extends Level {
       this.player.setTransform(this.player.getHitbox().getTransform());
       return false;
     });
+    // Providing Player Control over the Player Character
+    this.player.control(this.input, elapsed);
+    this.player.getHitbox().control(this.input, elapsed);
+    // We should probably do an update method in GameItem and just update all GameItems
+    this.player.getCollider().updatePoints(this.player.getTransform());
+    this.player.getHitbox().getCollider().updatePoints(this.player.getHitbox().getTransform());
 
     // Providing Player Control over the FovOverlay
     this.fov.control(this.input, elapsed, this.getCamera());

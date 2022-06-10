@@ -35,6 +35,7 @@ export default class Player extends GamePawn {
     this.movementSpeed = 150;
     this.rotationSpeed = 100;
 
+    // Create a new instance of a hitbox
     this.playerHitbox = new PlayerHitbox('hitbox', transform, mesh, collider);
   }
 
