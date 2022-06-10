@@ -1,14 +1,13 @@
-import GamePawn from '../../engine/ObjectModule/GamePawn.js';
-import Transform from '../../engine/ComponentsModule/Transform.js';
-import Mesh from '../../engine/ComponentsModule/Mesh.js';
 import Collider from '../../engine/ComponentsModule/Collider.js';
+import Mesh from '../../engine/ComponentsModule/Mesh.js';
+import Transform from '../../engine/ComponentsModule/Transform.js';
 import Input from '../../engine/InputModule/Input.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
-import PlayerHitbox from './PlayerHitbox.js';
+import GamePawn from '../../engine/ObjectModule/GamePawn.js';
 
-export default class Player extends GamePawn {
+export default class PlayerHitbox extends GamePawn {
   // The speed of the Player movement measured in pixels per second
-  private movementSpeed: number;
+  public movementSpeed: number;
 
   // The speed of the Player rotation measured in degrees per second
   public rotationSpeed: number;
@@ -16,16 +15,14 @@ export default class Player extends GamePawn {
   // The rotation the Player underwent since the last Frame
   public lastFrameRotationDifference: number;
 
-  // The Hitbox of the Player Character
-  private playerHitbox: PlayerHitbox;
-
   /**
-   * Create a new Player instance
+   * We create an instance of a hitbox for the player to detect collision with other
+   * GameItems in advance. This is useful for calculating when to stop in front of a building, etc
    *
-   * @param id The id of the GameObject
-   * @param transform The Transform of the GameObject
-   * @param mesh The Mesh of the GameItem
-   * @param collider The Collider of the GamePawn
+   * @param id The ID of the Item being used
+   * @param transform The position of the object
+   * @param mesh The Image/rendering of the object
+   * @param collider The collider of the object
    */
   public constructor(id: string, transform: Transform, mesh: Mesh, collider: Collider) {
     super(id, transform, mesh, collider);
@@ -34,12 +31,10 @@ export default class Player extends GamePawn {
 
     this.movementSpeed = 150;
     this.rotationSpeed = 100;
-
-    this.playerHitbox = new PlayerHitbox('hitbox', transform, mesh, collider);
   }
 
   /**
-   * Move this Player across the Game Canvas in response to the Player Input
+   * Move this PlayerHitbox across the Game Canvas in response to the Player Input
    *
    * @param input The Input matrix of this Level
    * @param elapsed The time in seconds that has been elapsed since the previous frame
@@ -59,23 +54,5 @@ export default class Player extends GamePawn {
     // Steering
     this.lastFrameRotationDifference = steering * this.rotationSpeed * elapsed * traction;
     this.getTransform().rotate(this.lastFrameRotationDifference);
-  }
-
-  /**
-   * Setter to set the movement speed to a new parameter
-   *
-   * @param speed The movement speed that needs to be set
-   */
-  public setSpeed(speed: number): void {
-    this.movementSpeed = speed;
-  }
-
-  /**
-   * Gets the hitbox of the player after creation
-   *
-   * @returns The hitbox of the player
-   */
-  public getHitbox(): PlayerHitbox {
-    return this.playerHitbox;
   }
 }

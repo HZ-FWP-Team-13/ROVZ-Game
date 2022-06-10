@@ -103,18 +103,23 @@ export default class Level1 extends Level {
   public update(elapsed: number): Scene {
     // Providing Player Control over the Player Character
     this.player.control(this.input, elapsed);
-
+    this.player.getHitbox().control(this.input, elapsed);
     // We should probably do an update method in GameItem and just update all GameItems
     this.player.getCollider().updatePoints(this.player.getTransform());
+    this.player.getHitbox().getCollider().updatePoints(this.player.getHitbox().getTransform());
 
     // Check to see if the building and the player are colliding
     // And update the point on which the building is at
     this.buildings.forEach((building) => {
       building.getCollider().updatePoints(building.getTransform());
 
-      if (Collider.checkCollision(this.player, building)) {
+      if (Collider.checkCollision(this.player.getHitbox(), building)) {
         console.log('COLLIDER DO SOMETHING PLEASE...');
+
+        return true;
       }
+      this.player.setTransform(this.player.getHitbox().getTransform());
+      return false;
     });
 
     // Providing Player Control over the FovOverlay
@@ -155,9 +160,24 @@ export default class Level1 extends Level {
     );
 
     // Drawing the Player Character on the Game Canvas
-    this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), this.getCamera());
-    this.player.getCollider().draw(this.game.ctx, this.getCamera());
+    this.player.getMesh().draw(
+      this.game.ctx,
+      this.player.getTransform(),
+      this.getCamera(),
+    );
 
+    // this.player.getCollider().draw(this.game.ctx, this.getCamera());
+
+    // Drawing the Hitbox of the Player on the Game Canvas
+    this.player.getHitbox().getMesh().draw(
+      this.game.ctx,
+      this.player.getHitbox().getTransform(),
+      this.getCamera(),
+    );
+
+    this.player.getHitbox().getCollider().draw(this.game.ctx, this.getCamera());
+
+    // Drawing the buildings on the Game Canvas
     this.buildings.forEach((building) => {
       building.getMesh().draw(
         this.game.ctx,

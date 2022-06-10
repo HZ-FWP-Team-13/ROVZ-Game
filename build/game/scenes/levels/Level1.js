@@ -21,12 +21,17 @@ export default class Level1 extends Level {
     }
     update(elapsed) {
         this.player.control(this.input, elapsed);
+        this.player.getHitbox().control(this.input, elapsed);
         this.player.getCollider().updatePoints(this.player.getTransform());
+        this.player.getHitbox().getCollider().updatePoints(this.player.getHitbox().getTransform());
         this.buildings.forEach((building) => {
             building.getCollider().updatePoints(building.getTransform());
-            if (Collider.checkCollision(this.player, building)) {
+            if (Collider.checkCollision(this.player.getHitbox(), building)) {
                 console.log('COLLIDER DO SOMETHING PLEASE...');
+                return true;
             }
+            this.player.setTransform(this.player.getHitbox().getTransform());
+            return false;
         });
         this.fov.control(this.input, elapsed, this.getCamera());
         this.getCamera().getTransform().setPosition(this.player.getTransform().getPosition());
@@ -38,7 +43,8 @@ export default class Level1 extends Level {
         this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
         this.game.ctx.drawImage(this.background.getMesh().getSourceImage(), this.getCamera().getTransform().getPosition().getX() - this.getCamera().getFrameDimensions().getX() / 2, this.getCamera().getTransform().getPosition().getY() - this.getCamera().getFrameDimensions().getY() / 2, this.getCamera().getFrameDimensions().getX(), this.getCamera().getFrameDimensions().getY(), 0, 0, this.getCamera().getFrameDimensions().getX(), this.getCamera().getFrameDimensions().getY());
         this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), this.getCamera());
-        this.player.getCollider().draw(this.game.ctx, this.getCamera());
+        this.player.getHitbox().getMesh().draw(this.game.ctx, this.player.getHitbox().getTransform(), this.getCamera());
+        this.player.getHitbox().getCollider().draw(this.game.ctx, this.getCamera());
         this.buildings.forEach((building) => {
             building.getMesh().draw(this.game.ctx, building.getTransform(), this.getCamera());
             building.getCollider().draw(this.game.ctx, this.getCamera());
