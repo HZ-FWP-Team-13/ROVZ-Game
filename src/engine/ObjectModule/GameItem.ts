@@ -1,8 +1,6 @@
 import GameObject from './GameObject.js';
 import Transform from '../ComponentsModule/Transform.js';
 import Mesh from '../ComponentsModule/Mesh.js';
-import Input from '../InputModule/Input.js';
-import Camera from '../GraphicsModule/Camera.js';
 
 export default class GameItem extends GameObject {
   // The Mesh of the GameItem

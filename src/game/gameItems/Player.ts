@@ -1,7 +1,6 @@
 import GamePawn from '../../engine/ObjectModule/GamePawn.js';
 import Transform from '../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../engine/ComponentsModule/Mesh.js';
-import Collider from '../../engine/ComponentsModule/Collider.js';
 import Input from '../../engine/InputModule/Input.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
 import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
