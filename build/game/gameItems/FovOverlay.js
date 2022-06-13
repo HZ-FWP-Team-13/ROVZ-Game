@@ -7,6 +7,9 @@ export default class FovOverlay extends GameItem {
         super(id, transform, mesh);
         this.rotationSpeed = 1;
     }
+    update(input, elapsed, camera) {
+        this.control(input, elapsed, camera);
+    }
     control(input, elapsed, camera) {
         let toCursor = new Vector2(0, -1);
         if (input.getMouse().getMouseInAction()) {

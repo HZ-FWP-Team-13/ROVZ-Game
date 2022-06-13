@@ -9,8 +9,9 @@ export default class Player extends GamePawn {
         this.movementSpeed = 150;
         this.rotationSpeed = 100;
     }
-    update(elapsed) {
+    update(input, elapsed) {
         this.getCollider().updatePoints(this.getTransform());
+        this.control(input, elapsed);
     }
     control(input, elapsed) {
         const traction = input.readAxisPressed('verticalMovement');

@@ -29,9 +29,8 @@ export default class Level1 extends Level {
         this.cars.push(new Car('car1', this.path, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))), new Car('car2', this.path, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))));
     }
     update(elapsed) {
-        this.player.update(elapsed);
-        this.player.control(this.input, elapsed);
-        this.fov.control(this.input, elapsed, this.getCamera());
+        this.player.update(this.input, elapsed);
+        this.fov.update(this.input, elapsed, this.getCamera());
         this.getCamera().getTransform().setPosition(this.player.getTransform().getPosition());
         this.fov.getTransform().setPosition(this.player.getTransform().getPosition());
         this.fov.getTransform().rotate(this.player.lastFrameRotationDifference);

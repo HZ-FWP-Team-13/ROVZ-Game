@@ -24,11 +24,22 @@ export default class FovOverlay extends GameItem {
   }
 
   /**
+   * Update this FovOverlay
+   *
+   * @param input The Input matrix of the Level
+   * @param elapsed The time in seconds that has been elapsed since the previous frame
+   * @param camera The Camera of the Level
+   */
+  public update(input: Input, elapsed: number, camera: Camera): void {
+    this.control(input, elapsed, camera);
+  }
+
+  /**
    * Rotate this FovOverlay in response to the Player Input
    *
-   * @param input The Input matrix of this Level
+   * @param input The Input matrix of the Level
    * @param elapsed The time in seconds that has been elapsed since the previous frame
-   * @param camera The Camera of this Level
+   * @param camera The Camera of the Level
    */
   public control(input: Input, elapsed: number, camera: Camera): void {
     // Calculating a Vector2 from the Player towards the Cursor

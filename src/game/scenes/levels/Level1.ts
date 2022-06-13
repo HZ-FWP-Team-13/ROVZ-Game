@@ -117,11 +117,8 @@ export default class Level1 extends Level {
    *   current scene, just return `null`
    */
   public update(elapsed: number): Scene {
-    this.player.update(elapsed);
-
-    // Providing Player Control over the Player Character and FOV
-    this.player.control(this.input, elapsed);
-    this.fov.control(this.input, elapsed, this.getCamera());
+    this.player.update(this.input, elapsed);
+    this.fov.update(this.input, elapsed, this.getCamera());
 
     // Preserving the position of the Camera relative to the Player Character
     this.getCamera().getTransform().setPosition(this.player.getTransform().getPosition());

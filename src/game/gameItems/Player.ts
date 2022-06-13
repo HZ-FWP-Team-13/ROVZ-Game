@@ -31,17 +31,20 @@ export default class Player extends GamePawn {
   }
 
   /**
-   * Update the simulation by one step
-   * @param elapsed Time elapsed between this frame and the previous
+   * Update this Player
+   *
+   * @param input The Input matrix of the Level
+   * @param elapsed The time in seconds that has been elapsed since the previous frame
    */
-  public update(elapsed: number) {
+  public update(input: Input, elapsed: number): void {
     this.getCollider().updatePoints(this.getTransform());
+    this.control(input, elapsed);
   }
 
   /**
    * Move this Player across the Game Canvas in response to the Player Input
    *
-   * @param input The Input matrix of this Level
+   * @param input The Input matrix of the Level
    * @param elapsed The time in seconds that has been elapsed since the previous frame
    */
   public control(input: Input, elapsed: number): void {
