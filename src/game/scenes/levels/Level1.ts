@@ -11,6 +11,7 @@ import Scene from '../../../engine/SceneModule/Scene.js';
 import Car from '../../gameItems/Car.js';
 import Path from '../../../engine/AIModule/Path.js';
 import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
+import FinishLine from '../../gameItems/FinishLine.js';
 
 export default class Level1 extends Level {
   private background: GameItem;
@@ -26,6 +27,9 @@ export default class Level1 extends Level {
 
   // Path
   private path: Path;
+
+  // FinishLine
+  private finishLine: FinishLine;
 
   /**
    * Create a new Level1 Level instance
@@ -99,6 +103,9 @@ export default class Level1 extends Level {
       new Car('car1', this.path, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
       new Car('car2', this.path, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
     );
+
+    // create finishline
+    this.finishLine = new FinishLine('finishline', new Mesh('./assets/img/testplayer.png', new Vector2(50, 50)), new Transform(new Vector2(50, 50)));
   }
 
   /**
@@ -179,5 +186,8 @@ export default class Level1 extends Level {
     this.player.getCollider().draw(this.game.ctx, camera);
     // Drawing the FovOverlay on the Game Canvas
     this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);
+
+    // draw finishline
+    this.finishLine.getMesh().draw(this.game.ctx, this.finishLine.getTransform(), camera);
   }
 }

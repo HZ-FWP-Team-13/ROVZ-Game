@@ -1,12 +1,14 @@
-import GameItem from './GameItem.js';
+import GameItem from '../../engine/ObjectModule/GameItem.js';
+import Transform from '../../engine/ComponentsModule/Transform';
+import Mesh from '../../engine/ComponentsModule/Mesh.js';
 
 export default class FinishLine extends GameItem {
   /**
-   *
-   * @param maxX Maximum x
-   * @param maxY Maximum y
+   *  create a finishline
+   * @param mesh
+   * @param transform
    */
-  public constructor(maxX: number, maxY: number) {
-    super(318, 159, './assets/img/testplayer.png', maxX, maxY, 1, 318);
+  public constructor(mesh: Mesh, transform: Transform) {
+    super('./assets/img/testplayer.png', transform, mesh);
   }
 }
