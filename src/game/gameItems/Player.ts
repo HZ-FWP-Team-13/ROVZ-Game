@@ -4,7 +4,6 @@ import Mesh from '../../engine/ComponentsModule/Mesh.js';
 import Collider from '../../engine/ComponentsModule/Collider.js';
 import Input from '../../engine/InputModule/Input.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
-import PlayerHitbox from './PlayerHitbox.js';
 
 export default class Player extends GamePawn {
   // The speed of the Player movement measured in pixels per second
@@ -15,9 +14,6 @@ export default class Player extends GamePawn {
 
   // The rotation the Player underwent since the last Frame
   public lastFrameRotationDifference: number;
-
-  // The Hitbox of the Player Character
-  private playerHitbox: PlayerHitbox;
 
   /**
    * Create a new Player instance
@@ -34,9 +30,6 @@ export default class Player extends GamePawn {
 
     this.movementSpeed = 150;
     this.rotationSpeed = 100;
-
-    // Create a new instance of a hitbox
-    this.playerHitbox = new PlayerHitbox('hitbox', transform, mesh, collider);
   }
 
   /**
@@ -69,14 +62,5 @@ export default class Player extends GamePawn {
    */
   public setSpeed(speed: number): void {
     this.movementSpeed = speed;
-  }
-
-  /**
-   * Gets the hitbox of the player after creation
-   *
-   * @returns The hitbox of the player
-   */
-  public getHitbox(): PlayerHitbox {
-    return this.playerHitbox;
   }
 }

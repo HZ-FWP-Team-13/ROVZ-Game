@@ -193,6 +193,72 @@ export default class Collider extends Component {
   }
 
   /**
+   * Check for collision between two colliders using SAT (Seperating Axis Theorem)
+   *
+   * @param gi1 The first GameItem
+   * @param gi2 The other GameItem
+   * @returns boolean
+   */
+  public static checkDiagonalCollision(
+    gi1: GamePawn,
+    gi2: GamePawn,
+  ): boolean {
+    let gameItem1 = gi1;
+
+    let gameItem2 = gi2;
+
+    for (let shape = 0; shape < 2; shape++) {
+      // Once the test has been performed using the axes of the first shape,
+      // perform the test using the axes of the second shape.
+      if (shape === 1) {
+        gameItem1 = gi2;
+
+        gameItem2 = gi1;
+      }
+
+      const c1 = gameItem1.getCollider();
+      const c2 = gameItem2.getCollider();
+
+      // Check the Diagonals of the Points...
+      for (let a = 0; a < c1.updatedPoints.length; a++) {
+        // Middle of the first object
+        const line1start = new Vector2(
+          gameItem1.getTransform().getPosition().getX(),
+          gameItem1.getTransform().getPosition().getY(),
+        );
+        //
+        const line1end = new Vector2(
+          c1.updatedPoints[a].getX(),
+          c1.updatedPoints[a].getY(),
+        );
+
+        // console.log(line1start);
+        // console.log(line1end);
+        // .... against the edges of another.
+        for (let b = 0; b < c2.updatedPoints.length; b++) {
+          const line2start = new Vector2(
+            c2.updatedPoints[b].getX(),
+            c2.updatedPoints[b].getY(),
+          );
+          const line2end = new Vector2(
+            c2.updatedPoints[(b + 1) % c2.updatedPoints.length].getX(),
+            c2.updatedPoints[(b + 1) % c2.updatedPoints.length].getY(),
+          );
+
+          const h = (line2end.getX() - line2start.getX()) * (line1start.getY() - line1end.getY()) + (line1start.getX() - line1end.getX()) * (line2end.getY() - line2start.getY());
+          const t1 = ((line2start.getY() - line2end.getY()) * (line2start.getX() - line2start.getX()) + (line2end.getX() - line2start.getX()) * (line1start.getY() - line2start.getY())) / h;
+					const t2 = ((line1start.getY() - line1end.getY()) * (line1start.getX() - line2start.getX()) + (line1end.getX() - line1start.getX()) * (line1start.getY() - line2start.getY())) / h;
+          console.log(t1);
+          if (t1 > 0 && t1 < 1 && t2 > 0 && t2 < 1) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
    * Clears all points from the Collider
    */
   public clearPoints(): void {

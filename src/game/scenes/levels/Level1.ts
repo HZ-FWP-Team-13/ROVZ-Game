@@ -82,7 +82,7 @@ export default class Level1 extends Level {
     );
 
     // Initalize the array of buildings, then process the amount
-    this.buildings = Factory.buildingFactory(100, 600, 6);
+    this.buildings = Factory.buildingFactory(200, 600, 1);
   }
 
   /**
@@ -103,23 +103,33 @@ export default class Level1 extends Level {
   public update(elapsed: number): Scene {
     // Check to see if the building and the player are colliding
     // And update the point on which the building is at
-    this.buildings.forEach((building) => {
-      building.getCollider().updatePoints(building.getTransform());
+    // this.buildings.forEach((building) => {
+    //   building.getCollider().updatePoints(building.getTransform());
 
-      if (Collider.checkCollision(this.player.getHitbox(), building)) {
-        console.log('COLLIDER DO SOMETHING PLEASE...');
+    //   // if (Collider.checkCollision(this.player.getHitbox(), building)) {
+    //   //   console.log('COLLIDER DO SOMETHING PLEASE...');
 
-        return true;
-      }
-      this.player.setTransform(this.player.getHitbox().getTransform());
-      return false;
-    });
+    //   //   return true;
+    //   // }
+    //   console.log(building);
+    //   if (Collider.checkDiagonalCollision(this.player, building)) {
+    //     console.log('COLLIDER DO SOMETHING PLEASE...');
+    //     return true;
+    //   }
+
+    //   this.player.setTransform(this.player.getTransform());
+    //   return false;
+    // });
     // Providing Player Control over the Player Character
     this.player.control(this.input, elapsed);
-    this.player.getHitbox().control(this.input, elapsed);
     // We should probably do an update method in GameItem and just update all GameItems
     this.player.getCollider().updatePoints(this.player.getTransform());
-    this.player.getHitbox().getCollider().updatePoints(this.player.getHitbox().getTransform());
+
+    this.buildings[0].getCollider().updatePoints(this.buildings[0].getTransform());
+
+    if (Collider.checkDiagonalCollision(this.player, this.buildings[0])) {
+      console.log('COLLIDER DO SOMETHING PLEASE...');
+    }
 
     // Providing Player Control over the FovOverlay
     this.fov.control(this.input, elapsed, this.getCamera());
@@ -165,16 +175,7 @@ export default class Level1 extends Level {
       this.getCamera(),
     );
 
-    // this.player.getCollider().draw(this.game.ctx, this.getCamera());
-
-    // Drawing the Hitbox of the Player on the Game Canvas
-    this.player.getHitbox().getMesh().draw(
-      this.game.ctx,
-      this.player.getHitbox().getTransform(),
-      this.getCamera(),
-    );
-
-    this.player.getHitbox().getCollider().draw(this.game.ctx, this.getCamera());
+    this.player.getCollider().draw(this.game.ctx, this.getCamera());
 
     // Drawing the buildings on the Game Canvas
     this.buildings.forEach((building) => {
