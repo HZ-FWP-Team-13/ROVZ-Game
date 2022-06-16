@@ -8,6 +8,8 @@ export default class GameWon extends Scene {
 
   private keyboard: KeyListener;
 
+  private gradient: CanvasGradient;
+
   /**
    * Creates a new instance of this class
    *
@@ -60,9 +62,15 @@ export default class GameWon extends Scene {
   public render(): void {
     // Clear the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-    // draw font and styles
-    this.game.ctx.fillText('You won!', 100, 200);
-    this.game.ctx.fillStyle = 'red';
-    this.game.ctx.font = '60px san-serif';
+    // draw text and font styles
+    this.game.ctx.fillText('Congratulations, you passed the level!', 100, 200);
+    this.game.ctx.font = '85px san-serif';
+    // create a gradient
+    this.gradient = this.game.ctx.createLinearGradient(0, 0, this.game.canvas.width, 0);
+    this.gradient.addColorStop(0, 'red');
+    this.gradient.addColorStop(0.5, 'orange');
+    this.gradient.addColorStop(1.0, 'yellow');
+    // Fill with gradient
+    this.game.ctx.fillStyle = this.gradient;
   }
 }

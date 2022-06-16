@@ -4,6 +4,7 @@ import Start from './Start.js';
 export default class GameWon extends Scene {
     shouldStart;
     keyboard;
+    gradient;
     constructor(game) {
         super(game);
         this.keyboard = new KeyListener();
@@ -26,9 +27,13 @@ export default class GameWon extends Scene {
     }
     render() {
         this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-        this.game.ctx.fillText('You won!', 100, 200);
-        this.game.ctx.fillStyle = 'red';
-        this.game.ctx.font = '60px san-serif';
+        this.game.ctx.fillText('Congratulations, you passed the level!', 100, 200);
+        this.game.ctx.font = '85px san-serif';
+        this.gradient = this.game.ctx.createLinearGradient(0, 0, this.game.canvas.width, 0);
+        this.gradient.addColorStop(0, 'red');
+        this.gradient.addColorStop(0.5, 'orange');
+        this.gradient.addColorStop(1.0, 'yellow');
+        this.game.ctx.fillStyle = this.gradient;
     }
 }
 //# sourceMappingURL=GameWon.js.map
