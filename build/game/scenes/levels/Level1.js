@@ -16,20 +16,25 @@ export default class Level1 extends Level {
     fov;
     buildings;
     cars;
-    path;
+    path1;
     constructor(game) {
         super(game);
-        this.background = new GameItem('background', new Transform(), new Mesh('./assets/img/background.png', new Vector2(1386, 980)));
+        this.background = new GameItem('background', new Transform(), new Mesh('./assets/img/level/roundabout.png', new Vector2(1386, 980)));
         this.player = new Player('player', new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2)), new Mesh('./assets/img/player/cyclist.png', new Vector2(28, 78)), new RectCollider(new Vector2(28, 78)));
         this.fov = new FovOverlay('fov', new Transform(), new Mesh('./assets/img/fov.png', new Vector2(6000, 6000)));
-        this.buildings = Factory.buildingFactory(200, 600, 4);
-        this.path = new Path();
-        const p = this.path;
-        p.addPoint(new Vector2(0, 200));
-        p.addPoint(new Vector2(600, 300));
-        p.addPoint(new Vector2(-100, 500));
+        this.buildings = Factory.buildingFactory(200, 1600, 4);
+        this.path1 = new Path();
+        const p = this.path1;
+        p.addPoint(new Vector2(550, 1000));
+        p.addPoint(new Vector2(550, 650));
+        p.addPoint(new Vector2(650, 550));
+        p.addPoint(new Vector2(650, 450));
+        p.addPoint(new Vector2(550, 350));
+        p.addPoint(new Vector2(450, 350));
+        p.addPoint(new Vector2(350, 450));
+        p.addPoint(new Vector2(0, 450));
         this.cars = [];
-        this.cars.push(new Car('car1', this.path, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))), new Car('car2', this.path, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))));
+        this.cars.push(new Car('car1', this.path1, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))), new Car('car2', this.path1, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))));
     }
     update(elapsed) {
         this.player.setHitbox(this.player);
@@ -83,7 +88,7 @@ export default class Level1 extends Level {
             car.getMesh().draw(this.game.ctx, car.getTransform(), camera);
             car.getCollider().draw(this.game.ctx, camera);
         });
-        this.path.draw(this.game.ctx, camera);
+        this.path1.draw(this.game.ctx, camera);
         this.buildings.forEach((building) => {
             building.getMesh().draw(this.game.ctx, building.getTransform(), this.getCamera());
             building.getCollider().draw(this.game.ctx, this.getCamera());

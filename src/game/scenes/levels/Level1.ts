@@ -30,8 +30,8 @@ export default class Level1 extends Level {
   // Car Array
   private cars: Car[];
 
-  // Path
-  private path: Path;
+  // Paths
+  private path1: Path;
 
   /**
    * Create a new Level1 Level instance
@@ -49,8 +49,8 @@ export default class Level1 extends Level {
       new Transform(),
       // The Transform of the GameItem
       new Mesh(
-        // The path to the Source Image of the GameItem Mesh
-        './assets/img/background.png',
+        // The path11 to the Source Image of the GameItem Mesh
+        './assets/img/level/roundabout.png',
         // The dimensions of the GameItem Mesh
         new Vector2(1386, 980),
       ),
@@ -92,21 +92,29 @@ export default class Level1 extends Level {
     );
 
     // Initalize the array of buildings, then process the amount
-    this.buildings = Factory.buildingFactory(200, 600, 4);
+    this.buildings = Factory.buildingFactory(200, 1600, 4);
 
-    this.path = new Path();
+    this.path1 = new Path();
 
-    // Car path
-    const p = this.path;
-    p.addPoint(new Vector2(0, 200));
-    p.addPoint(new Vector2(600, 300));
-    p.addPoint(new Vector2(-100, 500));
+    // Car path1
+    const p = this.path1;
+    p.addPoint(new Vector2(550, 1000));
+    p.addPoint(new Vector2(550, 650));
+
+    p.addPoint(new Vector2(650, 550));
+    p.addPoint(new Vector2(650, 450));
+
+    p.addPoint(new Vector2(550, 350));
+    p.addPoint(new Vector2(450, 350));
+
+    p.addPoint(new Vector2(350, 450));
+    p.addPoint(new Vector2(0, 450));
 
     // Create cars
     this.cars = [];
     this.cars.push(
-      new Car('car1', this.path, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
-      new Car('car2', this.path, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
+      new Car('car1', this.path1, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
+      new Car('car2', this.path1, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
     );
   }
 
@@ -244,8 +252,8 @@ export default class Level1 extends Level {
       car.getCollider().draw(this.game.ctx, camera);
     });
 
-    // Draw the path
-    this.path.draw(this.game.ctx, camera);
+    // Draw the path1
+    this.path1.draw(this.game.ctx, camera);
 
     // Drawing the buildings on the Game Canvas
     this.buildings.forEach((building) => {

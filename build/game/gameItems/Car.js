@@ -8,34 +8,34 @@ export default class Car extends GamePawn {
     targetSpeed;
     acceleration;
     path;
+    lastPassedPointIndex;
     constructor(id, path, startPoint, mesh, collider) {
         const transform = new Transform(path.getPoints()[startPoint], 0, new Vector2(1, 1));
         super(id, transform, mesh, collider);
         this.path = path;
-        this.speedRange = new Vector2(-50, 150);
         this.speed = 300;
-        this.targetSpeed = 150;
-        this.acceleration = 20;
+        this.lastPassedPointIndex = startPoint;
     }
     update(elapsed) {
-        this.getCollider().updatePoints(this.getTransform());
         const points = this.path.getPoints();
-        for (let i = 0; i < points.length; i++) {
-            const tx = this.getTransform().getPosition().getX();
-            const ty = this.getTransform().getPosition().getY();
-            const px = points[i].getX();
-            const py = points[i].getY();
-            if ((tx >= px - 5 && tx <= px + 5) && (ty <= py + 5 && ty >= py - 5)) {
-                const b = (i + 1) % points.length;
-                const u = new Vector2(points[b].getX() - points[i].getX(), points[b].getY() - points[i].getY());
-                const v = new Vector2(0, -1);
-                let angle = Mathematics.degrees(Math.acos(Vector2.dotProduct(u, v)
-                    / (Vector2.magnitude(u) * Vector2.magnitude(v))));
-                if (Vector2.crossProduct(u, v) > 0) {
-                    angle = 360 - angle;
-                }
-                this.getTransform().setRotation((angle));
+        const i = this.lastPassedPointIndex;
+        const j = (i + 1) % points.length;
+        const a = points[i];
+        const b = points[(j) % points.length];
+        const ab = Vector2.magnitude(Vector2.vectorDifference(b, a));
+        const c = Vector2.magnitude(Vector2.vectorDifference(this.getTransform().getPosition(), a));
+        if (c > ab) {
+            const k = (j + 1) % points.length;
+            this.getTransform().setPosition(b);
+            const u = new Vector2(points[k].getX() - points[j].getX(), points[k].getY() - points[j].getY());
+            const v = new Vector2(0, -1);
+            let angle = Mathematics.degrees(Math.acos(Vector2.dotProduct(u, v)
+                / (Vector2.magnitude(u) * Vector2.magnitude(v))));
+            if (Vector2.crossProduct(u, v) > 0) {
+                angle = 360 - angle;
             }
+            this.getTransform().setRotation((angle));
+            this.lastPassedPointIndex = j;
         }
         this.getTransform().translate(new Vector2(0, (this.speed * elapsed)));
     }

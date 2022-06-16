@@ -18,6 +18,8 @@ export default class Car extends GamePawn {
 
   public path: Path; // Path the car follows
 
+  private lastPassedPointIndex: number; // The last point the car has passed
+
   /**
    * Create a new Player instance //TODO SOME OF THIS STUFF HAS BECOME OBSOLETE
    *
@@ -39,13 +41,8 @@ export default class Car extends GamePawn {
     super(id, transform, mesh, collider);
 
     this.path = path;
-
-    // TODO: All of this should be able to be changed on a per-car basis.
-    // TODO: Values are assigned for testing purposes, this should be changed later.
-    this.speedRange = new Vector2(-50, 150);
     this.speed = 300;
-    this.targetSpeed = 150;
-    this.acceleration = 20;
+    this.lastPassedPointIndex = startPoint;
   }
 
   /**
@@ -53,41 +50,41 @@ export default class Car extends GamePawn {
    *
    * @param elapsed Time elapsed since last call
    */
-  public update(elapsed: number) : void {
-    this.getCollider().updatePoints(this.getTransform());
+  public update(elapsed: number): void {
     const points = this.path.getPoints();
-    for (let i = 0; i < points.length; i++) {
-      const tx = this.getTransform().getPosition().getX();
-      const ty = this.getTransform().getPosition().getY();
-      const px = points[i].getX();
-      const py = points[i].getY();
 
-      if (
-        (tx >= px - 5 && tx <= px + 5) && (ty <= py + 5 && ty >= py - 5)
-      ) {
-        const b = (i + 1) % points.length;
-        // Set the rotation of the car to align with the edge between this point and the next
+    const i = this.lastPassedPointIndex;
+    const j = (i + 1) % points.length;
 
-        // First, get the vector of the edge between this point and the next
-        const u = new Vector2(points[b].getX() - points[i].getX(),
-          points[b].getY() - points[i].getY());
+    const a = points[i];
+    const b = points[(j) % points.length];
 
-        // Next, create a vector that goes up (or is it down???)
-        const v = new Vector2(0, -1);
+    const ab = Vector2.magnitude(Vector2.vectorDifference(b, a));
+    const c = Vector2.magnitude(Vector2.vectorDifference(this.getTransform().getPosition(), a));
 
-        let angle = Mathematics.degrees(Math.acos(Vector2.dotProduct(u, v)
+    if (c > ab) {
+      const k = (j + 1) % points.length;
+      this.getTransform().setPosition(b);
+      // Set the rotation of the car to align with the edge between this point and the next
+
+      // First, get the vector of the edge between this point and the next
+      const u = new Vector2(points[k].getX() - points[j].getX(),
+        points[k].getY() - points[j].getY());
+
+      // Next, create a vector that goes up (or is it down???)
+      const v = new Vector2(0, -1);
+
+      let angle = Mathematics.degrees(Math.acos(Vector2.dotProduct(u, v)
         / (Vector2.magnitude(u) * Vector2.magnitude(v))));
 
-        if (Vector2.crossProduct(u, v) > 0) {
-          angle = 360 - angle;
-        }
-
-        this.getTransform().setRotation((angle));
+      if (Vector2.crossProduct(u, v) > 0) {
+        angle = 360 - angle;
       }
-    }
 
+      this.getTransform().setRotation((angle));
+
+      this.lastPassedPointIndex = j;
+    }
     this.getTransform().translate(new Vector2(0, (this.speed * elapsed)));
   }
-
-  // TODO: ACCESSORS
 }
