@@ -2,7 +2,6 @@ import GameItem from '../ObjectModule/GameItem.js';
 import MouseTrigger from '../ComponentsModule/MouseTrigger.js';
 import Transform from '../ComponentsModule/Transform.js';
 import Mesh from '../ComponentsModule/Mesh.js';
-import Vector2 from '../MathModule/Vector2.js';
 
 export default class Button extends GameItem {
   // The text of the Button

@@ -3,7 +3,6 @@ import GameItem from '../ObjectModule/GameItem.js';
 import Input from '../InputModule/Input.js';
 import Camera from '../GraphicsModule/Camera.js';
 import Vector2 from '../MathModule/Vector2.js';
-import Mathematics from '../MathModule/Mathematics.js';
 
 export default class MouseTrigger extends Component {
   // The state of the MouseTrigger
