@@ -8,9 +8,14 @@ import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 import Collider from '../../../engine/ComponentsModule/Collider.js';
 import Scene from '../../../engine/SceneModule/Scene.js';
+
+import Building from '../../gameItems/structures/Building.js';
+import Factory from '../../Factory.js';
+
 import Car from '../../gameItems/Car.js';
 import Path from '../../../engine/AIModule/Path.js';
 import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
+
 
 export default class Level1 extends Level {
   private background: GameItem;
@@ -21,11 +26,15 @@ export default class Level1 extends Level {
   // FovOverlay
   private fov: FovOverlay;
 
+  // Buildings and Amount
+  private buildings: Building[];
+
   // Car Array
   private cars: Car[];
 
   // Path
   private path: Path;
+
 
   /**
    * Create a new Level1 Level instance
@@ -85,6 +94,10 @@ export default class Level1 extends Level {
       ),
     );
 
+
+    // Initalize the array of buildings, then process the amount
+    this.buildings = Factory.buildingFactory(200, 600, 4);
+
     this.path = new Path();
 
     // Car path
@@ -117,7 +130,63 @@ export default class Level1 extends Level {
    *   current scene, just return `null`
    */
   public update(elapsed: number): Scene {
-    this.player.update(elapsed);
+    this.player.setHitbox(this.player);
+    this.player.getHitbox().getCollider().updatePoints(this.player.getHitbox().getTransform());
+
+    let collided: boolean = false;
+
+    // Check to see if the building and the player are colliding
+    // And update the point on which the building is at
+    this.buildings.forEach((building) => {
+      building.getCollider().updatePoints(building.getTransform());
+
+      // console.log(building);
+      if (Collider.checkCollision(this.player.getHitbox(), building)) {
+        collided = true;
+        console.log('You crashed into a building -_-');
+        // TODO: Gain control of the character after running into a building,
+        // while not being able to move forward
+        //
+        // ALSO, we need to detect which side the player is facing of the object,
+        // so we can calculate which x and y need to be changed
+
+        const vector: Vector2 = Vector2.vectorDifference(
+          this.player.getTransform().getPosition(),
+          building.getTransform().getPosition(),
+        );
+
+        if (vector.getX() > 0) {
+          // When the player touches the right side
+          this.player.getTransform().getPosition().setX(
+            this.player.getTransform().getPosition().getX() + 1,
+          );
+        } else if (vector.getX() < 0) {
+          // When the player touches the left side
+          this.player.getTransform().getPosition().setX(
+            this.player.getTransform().getPosition().getX() - 1,
+          );
+        }
+        if (vector.getY() > 0) {
+          // When the player touches the top side
+          this.player.getTransform().getPosition().setY(
+            this.player.getTransform().getPosition().getY() + 2,
+          );
+        } else if (vector.getY() < 0) {
+          // When the player touches the bottom side
+          this.player.getTransform().getPosition().setY(
+            this.player.getTransform().getPosition().getY() - 2,
+          );
+        }
+      }
+    });
+
+    if (!collided) {
+      this.player.control(this.input, elapsed);
+    }
+
+    // // Providing Player Control over the Player Character
+    // this.player.control(this.input, elapsed);
+
 
     // Providing Player Control over the Player Character and FOV
     this.player.control(this.input, elapsed);
@@ -175,8 +244,26 @@ export default class Level1 extends Level {
     this.path.draw(this.game.ctx, camera);
 
     // Drawing the Player Character on the Game Canvas
-    this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
-    this.player.getCollider().draw(this.game.ctx, camera);
+    this.player.getMesh().draw(
+      this.game.ctx,
+      this.player.getTransform(),
+      this.getCamera(),
+    );
+
+    this.player.getCollider().draw(this.game.ctx, this.getCamera());
+
+    // Drawing the buildings on the Game Canvas
+    this.buildings.forEach((building) => {
+      building.getMesh().draw(
+        this.game.ctx,
+        building.getTransform(),
+        this.getCamera(),
+      );
+
+      building.getCollider().draw(this.game.ctx, this.getCamera());
+    });
+
+
     // Drawing the FovOverlay on the Game Canvas
     this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);
   }

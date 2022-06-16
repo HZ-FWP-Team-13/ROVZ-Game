@@ -32,8 +32,8 @@ export default class Collider extends Component {
   /**
    * Draw this Collider vertices on the Game Canvas for debugging
    *
-   * @param ctx
-   * @param camera
+   * @param ctx The Canvas of the game
+   * @param camera The Camera of the player
    */
   public draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
     const vertSize = 8;
@@ -46,10 +46,18 @@ export default class Collider extends Component {
     const normalizedCameraY = -cameraPosition.getY() + cameraDimensions.getY() / 2;
 
     this.updatedPoints.forEach((point) => {
+
+      ctx.fillStyle = 'red';
+      const cameraPosition = camera.getTransform().getPosition();
+      const cameraDimensions = camera.getFrameDimensions();
+      ctx.fillRect(
+        point.getX() - vertSize / 2 - cameraPosition.getX() + cameraDimensions.getX() / 2,
+        point.getY() - vertSize / 2 - cameraPosition.getY() + cameraDimensions.getY() / 2,
       ctx.fillStyle = 'blue';
       ctx.fillRect(
         point.getX() - vertSize / 2 + normalizedCameraX,
         point.getY() - vertSize / 2 + normalizedCameraY,
+
         vertSize, vertSize,
       );
     });
@@ -76,10 +84,10 @@ export default class Collider extends Component {
   /**
    * Update the positions of the points in the World (Absolute) space.
    *
-   *
-   * @param transform Transform to update 'around'
+
+   * @param transform The Postitions of the points
    */
-  public updatePoints(transform: Transform) : void {
+  public updatePoints(transform: Transform): void {
     for (let i = 0; i < this.points.length; i++) {
       const transformRotation = -Mathematics.radians(transform.getRotation());
 
@@ -225,6 +233,7 @@ export default class Collider extends Component {
 
   /**
    * Clears the points and generates a rectangular collider based on width and height
+   *
    * @param width The width of the collider
    * @param height The height of the collider
    */
@@ -238,16 +247,18 @@ export default class Collider extends Component {
   }
 
   /**
+   * Getter for the Updated Points
    *
-   * @returns
+   * @returns The Updated Points of the Collisions
    */
   public getUpdatedPoints(): Vector2[] {
     return this.updatedPoints;
   }
 
   /**
+   * Setter for the Updated Points
    *
-   * @param value
+   * @param value The new vector that needs to be set
    */
   public setUpdatedPoints(value: Vector2[]): void {
     this.updatedPoints = value;

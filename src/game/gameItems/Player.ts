@@ -8,13 +8,16 @@ import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
 
 export default class Player extends GamePawn {
   // The speed of the Player movement measured in pixels per second
-  public movementSpeed: number;
+  private movementSpeed: number;
 
   // The speed of the Player rotation measured in degrees per second
   public rotationSpeed: number;
 
   // The rotation the Player underwent since the last Frame
   public lastFrameRotationDifference: number;
+
+  // We use this hitbox to determine movement against collidable objects
+  private hitbox: Player;
 
   /**
    * Create a new Player instance
@@ -26,6 +29,8 @@ export default class Player extends GamePawn {
    */
   public constructor(id: string, transform: Transform, mesh: Mesh, collider: RectCollider) {
     super(id, transform, mesh, collider);
+
+    this.createColliderPoints();
 
     this.movementSpeed = 150;
     this.rotationSpeed = 100;
@@ -60,5 +65,33 @@ export default class Player extends GamePawn {
     // Steering
     this.lastFrameRotationDifference = steering * this.rotationSpeed * elapsed * traction;
     this.getTransform().rotate(this.lastFrameRotationDifference);
+  }
+
+  /**
+   * Setter to set the movement speed to a new parameter
+   *
+   * @param speed The movement speed that needs to be set
+   */
+  public setSpeed(speed: number): void {
+    this.movementSpeed = speed;
+  }
+
+  /**
+   * getter for hitbox of the player.
+   *
+   * @returns the hitbox of the player
+   */
+  public getHitbox(): Player {
+    return this.hitbox;
+  }
+
+  /**
+   * Setter to set the movement speed to a new parameter
+   *
+   * @param player The movement speed that needs to be set
+   */
+  public setHitbox(player: Player): void {
+    this.hitbox = player;
+    this.hitbox.createColliderPoints();
   }
 }
