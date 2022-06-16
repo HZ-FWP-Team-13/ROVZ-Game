@@ -30,7 +30,6 @@ export default class Collider extends Component {
         ctx.lineTo(this.updatedPoints[0].getX() + normalizedCameraX, this.updatedPoints[0].getY() + normalizedCameraY);
         ctx.stroke();
         ctx.closePath();
-        console.log('DRAW');
     }
     updatePoints(transform) {
         for (let i = 0; i < this.points.length; i++) {
@@ -94,7 +93,6 @@ export default class Collider extends Component {
             }
         }
         c1.overlap = true;
-        console.log(true);
         return true;
     }
     clearPoints() {

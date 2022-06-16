@@ -69,8 +69,6 @@ export default class Collider extends Component {
     );
     ctx.stroke();
     ctx.closePath();
-
-    console.log('DRAW');
   }
 
   /**
@@ -211,7 +209,6 @@ export default class Collider extends Component {
       }
     }
     c1.overlap = true;
-    console.log(true);
     return true;
   }
 

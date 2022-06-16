@@ -1,10 +1,20 @@
 import Screen from '../../../engine/SceneModule/Screen.js';
+import Menu from '../../../engine/UIModule/Menu.js';
 import Game from '../../../engine/CoreModule/Game.js';
+import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Scene from '../../../engine/SceneModule/Scene.js';
 import Level1 from '../levels/Level1.js';
-import Graphics from '../../../engine/GraphicsModule/Graphics.js';
+import Button from '../../../engine/UIModule/Button.js';
+import Mesh from '../../../engine/ComponentsModule/Mesh.js';
+import Vector2 from '../../../engine/MathModule/Vector2.js';
+import GameItem from '../../../engine/ObjectModule/GameItem.js';
 
 export default class Start extends Screen {
+  private titleImage: GameItem;
+
+  // The Menu of the Start Screen
+  private menu: Menu;
+
   /**
    * Create a new Start Screen instance
    *
@@ -12,6 +22,49 @@ export default class Start extends Screen {
    */
   public constructor(game: Game) {
     super(game);
+
+    this.titleImage = new GameItem(
+      // The id of the GameObject
+      'titleImage',
+      // The Transform of the GameObject
+      new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2 - 100)),
+      // The Transform of the GameItem
+      new Mesh(
+        // The path to the Source Image of the GameItem Mesh
+        './assets/img/titleBike.png',
+        // The dimensions of the GameItem Mesh
+        new Vector2(574, 376),
+      ),
+    );
+
+    // Spawning the Menu
+    this.menu = new Menu(
+      // The id of the GameObject
+      'startMenu',
+      // The Transform of the GameObject
+      new Transform(),
+      // The Buttons of the Menu
+      new Map<string, Button>([
+        [
+          'play',
+          new Button(
+            // The id of the GameObject
+            'play',
+            // The Transform of the GameObject
+            new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2 + 200)),
+            // The Transform of the GameItem
+            new Mesh(
+              // The path to the Source Image of the GameItem Mesh
+              './assets/img/longButton.png',
+              // The dimensions of the GameItem Mesh
+              new Vector2(200, 50),
+            ),
+            'Play',
+          ),
+        ],
+      ]),
+    );
+
     game.reset();
   }
 
@@ -30,9 +83,12 @@ export default class Start extends Screen {
    *   current scene, just return `null`
    */
   public update(): Scene {
-    // TODO: The start menu
-    if (this.input.readAxisTyped('Select')) {
-      return new Level1(this.game);
+    const hoveredOption = this.menu.update(this.input);
+    if (this.input.getMouse().getMouseButtons() === 1) {
+      this.input.getMouse().setMouseButtons(0);
+      if (hoveredOption === 'play') {
+        return new Level1(this.game);
+      }
     }
     return null;
   }
@@ -43,8 +99,13 @@ export default class Start extends Screen {
   public render(): void {
     // Clearing the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-    // Showing the score
-    this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/startscreen.png'),
-      0, 0, this.game.canvas.width, this.game.canvas.height);
+    this.game.ctx.fillStyle = 'black';
+    this.game.ctx.fillRect(0, 0, this.game.canvas.width, this.game.canvas.height);
+
+    this.titleImage.getMesh().draw(this.game.ctx, this.titleImage.getTransform());
+    this.menu.draw(this.game.ctx);
+
+    // this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/startscreen.png'),
+    //   0, 0, this.game.canvas.width, this.game.canvas.height);
   }
 }
