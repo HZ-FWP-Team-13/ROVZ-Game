@@ -1,1 +1,0 @@
-{"version":3,"file":"Building1.js","sourceRoot":"","sources":["../../../../src/game/gameItems/structures/Building1.ts"],"names":[],"mappings":"AAGA,OAAO,QAAQ,MAAM,0CAA0C,CAAC;AAEhE,MAAM,CAAC,OAAO,OAAO,SAAU,SAAQ,QAAQ;IAS7C,YAAmB,EAAU,EAAE,SAAoB,EAAE,IAAU,EAAE,QAAkB;QACjF,KAAK,CAAC,EAAE,EAAE,SAAS,EAAE,IAAI,EAAE,QAAQ,CAAC,CAAC;QAErC,IAAI,CAAC,oBAAoB,EAAE,CAAC;IAC9B,CAAC;CACF"}

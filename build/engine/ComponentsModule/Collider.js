@@ -19,11 +19,8 @@ export default class Collider extends Component {
         const normalizedCameraX = -cameraPosition.getX() + cameraDimensions.getX() / 2;
         const normalizedCameraY = -cameraPosition.getY() + cameraDimensions.getY() / 2;
         this.updatedPoints.forEach((point) => {
-            ctx.fillStyle = 'red';
-            const cameraPosition = camera.getTransform().getPosition();
-            const cameraDimensions = camera.getFrameDimensions();
-            ctx.fillRect(point.getX() - vertSize / 2 - cameraPosition.getX() + cameraDimensions.getX() / 2, point.getY() - vertSize / 2 - cameraPosition.getY() + cameraDimensions.getY() / 2, vertSize, vertSize);
-
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(point.getX() - vertSize / 2 + normalizedCameraX, point.getY() - vertSize / 2 + normalizedCameraY, vertSize, vertSize);
         });
         ctx.strokeStyle = 'red';
         ctx.beginPath();
