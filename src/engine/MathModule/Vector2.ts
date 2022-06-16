@@ -92,13 +92,35 @@ export default class Vector2 {
   }
 
   /**
+   * Calculate the dot product of 2 given Vector2
    *
-   * @param a
-   * @param b
-   * @returns
+   * @param a Vector a
+   * @param b Vector b
+   * @returns The dot product of 2 given Vector2
    */
   public static dotProduct(a: Vector2, b: Vector2): number {
     return a.x * b.x + a.y * b.y;
+  }
+
+  /**
+   * Calculate the cross product of 2 given Vector2
+   *
+   * @param a One Vector2
+   * @param b The other Vector2
+   * @returns The cross product of the 2 Vector2
+   */
+  public static crossProduct(a: Vector2, b: Vector2): number {
+    return a.x * b.y + a.y * b.x;
+  }
+
+  /**
+   * Obtain the magnitude of a given vector
+   *
+   * @param vector The vector you want to obtain the magnitude of
+   * @returns The magnitude of a vector
+   */
+  public static magnitude(vector: Vector2) : number {
+    return Math.sqrt((vector.getX() ** 2) + (vector.getY() ** 2));
   }
 
   /**

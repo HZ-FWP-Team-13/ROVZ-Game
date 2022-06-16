@@ -37,16 +37,46 @@ export default class Collider extends Component {
    */
   public draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
     const vertSize = 8;
+    const cameraPosition = camera.getTransform().getPosition();
+    const cameraDimensions = camera.getFrameDimensions();
+
+    // Probably not the right term for this and
+    // whether to use a positive or negative cameraPosition for this variable.
+    const normalizedCameraX = -cameraPosition.getX() + cameraDimensions.getX() / 2;
+    const normalizedCameraY = -cameraPosition.getY() + cameraDimensions.getY() / 2;
+
     this.updatedPoints.forEach((point) => {
+
       ctx.fillStyle = 'red';
       const cameraPosition = camera.getTransform().getPosition();
       const cameraDimensions = camera.getFrameDimensions();
       ctx.fillRect(
         point.getX() - vertSize / 2 - cameraPosition.getX() + cameraDimensions.getX() / 2,
         point.getY() - vertSize / 2 - cameraPosition.getY() + cameraDimensions.getY() / 2,
+      ctx.fillStyle = 'blue';
+      ctx.fillRect(
+        point.getX() - vertSize / 2 + normalizedCameraX,
+        point.getY() - vertSize / 2 + normalizedCameraY,
+
         vertSize, vertSize,
       );
     });
+
+    // Draw a line from point to point
+    ctx.strokeStyle = 'red';
+    ctx.beginPath();
+    for (let i = 0; i < this.updatedPoints.length; i++) {
+      ctx.lineTo(
+        this.updatedPoints[i].getX() + normalizedCameraX,
+        this.updatedPoints[i].getY() + normalizedCameraY,
+      );
+    }
+    ctx.lineTo(
+      this.updatedPoints[0].getX() + normalizedCameraX,
+      this.updatedPoints[0].getY() + normalizedCameraY,
+    );
+    ctx.stroke();
+    ctx.closePath();
 
     console.log('DRAW');
   }
@@ -54,6 +84,7 @@ export default class Collider extends Component {
   /**
    * Update the positions of the points in the World (Absolute) space.
    *
+
    * @param transform The Postitions of the points
    */
   public updatePoints(transform: Transform): void {
@@ -188,7 +219,7 @@ export default class Collider extends Component {
       }
     }
     c1.overlap = true;
-    // console.log(true);
+    console.log(true);
     return true;
   }
 

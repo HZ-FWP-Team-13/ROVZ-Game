@@ -15,7 +15,10 @@ export default class Mesh extends Component {
     }
     draw(ctx, transform, camera) {
         ctx.save();
-        ctx.translate(transform.getPosition().getX() - (camera !== undefined ? camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2 : 0), transform.getPosition().getY() - (camera !== undefined ? camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2 : 0));
+        ctx.translate(transform.getPosition().getX(), transform.getPosition().getY());
+        if (camera !== undefined) {
+            ctx.translate(-camera.getTransform().getPosition().getX() + camera.getFrameDimensions().getX() / 2, -camera.getTransform().getPosition().getY() + camera.getFrameDimensions().getY() / 2);
+        }
         ctx.rotate(Mathematics.radians(transform.getRotation() + (camera !== undefined ? camera.getTransform().getRotation() : 0)));
         ctx.drawImage(this.sourceImage, this.dimensions.getX() * this.animationState, 0, this.dimensions.getX(), this.dimensions.getY(), -this.dimensions.getX() / 2, -this.dimensions.getY() / 2, this.dimensions.getX(), this.dimensions.getY());
         ctx.restore();

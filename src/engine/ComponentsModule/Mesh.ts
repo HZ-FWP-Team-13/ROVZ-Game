@@ -55,9 +55,15 @@ export default class Mesh extends Component {
     // Switching the Game Canvas rendering context to the relative coordinate system
     // Moving the origin of the coordinate system to the center of the future GameItem appearance
     ctx.translate(
-      transform.getPosition().getX() - (camera !== undefined ? camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2 : 0),
-      transform.getPosition().getY() - (camera !== undefined ? camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2 : 0),
+      transform.getPosition().getX(),
+      transform.getPosition().getY(),
     );
+    if (camera !== undefined) {
+      ctx.translate(
+        -camera.getTransform().getPosition().getX() + camera.getFrameDimensions().getX() / 2,
+        -camera.getTransform().getPosition().getY() + camera.getFrameDimensions().getY() / 2,
+      );
+    }
     // Rotating coordinate system to correspond with this GameItem rotation
     ctx.rotate(
       Mathematics.radians(

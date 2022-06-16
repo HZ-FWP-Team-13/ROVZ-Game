@@ -15,7 +15,8 @@ export default class FovOverlay extends GameItem {
             toCursor = Vector2.vectorDifference(this.getTransform().getPosition(), toCursor);
             toCursor.setY(toCursor.getY() * -1);
         }
-        const toCursorSlope = Mathematics.degrees(Math.atan(toCursor.getX() / toCursor.getY())) + (toCursor.getY() > 0 ? 180 : 0);
+        let toCursorSlope = Mathematics.degrees(Math.atan(toCursor.getX() / toCursor.getY()));
+        toCursorSlope += (toCursor.getY() > 0 ? 180 : 0);
         this.getTransform().setRotation(toCursorSlope);
     }
 }

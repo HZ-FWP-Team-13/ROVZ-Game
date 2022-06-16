@@ -34,6 +34,12 @@ export default class Vector2 {
     static dotProduct(a, b) {
         return a.x * b.x + a.y * b.y;
     }
+    static crossProduct(a, b) {
+        return a.x * b.y + a.y * b.x;
+    }
+    static magnitude(vector) {
+        return Math.sqrt((vector.getX() ** 2) + (vector.getY() ** 2));
+    }
     getX() {
         return this.x;
     }
