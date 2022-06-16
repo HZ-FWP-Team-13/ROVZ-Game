@@ -17,15 +17,36 @@ export default class Level1 extends Level {
         this.background = new GameItem('background', new Transform(), new Mesh('./assets/img/background.png', new Vector2(1386, 980)));
         this.player = new Player('player', new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2)), new Mesh('./assets/img/testplayer-old.png', new Vector2(32, 32)), new Collider());
         this.fov = new FovOverlay('fov', new Transform(), new Mesh('./assets/img/fov.png', new Vector2(6000, 6000)));
-        this.buildings = Factory.buildingFactory(200, 600, 1);
+        this.buildings = Factory.buildingFactory(200, 600, 4);
     }
     update(elapsed) {
-        this.player.control(this.input, elapsed);
-        this.player.getCollider().updatePoints(this.player.getTransform());
-        this.buildings[0].getCollider().updatePoints(this.buildings[0].getTransform());
-        if (Collider.checkDiagonalCollision(this.player, this.buildings[0])) {
-            console.log('COLLIDER DO SOMETHING PLEASE...');
+        this.player.setHitbox(this.player);
+        this.player.getHitbox().getCollider().updatePoints(this.player.getHitbox().getTransform());
+        let collided = false;
+        this.buildings.forEach((building) => {
+            building.getCollider().updatePoints(building.getTransform());
+            if (Collider.checkCollision(this.player.getHitbox(), building)) {
+                collided = true;
+                console.log('You crashed into a building -_-');
+                const vector = Vector2.vectorDifference(this.player.getTransform().getPosition(), building.getTransform().getPosition());
+                if (vector.getX() > 0) {
+                    this.player.getTransform().getPosition().setX(this.player.getTransform().getPosition().getX() + 1);
+                }
+                else if (vector.getX() < 0) {
+                    this.player.getTransform().getPosition().setX(this.player.getTransform().getPosition().getX() - 1);
+                }
+                if (vector.getY() > 0) {
+                    this.player.getTransform().getPosition().setY(this.player.getTransform().getPosition().getY() + 2);
+                }
+                else if (vector.getY() < 0) {
+                    this.player.getTransform().getPosition().setY(this.player.getTransform().getPosition().getY() - 2);
+                }
+            }
+        });
+        if (!collided) {
+            this.player.control(this.input, elapsed);
         }
+        this.player.getCollider().updatePoints(this.player.getTransform());
         this.fov.control(this.input, elapsed, this.getCamera());
         this.getCamera().getTransform().setPosition(this.player.getTransform().getPosition());
         this.fov.getTransform().setPosition(this.player.getTransform().getPosition());

@@ -4,6 +4,7 @@ export default class Player extends GamePawn {
     movementSpeed;
     rotationSpeed;
     lastFrameRotationDifference;
+    hitbox;
     constructor(id, transform, mesh, collider) {
         super(id, transform, mesh, collider);
         this.createColliderPoints();
@@ -21,6 +22,13 @@ export default class Player extends GamePawn {
     }
     setSpeed(speed) {
         this.movementSpeed = speed;
+    }
+    getHitbox() {
+        return this.hitbox;
+    }
+    setHitbox(player) {
+        this.hitbox = player;
+        this.hitbox.createColliderPoints();
     }
 }
 //# sourceMappingURL=Player.js.map

@@ -15,6 +15,9 @@ export default class Player extends GamePawn {
   // The rotation the Player underwent since the last Frame
   public lastFrameRotationDifference: number;
 
+  // We use this hitbox to determine movement against collidable objects
+  private hitbox: Player;
+
   /**
    * Create a new Player instance
    *
@@ -62,5 +65,24 @@ export default class Player extends GamePawn {
    */
   public setSpeed(speed: number): void {
     this.movementSpeed = speed;
+  }
+
+  /**
+   * getter for hitbox of the player.
+   *
+   * @returns the hitbox of the player
+   */
+  public getHitbox(): Player {
+    return this.hitbox;
+  }
+
+  /**
+   * Setter to set the movement speed to a new parameter
+   *
+   * @param player The movement speed that needs to be set
+   */
+  public setHitbox(player: Player): void {
+    this.hitbox = player;
+    this.hitbox.createColliderPoints();
   }
 }

@@ -82,7 +82,7 @@ export default class Level1 extends Level {
     );
 
     // Initalize the array of buildings, then process the amount
-    this.buildings = Factory.buildingFactory(200, 600, 1);
+    this.buildings = Factory.buildingFactory(200, 600, 4);
   }
 
   /**
@@ -101,35 +101,65 @@ export default class Level1 extends Level {
    *   current scene, just return `null`
    */
   public update(elapsed: number): Scene {
+    this.player.setHitbox(this.player);
+    this.player.getHitbox().getCollider().updatePoints(this.player.getHitbox().getTransform());
+
+    let collided: boolean = false;
+
     // Check to see if the building and the player are colliding
     // And update the point on which the building is at
-    // this.buildings.forEach((building) => {
-    //   building.getCollider().updatePoints(building.getTransform());
+    this.buildings.forEach((building) => {
+      building.getCollider().updatePoints(building.getTransform());
 
-    //   // if (Collider.checkCollision(this.player.getHitbox(), building)) {
-    //   //   console.log('COLLIDER DO SOMETHING PLEASE...');
+      // console.log(building);
+      if (Collider.checkCollision(this.player.getHitbox(), building)) {
+        collided = true;
+        console.log('You crashed into a building -_-');
+        // TODO: Gain control of the character after running into a building,
+        // while not being able to move forward
+        //
+        // ALSO, we need to detect which side the player is facing of the object,
+        // so we can calculate which x and y need to be changed
 
-    //   //   return true;
-    //   // }
-    //   console.log(building);
-    //   if (Collider.checkDiagonalCollision(this.player, building)) {
-    //     console.log('COLLIDER DO SOMETHING PLEASE...');
-    //     return true;
-    //   }
+        const vector: Vector2 = Vector2.vectorDifference(
+          this.player.getTransform().getPosition(),
+          building.getTransform().getPosition(),
+        );
 
-    //   this.player.setTransform(this.player.getTransform());
-    //   return false;
-    // });
-    // Providing Player Control over the Player Character
-    this.player.control(this.input, elapsed);
+        if (vector.getX() > 0) {
+          // When the player touches the right side
+          this.player.getTransform().getPosition().setX(
+            this.player.getTransform().getPosition().getX() + 1,
+          );
+        } else if (vector.getX() < 0) {
+          // When the player touches the left side
+          this.player.getTransform().getPosition().setX(
+            this.player.getTransform().getPosition().getX() - 1,
+          );
+        }
+        if (vector.getY() > 0) {
+          // When the player touches the top side
+          this.player.getTransform().getPosition().setY(
+            this.player.getTransform().getPosition().getY() + 2,
+          );
+        } else if (vector.getY() < 0) {
+          // When the player touches the bottom side
+          this.player.getTransform().getPosition().setY(
+            this.player.getTransform().getPosition().getY() - 2,
+          );
+        }
+      }
+    });
+
+    if (!collided) {
+      this.player.control(this.input, elapsed);
+    }
+
+    // // Providing Player Control over the Player Character
+    // this.player.control(this.input, elapsed);
+
     // We should probably do an update method in GameItem and just update all GameItems
     this.player.getCollider().updatePoints(this.player.getTransform());
-
-    this.buildings[0].getCollider().updatePoints(this.buildings[0].getTransform());
-
-    if (Collider.checkDiagonalCollision(this.player, this.buildings[0])) {
-      console.log('COLLIDER DO SOMETHING PLEASE...');
-    }
 
     // Providing Player Control over the FovOverlay
     this.fov.control(this.input, elapsed, this.getCamera());
