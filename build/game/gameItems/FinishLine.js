@@ -1,4 +1,4 @@
-import GamePawn from '../../engine/ObjectModule/GamePawn';
+import GamePawn from '../../engine/ObjectModule/GamePawn.js';
 export default class FinishLine extends GamePawn {
     constructor(id, mesh, transform, collider) {
         super(id, transform, mesh, collider);

@@ -1,7 +1,7 @@
-import Transform from '../../engine/ComponentsModule/Transform';
+import Transform from '../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../engine/ComponentsModule/Mesh.js';
-import GamePawn from '../../engine/ObjectModule/GamePawn';
-import RectCollider from '../../engine/ComponentsModule/RectCollider';
+import GamePawn from '../../engine/ObjectModule/GamePawn.js';
+import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
 
 export default class FinishLine extends GamePawn {
   /**
