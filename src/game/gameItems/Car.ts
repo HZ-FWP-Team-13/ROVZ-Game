@@ -1,7 +1,7 @@
 import GamePawn from '../../engine/ObjectModule/GamePawn.js';
 import Transform from '../../engine/ComponentsModule/Transform.js';
 import Mesh from '../../engine/ComponentsModule/Mesh.js';
-import Collider from '../../engine/ComponentsModule/Collider.js';
+
 import Vector2 from '../../engine/MathModule/Vector2.js';
 import Path from '../../engine/AIModule/Path.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
@@ -33,6 +33,7 @@ export default class Car extends GamePawn {
     startPoint: number,
     mesh: Mesh,
     collider: RectCollider,
+
   ) {
     const transform = new Transform(path.getPoints()[startPoint], 0, new Vector2(1, 1));
     super(id, transform, mesh, collider);

@@ -23,6 +23,16 @@ export default class GamePawn extends GameItem {
   }
 
   /**
+   * Create a new instance of a rectangular collider
+   */
+  public createColliderPoints(): void {
+    this.getCollider().generateRectCollider(
+      this.getMesh().getDimensions().getX(),
+      this.getMesh().getDimensions().getY(),
+    );
+  }
+
+  /**
    * Get the Collider of this GamePawn
    *
    * @returns The Collider of this GamePawn

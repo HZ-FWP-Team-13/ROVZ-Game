@@ -9,10 +9,12 @@ import Collider from '../../../engine/ComponentsModule/Collider.js';
 import Car from '../../gameItems/Car.js';
 import Path from '../../../engine/AIModule/Path.js';
 import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
+import Factory from '../../Factory.js';
 export default class Level1 extends Level {
     background;
     player;
     fov;
+    buildings;
     cars;
     path;
     constructor(game) {
@@ -20,6 +22,7 @@ export default class Level1 extends Level {
         this.background = new GameItem('background', new Transform(), new Mesh('./assets/img/background.png', new Vector2(1386, 980)));
         this.player = new Player('player', new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2)), new Mesh('./assets/img/player/cyclist.png', new Vector2(28, 78)), new RectCollider(new Vector2(28, 78)));
         this.fov = new FovOverlay('fov', new Transform(), new Mesh('./assets/img/fov.png', new Vector2(6000, 6000)));
+        this.buildings = Factory.buildingFactory(200, 600, 4);
         this.path = new Path();
         const p = this.path;
         p.addPoint(new Vector2(0, 200));
@@ -29,7 +32,14 @@ export default class Level1 extends Level {
         this.cars.push(new Car('car1', this.path, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))), new Car('car2', this.path, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))));
     }
     update(elapsed) {
-        this.player.update(elapsed);
+        this.player.setHitbox(this.player);
+        this.player.getHitbox().getCollider().updatePoints(this.player.getHitbox().getTransform());
+        if (!this.isColliding(this.buildings)) {
+            this.player.control(this.input, elapsed);
+        }
+        if (!this.isColliding(this.cars)) {
+            this.player.control(this.input, elapsed);
+        }
         this.player.control(this.input, elapsed);
         this.fov.control(this.input, elapsed, this.getCamera());
         this.getCamera().getTransform().setPosition(this.player.getTransform().getPosition());
@@ -41,6 +51,30 @@ export default class Level1 extends Level {
         });
         return null;
     }
+    isColliding(objects) {
+        let collided = false;
+        objects.forEach((object) => {
+            collided = true;
+            object.getCollider().updatePoints(object.getTransform());
+            if (Collider.checkCollision(this.player.getHitbox(), object)) {
+                console.log('You crashed into a building -_-');
+                const vector = Vector2.vectorDifference(this.player.getTransform().getPosition(), object.getTransform().getPosition());
+                if (vector.getX() > 0) {
+                    this.player.getTransform().getPosition().setX(this.player.getTransform().getPosition().getX() + 3);
+                }
+                else if (vector.getX() < 0) {
+                    this.player.getTransform().getPosition().setX(this.player.getTransform().getPosition().getX() - 3);
+                }
+                if (vector.getY() > 0) {
+                    this.player.getTransform().getPosition().setY(this.player.getTransform().getPosition().getY() + 3);
+                }
+                else if (vector.getY() < 0) {
+                    this.player.getTransform().getPosition().setY(this.player.getTransform().getPosition().getY() - 3);
+                }
+            }
+        });
+        return collided;
+    }
     render() {
         const camera = this.getCamera();
         this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
@@ -50,6 +84,10 @@ export default class Level1 extends Level {
             car.getCollider().draw(this.game.ctx, camera);
         });
         this.path.draw(this.game.ctx, camera);
+        this.buildings.forEach((building) => {
+            building.getMesh().draw(this.game.ctx, building.getTransform(), this.getCamera());
+            building.getCollider().draw(this.game.ctx, this.getCamera());
+        });
         this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
         this.player.getCollider().draw(this.game.ctx, camera);
         this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);

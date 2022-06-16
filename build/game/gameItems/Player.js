@@ -4,13 +4,12 @@ export default class Player extends GamePawn {
     movementSpeed;
     rotationSpeed;
     lastFrameRotationDifference;
+    hitbox;
     constructor(id, transform, mesh, collider) {
         super(id, transform, mesh, collider);
+        this.createColliderPoints();
         this.movementSpeed = 150;
         this.rotationSpeed = 100;
-    }
-    update(elapsed) {
-        this.getCollider().updatePoints(this.getTransform());
     }
     control(input, elapsed) {
         const traction = input.readAxisPressed('verticalMovement');
@@ -20,6 +19,16 @@ export default class Player extends GamePawn {
         }
         this.lastFrameRotationDifference = steering * this.rotationSpeed * elapsed * traction;
         this.getTransform().rotate(this.lastFrameRotationDifference);
+    }
+    setSpeed(speed) {
+        this.movementSpeed = speed;
+    }
+    getHitbox() {
+        return this.hitbox;
+    }
+    setHitbox(player) {
+        this.hitbox = player;
+        this.hitbox.createColliderPoints();
     }
 }
 //# sourceMappingURL=Player.js.map
