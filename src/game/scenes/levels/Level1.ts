@@ -107,9 +107,13 @@ export default class Level1 extends Level {
 
     // create finishline
     this.finishLine = new FinishLine(
+      // the id of the gamepawn
       'finishline',
+      // the mesh of the gamepawn
       new Mesh('./assets/img/testplayer.png', new Vector2(50, 50), 0),
+      // the transform of the gamepawn
       new Transform(),
+      // the collider of the gamepawn
       new RectCollider(new Vector2(50, 50)),
     );
   }
@@ -150,7 +154,7 @@ export default class Level1 extends Level {
 
       Collider.checkCollision(car, this.player);
     });
-
+    // after checking collision it changes the scene
     if (this.hasWon()) {
       return new GameWon(this.game);
     }
@@ -158,6 +162,7 @@ export default class Level1 extends Level {
     return null;
   }
 
+  // checks for collision
   private hasWon(): boolean {
     return Collider.checkCollision(this.player, this.finishLine);
   }

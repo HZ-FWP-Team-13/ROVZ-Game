@@ -6,10 +6,11 @@ import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
 export default class FinishLine extends GamePawn {
   /**
    *  create a finishline
-   * @param id
-   * @param mesh
-   * @param transform
-   * @param collider
+   *
+   * @param id the id of the finishline
+   * @param mesh the mesh of the finishline
+   * @param transform the transform of the finishline
+   * @param collider the collider of the finishline
    */
   public constructor(id: string, mesh: Mesh, transform: Transform, collider: RectCollider) {
     super(id, transform, mesh, collider);
