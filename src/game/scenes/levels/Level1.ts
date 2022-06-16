@@ -18,6 +18,8 @@ import GamePawn from '../../../engine/ObjectModule/GamePawn.js';
 export default class Level1 extends Level {
   private background: GameItem;
 
+  private foreground: GameItem;
+
   // Player Character
   private player: Player;
 
@@ -25,13 +27,19 @@ export default class Level1 extends Level {
   private fov: FovOverlay;
 
   // Buildings Array
-  private buildings: Building[];
+  // private buildings: Building[];
 
   // Car Array
   private cars: Car[];
 
+  // Pathpoints
+  // private pathPoints: Vector2[];
+
   // Paths
   private path1: Path;
+
+  // Paths
+  private path2: Path;
 
   /**
    * Create a new Level1 Level instance
@@ -50,9 +58,24 @@ export default class Level1 extends Level {
       // The Transform of the GameItem
       new Mesh(
         // The path11 to the Source Image of the GameItem Mesh
-        './assets/img/level/roundabout.png',
+        './assets/img/level/ra_bg.png',
         // The dimensions of the GameItem Mesh
-        new Vector2(1386, 980),
+        new Vector2(3000, 3000),
+      ),
+    );
+
+    // Spawning the Background
+    this.foreground = new GameItem(
+      // The id of the GameObject
+      'foreground',
+      // The Transform of the GameObject
+      new Transform(),
+      // The Transform of the GameItem
+      new Mesh(
+        // The path11 to the Source Image of the GameItem Mesh
+        './assets/img/level/ra_fg.png',
+        // The dimensions of the GameItem Mesh
+        new Vector2(3000, 3000),
       ),
     );
 
@@ -63,7 +86,7 @@ export default class Level1 extends Level {
       // The Transform of the GameObject
       new Transform(
         // The coordinates of the Player Transform
-        new Vector2(game.canvas.width / 2, game.canvas.height / 2),
+        new Vector2(1634, 2500),
       ),
       // The Mesh of the GameItem
       new Mesh(
@@ -92,29 +115,52 @@ export default class Level1 extends Level {
     );
 
     // Initalize the array of buildings, then process the amount
-    this.buildings = Factory.buildingFactory(200, 1600, 4);
+    // this.buildings = Factory.buildingFactory(200, 1600, 4);
 
     this.path1 = new Path();
 
     // Car path1
-    const p = this.path1;
-    p.addPoint(new Vector2(550, 1000));
-    p.addPoint(new Vector2(550, 650));
+    const p1 = this.path1;
+    p1.addPoint(new Vector2(1550, 2900));
+    p1.addPoint(new Vector2(1550, 1700));
 
-    p.addPoint(new Vector2(650, 550));
-    p.addPoint(new Vector2(650, 450));
+    p1.addPoint(new Vector2(1700, 1550));
+    p1.addPoint(new Vector2(1700, 1450));
 
-    p.addPoint(new Vector2(550, 350));
-    p.addPoint(new Vector2(450, 350));
+    p1.addPoint(new Vector2(1550, 1300));
+    p1.addPoint(new Vector2(1450, 1300));
 
-    p.addPoint(new Vector2(350, 450));
-    p.addPoint(new Vector2(0, 450));
+    p1.addPoint(new Vector2(1300, 1450));
+    p1.addPoint(new Vector2(100, 1450));
+
+    this.path1.setLastPointIndex(this.path1.getPoints().length - 1);
+
+    this.path2 = new Path();
+
+    // Car path2
+    const p2 = this.path2;
+    p2.addPoint(new Vector2(3000 - 1550, 3000 - 2900));
+    p2.addPoint(new Vector2(3000 - 1550, 3000 - 1700));
+
+    p2.addPoint(new Vector2(3000 - 1700, 3000 - 1550));
+    p2.addPoint(new Vector2(3000 - 1700, 3000 - 1450));
+
+    p2.addPoint(new Vector2(3000 - 1550, 3000 - 1300));
+    p2.addPoint(new Vector2(3000 - 1450, 3000 - 1300));
+
+    p2.addPoint(new Vector2(3000 - 1300, 3000 - 1450));
+    p2.addPoint(new Vector2(3000 - 100, 3000 - 1450));
+
+    this.path2.setLastPointIndex(this.path1.getPoints().length - 1);
 
     // Create cars
     this.cars = [];
     this.cars.push(
-      new Car('car1', this.path1, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
-      new Car('car2', this.path1, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
+      new Car('car1', this.path1, 0, 'RED'),
+      new Car('car2', this.path1, 1, 'BLUE'),
+      new Car('car3', this.path2, 2, 'GREEN'),
+      new Car('car4', this.path2, 6, 'RED'),
+      // new Car('car2', this.path1, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
     );
   }
 
@@ -137,9 +183,9 @@ export default class Level1 extends Level {
     this.player.setHitbox(this.player);
     this.player.getHitbox().getCollider().updatePoints(this.player.getHitbox().getTransform());
 
-    if (!this.isColliding(this.buildings)) {
-      this.player.control(this.input, elapsed);
-    }
+    // if (!this.isColliding(this.buildings)) {
+    //   this.player.control(this.input, elapsed);
+    // }
 
     if (!this.isColliding(this.cars)) {
       this.player.control(this.input, elapsed);
@@ -252,23 +298,40 @@ export default class Level1 extends Level {
       car.getCollider().draw(this.game.ctx, camera);
     });
 
-    // Draw the path1
+    // Draw the paths
     this.path1.draw(this.game.ctx, camera);
+    this.path2.draw(this.game.ctx, camera);
 
-    // Drawing the buildings on the Game Canvas
-    this.buildings.forEach((building) => {
-      building.getMesh().draw(
-        this.game.ctx,
-        building.getTransform(),
-        this.getCamera(),
-      );
+    // // Drawing the buildings on the Game Canvas
+    // this.buildings.forEach((building) => {
+    //   building.getMesh().draw(
+    //     this.game.ctx,
+    //     building.getTransform(),
+    //     this.getCamera(),
+    //   );
 
-      building.getCollider().draw(this.game.ctx, this.getCamera());
-    });
+    //   building.getCollider().draw(this.game.ctx, this.getCamera());
+    // });
 
     // Drawing the Player Character on the Game Canvas
     this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
     this.player.getCollider().draw(this.game.ctx, camera);
+
+    // TODO: This is not good.
+    this.game.ctx.drawImage(
+      // The Source Image of the Background
+      this.foreground.getMesh().getSourceImage(),
+      // The position of the frame within the Source Image
+      camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2,
+      camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2,
+      // The dimensions of the frame within the Source Image
+      camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
+      // The position of the frame on the Game Canvas
+      0, 0,
+      // The dimensions of the frame on the Game Canvas
+      camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
+    );
+
     // Drawing the FovOverlay on the Game Canvas
     this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);
   }

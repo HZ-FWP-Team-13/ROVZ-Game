@@ -1,16 +1,32 @@
 import GamePawn from '../../engine/ObjectModule/GamePawn.js';
 import Transform from '../../engine/ComponentsModule/Transform.js';
+import Mesh from '../../engine/ComponentsModule/Mesh.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
+import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
 export default class Car extends GamePawn {
     speed;
-    speedRange;
-    targetSpeed;
-    acceleration;
     path;
     lastPassedPointIndex;
-    constructor(id, path, startPoint, mesh, collider) {
+    constructor(id, path, startPoint, skin) {
         const transform = new Transform(path.getPoints()[startPoint], 0, new Vector2(1, 1));
+        let sip = '';
+        switch (skin) {
+            case 'RED':
+                sip = 'assets/img/cars/car_red.png';
+                break;
+            case 'BLUE':
+                sip = 'assets/img/cars/car_blue.png';
+                break;
+            case 'GREEN':
+                sip = 'assets/img/cars/car_green.png';
+                break;
+            default:
+                sip = 'assets/img/cars/car_red.png';
+                break;
+        }
+        const mesh = new Mesh(sip, new Vector2(64, 128));
+        const collider = new RectCollider(new Vector2(64, 128));
         super(id, transform, mesh, collider);
         this.path = path;
         this.speed = 300;
@@ -24,7 +40,7 @@ export default class Car extends GamePawn {
         const b = points[(j) % points.length];
         const ab = Vector2.magnitude(Vector2.vectorDifference(b, a));
         const c = Vector2.magnitude(Vector2.vectorDifference(this.getTransform().getPosition(), a));
-        if (c > ab) {
+        if (c >= ab) {
             const k = (j + 1) % points.length;
             this.getTransform().setPosition(b);
             const u = new Vector2(points[k].getX() - points[j].getX(), points[k].getY() - points[j].getY());
@@ -38,6 +54,10 @@ export default class Car extends GamePawn {
             this.lastPassedPointIndex = j;
         }
         this.getTransform().translate(new Vector2(0, (this.speed * elapsed)));
+        if (this.lastPassedPointIndex === this.path.getLastPointIndex()) {
+            this.getTransform().setPosition(points[0]);
+        }
+        console.log(this.lastPassedPointIndex);
     }
 }
 //# sourceMappingURL=Car.js.map

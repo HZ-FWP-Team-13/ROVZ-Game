@@ -4,10 +4,12 @@ import Vector2 from '../MathModule/Vector2.js';
 export default class Path {
   private points: Vector2[];
 
+  private lastPointIndex: number;
+
   /**
    * Constructor
    */
-  public constructor() {
+  public constructor(lastPointIndex: number = null) {
     this.points = [];
   }
 
@@ -67,5 +69,13 @@ export default class Path {
    */
   public getPoints() : Vector2[] {
     return this.points;
+  }
+
+  public getLastPointIndex() : number {
+    return this.lastPointIndex;
+  }
+
+  public setLastPointIndex(lastPointIndex: number) : void {
+    this.lastPointIndex = lastPointIndex;
   }
 }

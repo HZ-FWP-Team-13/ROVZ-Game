@@ -1,6 +1,7 @@
 export default class Path {
     points;
-    constructor() {
+    lastPointIndex;
+    constructor(lastPointIndex = null) {
         this.points = [];
     }
     draw(ctx, camera) {
@@ -27,6 +28,12 @@ export default class Path {
     }
     getPoints() {
         return this.points;
+    }
+    getLastPointIndex() {
+        return this.lastPointIndex;
+    }
+    setLastPointIndex(lastPointIndex) {
+        this.lastPointIndex = lastPointIndex;
     }
 }
 //# sourceMappingURL=Path.js.map
