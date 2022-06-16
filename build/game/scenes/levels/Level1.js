@@ -10,6 +10,7 @@ import Car from '../../gameItems/Car.js';
 import Path from '../../../engine/AIModule/Path.js';
 import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
 import FinishLine from '../../gameItems/FinishLine.js';
+import GameWon from '../screens/GameWon.js';
 export default class Level1 extends Level {
     background;
     player;
@@ -17,7 +18,6 @@ export default class Level1 extends Level {
     cars;
     path;
     finishLine;
-    win;
     constructor(game) {
         super(game);
         this.background = new GameItem('background', new Transform(), new Mesh('./assets/img/background.png', new Vector2(1386, 980)));
@@ -42,11 +42,14 @@ export default class Level1 extends Level {
         this.cars.forEach((car) => {
             car.update(elapsed);
             Collider.checkCollision(car, this.player);
-            if (Collider.checkCollision(this.finishLine, this.player)) {
-            }
-            ;
         });
+        if (this.hasWon()) {
+            return new GameWon(this.game);
+        }
         return null;
+    }
+    hasWon() {
+        return Collider.checkCollision(this.player, this.finishLine);
     }
     render() {
         const camera = this.getCamera();

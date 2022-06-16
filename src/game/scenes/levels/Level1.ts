@@ -12,6 +12,7 @@ import Car from '../../gameItems/Car.js';
 import Path from '../../../engine/AIModule/Path.js';
 import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
 import FinishLine from '../../gameItems/FinishLine.js';
+import GameWon from '../screens/GameWon.js';
 
 export default class Level1 extends Level {
   private background: GameItem;
@@ -30,9 +31,6 @@ export default class Level1 extends Level {
 
   // FinishLine
   private finishLine: FinishLine;
-
-  // win
-  private win: number;
 
   /**
    * Create a new Level1 Level instance
@@ -151,13 +149,17 @@ export default class Level1 extends Level {
       car.update(elapsed);
 
       Collider.checkCollision(car, this.player);
-
-      if (Collider.checkCollision(this.finishLine, this.player)){
-
-      };
     });
 
+    if (this.hasWon()) {
+      return new GameWon(this.game);
+    }
+
     return null;
+  }
+
+  private hasWon(): boolean {
+    return Collider.checkCollision(this.player, this.finishLine);
   }
 
   /**
