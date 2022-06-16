@@ -26,6 +26,9 @@ export default class GameWon extends Scene {
     }
     render() {
         this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
+        this.game.ctx.fillText('You won!', 100, 200);
+        this.game.ctx.fillStyle = 'red';
+        this.game.ctx.font = '60px san-serif';
     }
 }
 //# sourceMappingURL=GameWon.js.map
