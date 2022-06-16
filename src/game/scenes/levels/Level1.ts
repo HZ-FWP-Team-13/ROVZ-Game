@@ -31,6 +31,9 @@ export default class Level1 extends Level {
   // FinishLine
   private finishLine: FinishLine;
 
+  // win
+  private win: number;
+
   /**
    * Create a new Level1 Level instance
    *
@@ -105,7 +108,12 @@ export default class Level1 extends Level {
     );
 
     // create finishline
-    this.finishLine = new FinishLine('finishline', new Mesh('./assets/img/testplayer.png', new Vector2(50, 50)), new Transform(new Vector2(50, 50)));
+    this.finishLine = new FinishLine(
+      'finishline',
+      new Mesh('./assets/img/testplayer.png', new Vector2(50, 50), 0),
+      new Transform(),
+      new RectCollider(new Vector2(50, 50)),
+    );
   }
 
   /**
@@ -143,6 +151,10 @@ export default class Level1 extends Level {
       car.update(elapsed);
 
       Collider.checkCollision(car, this.player);
+
+      if (Collider.checkCollision(this.finishLine, this.player)){
+
+      };
     });
 
     return null;
@@ -184,6 +196,7 @@ export default class Level1 extends Level {
     // Drawing the Player Character on the Game Canvas
     this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
     this.player.getCollider().draw(this.game.ctx, camera);
+
     // Drawing the FovOverlay on the Game Canvas
     this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);
 

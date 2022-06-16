@@ -9,12 +9,15 @@ import Collider from '../../../engine/ComponentsModule/Collider.js';
 import Car from '../../gameItems/Car.js';
 import Path from '../../../engine/AIModule/Path.js';
 import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
+import FinishLine from '../../gameItems/FinishLine.js';
 export default class Level1 extends Level {
     background;
     player;
     fov;
     cars;
     path;
+    finishLine;
+    win;
     constructor(game) {
         super(game);
         this.background = new GameItem('background', new Transform(), new Mesh('./assets/img/background.png', new Vector2(1386, 980)));
@@ -27,6 +30,7 @@ export default class Level1 extends Level {
         p.addPoint(new Vector2(-100, 500));
         this.cars = [];
         this.cars.push(new Car('car1', this.path, 0, new Mesh('assets/img/cars/car_red.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))), new Car('car2', this.path, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))));
+        this.finishLine = new FinishLine('finishline', new Mesh('./assets/img/testplayer.png', new Vector2(50, 50), 0), new Transform(), new RectCollider(new Vector2(50, 50)));
     }
     update(elapsed) {
         this.player.update(elapsed);
@@ -38,6 +42,9 @@ export default class Level1 extends Level {
         this.cars.forEach((car) => {
             car.update(elapsed);
             Collider.checkCollision(car, this.player);
+            if (Collider.checkCollision(this.finishLine, this.player)) {
+            }
+            ;
         });
         return null;
     }
@@ -53,6 +60,7 @@ export default class Level1 extends Level {
         this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
         this.player.getCollider().draw(this.game.ctx, camera);
         this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);
+        this.finishLine.getMesh().draw(this.game.ctx, this.finishLine.getTransform(), camera);
     }
 }
 //# sourceMappingURL=Level1.js.map
