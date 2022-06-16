@@ -69,8 +69,6 @@ export default class Collider extends Component {
     );
     ctx.stroke();
     ctx.closePath();
-
-    console.log('DRAW');
   }
 
   /**

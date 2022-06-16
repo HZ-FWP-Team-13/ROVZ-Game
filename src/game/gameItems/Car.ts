@@ -6,15 +6,11 @@ import Vector2 from '../../engine/MathModule/Vector2.js';
 import Path from '../../engine/AIModule/Path.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
 import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
+import Collider from '../../engine/ComponentsModule/Collider.js';
+import Graphics from '../../engine/GraphicsModule/Graphics.js';
 
 export default class Car extends GamePawn {
   public speed: number; // The current speed of the vehicle
-
-  public speedRange: Vector2; // min and max speed of the vehicle
-
-  public targetSpeed: number; // Target speed of the vehicle
-
-  public acceleration: number; // Speed increase per second
 
   public path: Path; // Path the car follows
 
@@ -33,11 +29,33 @@ export default class Car extends GamePawn {
     id: string,
     path: Path,
     startPoint: number,
-    mesh: Mesh,
-    collider: RectCollider,
-
+    skin: string,
   ) {
     const transform = new Transform(path.getPoints()[startPoint], 0, new Vector2(1, 1));
+
+    // Source Image Path
+    let sip = '';
+    switch (skin) {
+      case 'RED':
+        sip = 'assets/img/cars/car_red.png';
+        break;
+      case 'BLUE':
+        sip = 'assets/img/cars/car_blue.png';
+        break;
+      case 'GREEN':
+        sip = 'assets/img/cars/car_green.png';
+        break;
+      default:
+        sip = 'assets/img/cars/car_red.png';
+        break;
+    }
+
+    // TODO: Image loading is laggy sometimes and results in nothing being rendered.
+    // We should wait for all images to load prior to rendering.
+
+    const mesh = new Mesh(sip, new Vector2(64, 128));
+    const collider = new RectCollider(new Vector2(64, 128));
+
     super(id, transform, mesh, collider);
 
     this.path = path;
@@ -62,7 +80,7 @@ export default class Car extends GamePawn {
     const ab = Vector2.magnitude(Vector2.vectorDifference(b, a));
     const c = Vector2.magnitude(Vector2.vectorDifference(this.getTransform().getPosition(), a));
 
-    if (c > ab) {
+    if (c >= ab) {
       const k = (j + 1) % points.length;
       this.getTransform().setPosition(b);
       // Set the rotation of the car to align with the edge between this point and the next
@@ -86,5 +104,11 @@ export default class Car extends GamePawn {
       this.lastPassedPointIndex = j;
     }
     this.getTransform().translate(new Vector2(0, (this.speed * elapsed)));
+
+    if (this.lastPassedPointIndex === this.path.getLastPointIndex()) {
+      this.getTransform().setPosition(points[0]);
+    }
+
+    console.log(this.lastPassedPointIndex);
   }
 }
