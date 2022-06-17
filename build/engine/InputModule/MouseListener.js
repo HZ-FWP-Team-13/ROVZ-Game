@@ -1,7 +1,7 @@
 import Vector2 from '../MathModule/Vector2.js';
 export default class MouseListener {
     mousePosition = Vector2.zero;
-    mouseButtons;
+    mouseButtons = 0;
     mouseInAction = false;
     constructor() {
         window.addEventListener('mousemove', (event) => {
@@ -9,7 +9,9 @@ export default class MouseListener {
             if (this.mousePosition.getX() !== 0 || this.mousePosition.getY() !== 0) {
                 this.mouseInAction = true;
             }
-            this.mouseButtons = event.buttons;
+        });
+        window.addEventListener('click', () => {
+            this.mouseButtons = 1;
         });
     }
     getMousePosition() {
@@ -17,6 +19,9 @@ export default class MouseListener {
     }
     getMouseButtons() {
         return this.mouseButtons;
+    }
+    setMouseButtons(mouseButtons) {
+        this.mouseButtons = mouseButtons;
     }
     getMouseInAction() {
         return this.mouseInAction;
