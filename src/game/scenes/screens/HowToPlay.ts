@@ -2,51 +2,29 @@ import Screen from '../../../engine/SceneModule/Screen.js';
 import Game from '../../../engine/CoreModule/Game.js';
 import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Scene from '../../../engine/SceneModule/Scene.js';
-import Level1 from '../levels/Level1.js';
-import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 import Vector2 from '../../../engine/MathModule/Vector2.js';
-import GameItem from '../../../engine/ObjectModule/GameItem.js';
-import StartMenu from '../../gameItems/menus/StartMenu.js';
-import HowToPlay from './HowToPlay.js';
+import HowToPlayMenu from '../../gameItems/menus/HowToPlayMenu.js';
+import Start from './Start.js';
+import Graphics from '../../../engine/GraphicsModule/Graphics.js';
 
-export default class Start extends Screen {
-  private titleImage: GameItem;
-
-  // The Menu of the Start Screen
-  private menu: StartMenu;
+export default class HowToPlay extends Screen {
+  // The Menu of the HowToPlay Screen
+  private menu: HowToPlayMenu;
 
   /**
-   * Create a new Start Screen instance
+   * Create a new HowToPlay Screen instance
    *
    * @param game The Game namespace
    */
   public constructor(game: Game) {
     super(game);
 
-    this.titleImage = new GameItem(
-      // The id of the GameObject
-      'titleImage',
-      // The Transform of the GameObject
-      new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2 - 100)),
-      // The Transform of the GameItem
-      new Mesh(
-        // The path to the Source Image of the GameItem Mesh
-        './assets/img/titleBike.png',
-        // The dimensions of the GameItem Mesh
-        new Vector2(574, 376),
-      ),
-    );
-
     // Spawning the Menu
-    this.menu = new StartMenu(
+    this.menu = new HowToPlayMenu(
       new Map<string, Transform>([
         [
-          'play',
+          'gotIt',
           new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2 + 200)),
-        ],
-        [
-          'howToPlay',
-          new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2 + 260)),
         ],
       ]),
     );
@@ -72,18 +50,15 @@ export default class Start extends Screen {
     const hoveredOption = this.menu.update(this.input);
     if (this.input.getMouse().getMouseButtons() === 1) {
       this.input.getMouse().setMouseButtons(0);
-      if (hoveredOption === 'play') {
-        return new Level1(this.game);
-      }
-      if (hoveredOption === 'howToPlay') {
-        return new HowToPlay(this.game);
+      if (hoveredOption === 'gotIt') {
+        return new Start(this.game);
       }
     }
     return null;
   }
 
   /**
-   * Render this Start Scene to the Game Canvas
+   * Render this HowToPlay Screen to the Game Canvas
    */
   public render(): void {
     // Clearing the screen
@@ -91,7 +66,63 @@ export default class Start extends Screen {
     this.game.ctx.fillStyle = 'black';
     this.game.ctx.fillRect(0, 0, this.game.canvas.width, this.game.canvas.height);
 
-    this.titleImage.getMesh().draw(this.game.ctx, this.titleImage.getTransform());
+    this.game.ctx.fillStyle = 'white';
+    let text: string = 'To move press';
+    this.game.ctx.fillText(
+      text,
+      this.game.canvas.width / 2 - 250,
+      this.game.canvas.height / 2 - 200,
+    );
+
+    this.game.ctx.drawImage(
+      Graphics.loadNewImage('./assets/img/w.png'),
+      this.game.canvas.width / 2 + 100,
+      this.game.canvas.height / 2 - 200 - 69 / 2,
+      69, 69,
+    );
+
+    this.game.ctx.drawImage(
+      Graphics.loadNewImage('./assets/img/s.png'),
+      this.game.canvas.width / 2 + 200,
+      this.game.canvas.height / 2 - 200 - 69 / 2,
+      69, 69,
+    );
+
+    text = 'To steer press';
+    this.game.ctx.fillText(
+      text,
+      this.game.canvas.width / 2 - 250,
+      this.game.canvas.height / 2 - 70,
+    );
+
+    this.game.ctx.drawImage(
+      Graphics.loadNewImage('./assets/img/a.png'),
+      this.game.canvas.width / 2 + 100,
+      this.game.canvas.height / 2 - 70 - 69 / 2,
+      69, 69,
+    );
+
+    this.game.ctx.drawImage(
+      Graphics.loadNewImage('./assets/img/d.png'),
+      this.game.canvas.width / 2 + 200,
+      this.game.canvas.height / 2 - 70 - 69 / 2,
+      69, 69,
+    );
+
+    text = 'To rotate the field of view';
+    this.game.ctx.fillText(
+      text,
+      this.game.canvas.width / 2 - 250,
+      this.game.canvas.height / 2 + 60,
+    );
+
+    this.game.ctx.drawImage(
+      Graphics.loadNewImage('./assets/img/mouse.png'),
+      this.game.canvas.width / 2 + 151,
+      this.game.canvas.height / 2 + 60 - 69 / 2,
+      69, 69,
+    );
+
     this.menu.draw(this.game.ctx);
 
     // this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/startscreen.png'),

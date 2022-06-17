@@ -4,25 +4,25 @@ import Vector2 from '../../../engine/MathModule/Vector2.js';
 import Button from '../../../engine/UIModule/Button.js';
 import Menu from '../../../engine/UIModule/Menu.js';
 
-export default class StartMenu extends Menu {
+export default class HowToPlayMenu extends Menu {
   /**
-   * Create a new StartMenu instance
+   * Create a new HowToPlayMenu instance
    *
-   * @param buttonsTransforms The Tranfroms of the StartMenu Buttons
+   * @param buttonsTransforms The Tranfroms of the HowToPlayMenu Buttons
    */
   public constructor(buttonsTransforms: Map<string, Transform>) {
     super(
       // The id of the GameObject
-      'startMenu',
+      'howToPlayMenu',
       // The Transform of the GameObject
       new Transform(),
       // The Buttons of the Menu
       new Map<string, Button>([
         [
-          'play',
+          'gotIt',
           new Button(
             // The id of the GameObject
-            'play',
+            'gotIt',
             // The Transform of the GameObject
             new Transform(),
             // The Transform of the GameItem
@@ -32,24 +32,7 @@ export default class StartMenu extends Menu {
               // The dimensions of the GameItem Mesh
               new Vector2(200, 50),
             ),
-            'Play',
-          ),
-        ],
-        [
-          'howToPlay',
-          new Button(
-            // The id of the GameObject
-            'howToPlay',
-            // The Transform of the GameObject
-            new Transform(),
-            // The Transform of the GameItem
-            new Mesh(
-              // The path to the Source Image of the GameItem Mesh
-              './assets/img/longButton.png',
-              // The dimensions of the GameItem Mesh
-              new Vector2(200, 50),
-            ),
-            'How to play',
+            'Got it!',
           ),
         ],
       ]),

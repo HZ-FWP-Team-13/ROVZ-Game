@@ -3,16 +3,12 @@ import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Vector2 from '../../../engine/MathModule/Vector2.js';
 import Button from '../../../engine/UIModule/Button.js';
 import Menu from '../../../engine/UIModule/Menu.js';
-export default class StartMenu extends Menu {
+export default class HowToPlayMenu extends Menu {
     constructor(buttonsTransforms) {
-        super('startMenu', new Transform(), new Map([
+        super('howToPlayMenu', new Transform(), new Map([
             [
-                'play',
-                new Button('play', new Transform(), new Mesh('./assets/img/longButton.png', new Vector2(200, 50)), 'Play'),
-            ],
-            [
-                'howToPlay',
-                new Button('howToPlay', new Transform(), new Mesh('./assets/img/longButton.png', new Vector2(200, 50)), 'How to play'),
+                'gotIt',
+                new Button('gotIt', new Transform(), new Mesh('./assets/img/longButton.png', new Vector2(200, 50)), 'Got it!'),
             ],
         ]));
         this.getOptions().forEach((value, key) => {
@@ -20,4 +16,4 @@ export default class StartMenu extends Menu {
         });
     }
 }
-//# sourceMappingURL=StartMenu.js.map
+//# sourceMappingURL=HowToPlayMenu.js.map

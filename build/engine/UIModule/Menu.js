@@ -19,6 +19,7 @@ export default class Menu extends GameObject {
         return hoveredOption;
     }
     draw(ctx, font) {
+        ctx.fillStyle = 'black';
         if (font === undefined) {
             ctx.font = '20px serif';
         }

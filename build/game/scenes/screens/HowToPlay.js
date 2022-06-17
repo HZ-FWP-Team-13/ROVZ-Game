@@ -1,0 +1,48 @@
+import Screen from '../../../engine/SceneModule/Screen.js';
+import Transform from '../../../engine/ComponentsModule/Transform.js';
+import Vector2 from '../../../engine/MathModule/Vector2.js';
+import HowToPlayMenu from '../../gameItems/menus/HowToPlayMenu.js';
+import Start from './Start.js';
+import Graphics from '../../../engine/GraphicsModule/Graphics.js';
+export default class HowToPlay extends Screen {
+    menu;
+    constructor(game) {
+        super(game);
+        this.menu = new HowToPlayMenu(new Map([
+            [
+                'gotIt',
+                new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2 + 200)),
+            ],
+        ]));
+        game.reset();
+    }
+    update() {
+        const hoveredOption = this.menu.update(this.input);
+        if (this.input.getMouse().getMouseButtons() === 1) {
+            this.input.getMouse().setMouseButtons(0);
+            if (hoveredOption === 'gotIt') {
+                return new Start(this.game);
+            }
+        }
+        return null;
+    }
+    render() {
+        this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
+        this.game.ctx.fillStyle = 'black';
+        this.game.ctx.fillRect(0, 0, this.game.canvas.width, this.game.canvas.height);
+        this.game.ctx.fillStyle = 'white';
+        let text = 'To move press';
+        this.game.ctx.fillText(text, this.game.canvas.width / 2 - 250, this.game.canvas.height / 2 - 200);
+        this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/w.png'), this.game.canvas.width / 2 + 100, this.game.canvas.height / 2 - 200 - 69 / 2, 69, 69);
+        this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/s.png'), this.game.canvas.width / 2 + 200, this.game.canvas.height / 2 - 200 - 69 / 2, 69, 69);
+        text = 'To steer press';
+        this.game.ctx.fillText(text, this.game.canvas.width / 2 - 250, this.game.canvas.height / 2 - 70);
+        this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/a.png'), this.game.canvas.width / 2 + 100, this.game.canvas.height / 2 - 70 - 69 / 2, 69, 69);
+        this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/d.png'), this.game.canvas.width / 2 + 200, this.game.canvas.height / 2 - 70 - 69 / 2, 69, 69);
+        text = 'To rotate the field of view';
+        this.game.ctx.fillText(text, this.game.canvas.width / 2 - 250, this.game.canvas.height / 2 + 60);
+        this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/mouse.png'), this.game.canvas.width / 2 + 151, this.game.canvas.height / 2 + 60 - 69 / 2, 69, 69);
+        this.menu.draw(this.game.ctx);
+    }
+}
+//# sourceMappingURL=HowToPlay.js.map
