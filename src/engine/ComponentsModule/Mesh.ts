@@ -138,7 +138,7 @@ export default class Mesh extends Component {
   /**
    * Set the dimensions of this Mesh
    *
-   * @param value The width of this Mesh
+   * @param value The dimensions of this Mesh
    */
   public setDimensions(value: Vector2): void {
     this.dimensions = value;
