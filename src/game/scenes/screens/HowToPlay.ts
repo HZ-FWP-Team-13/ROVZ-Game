@@ -67,7 +67,7 @@ export default class HowToPlay extends Screen {
     this.game.ctx.fillRect(0, 0, this.game.canvas.width, this.game.canvas.height);
 
     this.game.ctx.fillStyle = 'white';
-    let text: string = 'To move press';
+    let text: string = 'Naar voren / achteren fietsen';
     this.game.ctx.fillText(
       text,
       this.game.canvas.width / 2 - 250,
@@ -88,7 +88,7 @@ export default class HowToPlay extends Screen {
       69, 69,
     );
 
-    text = 'To steer press';
+    text = 'Sturen';
     this.game.ctx.fillText(
       text,
       this.game.canvas.width / 2 - 250,
@@ -109,7 +109,7 @@ export default class HowToPlay extends Screen {
       69, 69,
     );
 
-    text = 'To rotate the field of view';
+    text = 'Kijken';
     this.game.ctx.fillText(
       text,
       this.game.canvas.width / 2 - 250,

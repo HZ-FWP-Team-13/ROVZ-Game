@@ -8,11 +8,11 @@ export default class StartMenu extends Menu {
         super('startMenu', new Transform(), new Map([
             [
                 'play',
-                new Button('play', new Transform(), new Mesh('./assets/img/longButton.png', new Vector2(200, 50)), 'Play'),
+                new Button('play', new Transform(), new Mesh('./assets/img/longButton.png', new Vector2(200, 50)), 'Spelen!'),
             ],
             [
                 'howToPlay',
-                new Button('howToPlay', new Transform(), new Mesh('./assets/img/longButton.png', new Vector2(200, 50)), 'How to play'),
+                new Button('howToPlay', new Transform(), new Mesh('./assets/img/longButton.png', new Vector2(200, 50)), 'Handleiding'),
             ],
         ]));
         this.getOptions().forEach((value, key) => {

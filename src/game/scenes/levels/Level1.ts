@@ -14,6 +14,8 @@ import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
 import Building from '../../gameItems/structures/Building.js';
 import Factory from '../../Factory.js';
 import GamePawn from '../../../engine/ObjectModule/GamePawn.js';
+import Goal from '../../gameItems/Goal.js';
+import Start from '../screens/Start.js';
 
 export default class Level1 extends Level {
   private background: GameItem;
@@ -40,6 +42,9 @@ export default class Level1 extends Level {
 
   // Paths
   private path2: Path;
+
+  // Goal
+  private goal: Goal;
 
   /**
    * Create a new Level1 Level instance
@@ -113,6 +118,8 @@ export default class Level1 extends Level {
         new Vector2(6000, 6000),
       ),
     );
+
+    this.goal = new Goal('goal', new Vector2(700, 1350));
 
     // Initalize the array of buildings, then process the amount
     // this.buildings = Factory.buildingFactory(200, 1600, 4);
@@ -210,6 +217,12 @@ export default class Level1 extends Level {
       Collider.checkCollision(car, this.player);
     });
 
+    this.goal.getCollider().updatePoints(this.goal.getTransform());
+
+    if (Collider.checkCollision(this.goal, this.player)) {
+      return new Start(this.game);
+    }
+
     return null;
   }
 
@@ -295,12 +308,12 @@ export default class Level1 extends Level {
     // Draw the car
     this.cars.forEach((car) => {
       car.getMesh().draw(this.game.ctx, car.getTransform(), camera);
-      car.getCollider().draw(this.game.ctx, camera);
+      // car.getCollider().draw(this.game.ctx, camera);
     });
 
     // Draw the paths
-    this.path1.draw(this.game.ctx, camera);
-    this.path2.draw(this.game.ctx, camera);
+    // this.path1.draw(this.game.ctx, camera);
+    // this.path2.draw(this.game.ctx, camera);
 
     // // Drawing the buildings on the Game Canvas
     // this.buildings.forEach((building) => {
@@ -315,7 +328,9 @@ export default class Level1 extends Level {
 
     // Drawing the Player Character on the Game Canvas
     this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
-    this.player.getCollider().draw(this.game.ctx, camera);
+    // this.player.getCollider().draw(this.game.ctx, camera);
+
+    this.goal.getMesh().draw(this.game.ctx, this.goal.getTransform(), camera);
 
     // TODO: This is not good.
     this.game.ctx.drawImage(

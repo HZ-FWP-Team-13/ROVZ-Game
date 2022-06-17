@@ -31,15 +31,15 @@ export default class HowToPlay extends Screen {
         this.game.ctx.fillStyle = 'black';
         this.game.ctx.fillRect(0, 0, this.game.canvas.width, this.game.canvas.height);
         this.game.ctx.fillStyle = 'white';
-        let text = 'To move press';
+        let text = 'Naar voren / achteren fietsen';
         this.game.ctx.fillText(text, this.game.canvas.width / 2 - 250, this.game.canvas.height / 2 - 200);
         this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/w.png'), this.game.canvas.width / 2 + 100, this.game.canvas.height / 2 - 200 - 69 / 2, 69, 69);
         this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/s.png'), this.game.canvas.width / 2 + 200, this.game.canvas.height / 2 - 200 - 69 / 2, 69, 69);
-        text = 'To steer press';
+        text = 'Sturen';
         this.game.ctx.fillText(text, this.game.canvas.width / 2 - 250, this.game.canvas.height / 2 - 70);
         this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/a.png'), this.game.canvas.width / 2 + 100, this.game.canvas.height / 2 - 70 - 69 / 2, 69, 69);
         this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/d.png'), this.game.canvas.width / 2 + 200, this.game.canvas.height / 2 - 70 - 69 / 2, 69, 69);
-        text = 'To rotate the field of view';
+        text = 'Kijken';
         this.game.ctx.fillText(text, this.game.canvas.width / 2 - 250, this.game.canvas.height / 2 + 60);
         this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/mouse.png'), this.game.canvas.width / 2 + 151, this.game.canvas.height / 2 + 60 - 69 / 2, 69, 69);
         this.menu.draw(this.game.ctx);

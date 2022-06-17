@@ -32,7 +32,7 @@ export default class HowToPlayMenu extends Menu {
               // The dimensions of the GameItem Mesh
               new Vector2(200, 50),
             ),
-            'Got it!',
+            'Oké!',
           ),
         ],
       ]),

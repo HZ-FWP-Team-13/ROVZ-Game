@@ -8,7 +8,7 @@ export default class HowToPlayMenu extends Menu {
         super('howToPlayMenu', new Transform(), new Map([
             [
                 'gotIt',
-                new Button('gotIt', new Transform(), new Mesh('./assets/img/longButton.png', new Vector2(200, 50)), 'Got it!'),
+                new Button('gotIt', new Transform(), new Mesh('./assets/img/longButton.png', new Vector2(200, 50)), 'Oké!'),
             ],
         ]));
         this.getOptions().forEach((value, key) => {

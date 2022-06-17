@@ -32,7 +32,7 @@ export default class StartMenu extends Menu {
               // The dimensions of the GameItem Mesh
               new Vector2(200, 50),
             ),
-            'Play',
+            'Spelen!',
           ),
         ],
         [
@@ -49,7 +49,7 @@ export default class StartMenu extends Menu {
               // The dimensions of the GameItem Mesh
               new Vector2(200, 50),
             ),
-            'How to play',
+            'Handleiding',
           ),
         ],
       ]),
