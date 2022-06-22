@@ -77,9 +77,9 @@ export default class Player extends GamePawn {
   }
 
   /**
-   * Setter to set the movement speed to a new parameter
+   * Setter to set the hitbox for the player
    *
-   * @param player The movement speed that needs to be set
+   * @param player Player the hitbox is based on
    */
   public setHitbox(player: Player): void {
     this.hitbox = player;
