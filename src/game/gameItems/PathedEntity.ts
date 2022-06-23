@@ -6,49 +6,45 @@ import Vector2 from '../../engine/MathModule/Vector2.js';
 import Path from '../../engine/AIModule/Path.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
 import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
-import Collider from '../../engine/ComponentsModule/Collider.js';
-import Graphics from '../../engine/GraphicsModule/Graphics.js';
-import PathedEntity from './PathedEntity.js';
 
-export default class Car extends PathedEntity {
+export default class Car extends GamePawn {
+  public speed: number; // The current speed of the entity along the path
+
+  public path: Path; // Path the entity follows
+
+  protected lastPassedPointIndex: number; // The last point the entity has passed
+
   /**
-   * Create a new Player instance //TODO SOME OF THIS STUFF HAS BECOME OBSOLETE
+   * Create a new instance
    *
    * @param id The id of the GameObject
    * @param path path to follow
    * @param startPoint starting point on the path
    * @param mesh The Mesh of the GameItem
    * @param collider The Collider of the GamePawn
+   * @param skin
    */
   public constructor(
     id: string,
     path: Path,
     startPoint: number,
-    skin: string,
+    speed: number,
+    sip: string,
+    wh: Vector2,
   ) {
-    // Source Image Path
-    let sip = '';
-    switch (skin) {
-      case 'RED':
-        sip = 'assets/img/cars/car_red.png';
-        break;
-      case 'BLUE':
-        sip = 'assets/img/cars/car_blue.png';
-        break;
-      case 'GREEN':
-        sip = 'assets/img/cars/car_green.png';
-        break;
-      default:
-        sip = 'assets/img/cars/car_red.png';
-        break;
-    }
+    const transform = new Transform(path.getPoints()[startPoint], 0, new Vector2(1, 1));
 
-    const speed = 500;
-    const wh = new Vector2(64, 128);
     // TODO: Image loading is laggy sometimes and results in nothing being rendered.
     // We should wait for all images to load prior to rendering.
 
-    super(id, path, startPoint, speed, sip, wh);
+    const mesh = new Mesh(sip, wh);
+    const collider = new RectCollider(wh);
+
+    super(id, transform, mesh, collider);
+
+    this.path = path;
+    this.speed = speed;
+    this.lastPassedPointIndex = startPoint;
   }
 
   /**

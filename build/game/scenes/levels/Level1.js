@@ -23,6 +23,8 @@ export default class Level1 extends Level {
     tg2;
     path1;
     path2;
+    trainpath1;
+    trainpath2;
     goal;
     constructor(game) {
         super(game);
@@ -42,28 +44,29 @@ export default class Level1 extends Level {
         this.goal = new Goal('goal', new Vector2(700, 1350));
         this.path1 = new Path();
         const p1 = this.path1;
-        p1.addPoint(new Vector2(1550, 2900));
-        p1.addPoint(new Vector2(1550, 1700));
-        p1.addPoint(new Vector2(1700, 1550));
-        p1.addPoint(new Vector2(1700, 1450));
-        p1.addPoint(new Vector2(1550, 1300));
-        p1.addPoint(new Vector2(1450, 1300));
-        p1.addPoint(new Vector2(1300, 1450));
-        p1.addPoint(new Vector2(100, 1450));
+        p1.addPoint(this.pg1[0]);
+        p1.addPoint(this.pg1[1]);
+        p1.addPoint(this.pg1[2]);
+        p1.addPoint(this.pg1[19]);
+        p1.addPoint(this.rag1[6]);
+        p1.addPoint(this.rag1[7]);
+        p1.addPoint(this.pg1[20]);
+        p1.addPoint(this.pg1[8]);
+        p1.addPoint(this.pg1[7]);
+        p1.addPoint(this.pg1[6]);
+        p1.addPoint(this.pg1[5]);
+        p1.addPoint(this.pg1[21]);
         this.path1.setLastPointIndex(this.path1.getPoints().length - 1);
-        this.path2 = new Path();
-        const p2 = this.path2;
-        p2.addPoint(new Vector2(3000 - 1550, 3000 - 2900));
-        p2.addPoint(new Vector2(3000 - 1550, 3000 - 1700));
-        p2.addPoint(new Vector2(3000 - 1700, 3000 - 1550));
-        p2.addPoint(new Vector2(3000 - 1700, 3000 - 1450));
-        p2.addPoint(new Vector2(3000 - 1550, 3000 - 1300));
-        p2.addPoint(new Vector2(3000 - 1450, 3000 - 1300));
-        p2.addPoint(new Vector2(3000 - 1300, 3000 - 1450));
-        p2.addPoint(new Vector2(3000 - 100, 3000 - 1450));
-        this.path2.setLastPointIndex(this.path1.getPoints().length - 1);
+        this.trainpath1 = new Path();
+        this.trainpath1.addPoint(this.tg1[0]);
+        this.trainpath1.addPoint(this.tg1[1]);
+        this.trainpath1.setLastPointIndex(1);
+        this.trainpath2 = new Path();
+        this.trainpath2.addPoint(this.tg2[0]);
+        this.trainpath2.addPoint(this.tg2[1]);
+        this.trainpath2.setLastPointIndex(1);
         this.cars = [];
-        this.cars.push(new Car('car1', this.path1, 0, 'RED'), new Car('car2', this.path1, 1, 'BLUE'), new Car('car3', this.path2, 2, 'GREEN'), new Car('car4', this.path2, 6, 'RED'));
+        this.cars.push(new Car('car1', this.path1, 0, 'RED'), new Car('car2', this.path1, 1, 'BLUE'), new Car('car3', this.path1, 7, 'GREEN'));
     }
     update(elapsed) {
         this.player.setHitbox(this.player);

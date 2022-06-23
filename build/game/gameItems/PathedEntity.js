@@ -1,26 +1,21 @@
+import GamePawn from '../../engine/ObjectModule/GamePawn.js';
+import Transform from '../../engine/ComponentsModule/Transform.js';
+import Mesh from '../../engine/ComponentsModule/Mesh.js';
 import Vector2 from '../../engine/MathModule/Vector2.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
-import PathedEntity from './PathedEntity.js';
-export default class Car extends PathedEntity {
-    constructor(id, path, startPoint, skin) {
-        let sip = '';
-        switch (skin) {
-            case 'RED':
-                sip = 'assets/img/cars/car_red.png';
-                break;
-            case 'BLUE':
-                sip = 'assets/img/cars/car_blue.png';
-                break;
-            case 'GREEN':
-                sip = 'assets/img/cars/car_green.png';
-                break;
-            default:
-                sip = 'assets/img/cars/car_red.png';
-                break;
-        }
-        const speed = 500;
-        const wh = new Vector2(64, 128);
-        super(id, path, startPoint, speed, sip, wh);
+import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
+export default class Car extends GamePawn {
+    speed;
+    path;
+    lastPassedPointIndex;
+    constructor(id, path, startPoint, speed, sip, wh) {
+        const transform = new Transform(path.getPoints()[startPoint], 0, new Vector2(1, 1));
+        const mesh = new Mesh(sip, wh);
+        const collider = new RectCollider(wh);
+        super(id, transform, mesh, collider);
+        this.path = path;
+        this.speed = speed;
+        this.lastPassedPointIndex = startPoint;
     }
     update(elapsed) {
         const points = this.path.getPoints();
@@ -50,4 +45,4 @@ export default class Car extends PathedEntity {
         console.log(this.lastPassedPointIndex);
     }
 }
-//# sourceMappingURL=Car.js.map
+//# sourceMappingURL=PathedEntity.js.map
