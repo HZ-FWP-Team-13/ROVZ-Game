@@ -20,7 +20,7 @@ import Start from '../screens/Start.js';
 export default class Level1 extends Level {
   private background: GameItem;
 
-  private foreground: GameItem;
+  // private foreground: GameItem;
 
   // Player Character
   private player: Player;
@@ -36,6 +36,22 @@ export default class Level1 extends Level {
 
   // Pathpoints
   // private pathPoints: Vector2[];
+
+  // Point Group 1: Green
+  private pg1: Vector2[];
+
+  // Point Group 2: Red
+  private pg2: Vector2[];
+
+  // Roundabound Group 1: Blue
+  private rag1: Vector2[];
+
+  // Train Group 1: Cyan
+  private tg1: Vector2[];
+
+  // Train Group 2: Pink
+  private tg2: Vector2[];
+
 
   // Paths
   private path1: Path;
@@ -63,26 +79,26 @@ export default class Level1 extends Level {
       // The Transform of the GameItem
       new Mesh(
         // The path11 to the Source Image of the GameItem Mesh
-        './assets/img/level/ra_bg.png',
+        './assets/img/level/biglevel.png',
         // The dimensions of the GameItem Mesh
         new Vector2(3000, 3000),
       ),
     );
 
-    // Spawning the Background
-    this.foreground = new GameItem(
-      // The id of the GameObject
-      'foreground',
-      // The Transform of the GameObject
-      new Transform(),
-      // The Transform of the GameItem
-      new Mesh(
-        // The path11 to the Source Image of the GameItem Mesh
-        './assets/img/level/ra_fg.png',
-        // The dimensions of the GameItem Mesh
-        new Vector2(3000, 3000),
-      ),
-    );
+    // // Spawning the Foreground
+    // this.foreground = new GameItem(
+    //   // The id of the GameObject
+    //   'foreground',
+    //   // The Transform of the GameObject
+    //   new Transform(),
+    //   // The Transform of the GameItem
+    //   new Mesh(
+    //     // The path11 to the Source Image of the GameItem Mesh
+    //     './assets/img/level/ra_fg.png',
+    //     // The dimensions of the GameItem Mesh
+    //     new Vector2(3000, 3000),
+    //   ),
+    // );
 
     // Spawning the Player
     this.player = new Player(
@@ -117,6 +133,131 @@ export default class Level1 extends Level {
         // The dimensions of the FovOverlay Mesh
         new Vector2(6000, 6000),
       ),
+    );
+
+    this.pg1 = [];
+    this.pg1.push(
+      // 0
+      new Vector2(1150, 0),
+
+      // 1 - 3
+      new Vector2(1150, 1400),
+      new Vector2(1200, 1450),
+      new Vector2(1150, 1500),
+
+      // 4 - 6
+      new Vector2(1150, 2900),
+      new Vector2(1100, 2950),
+      new Vector2(1200, 2950),
+
+      // 7 - 9
+      new Vector2(2400, 2950),
+      new Vector2(2450, 2900),
+      new Vector2(2500, 2950),
+
+      // 10 - 11
+      new Vector2(3600, 2950),
+      new Vector2(3650, 2900),
+
+      // 12 - 14
+      new Vector2(3650, 1500),
+      new Vector2(3600, 1450),
+      new Vector2(3650, 1400),
+
+      // 15
+      new Vector2(3650, 0),
+
+      // 16
+      new Vector2(2800, 1450),
+
+      // 17
+      new Vector2(2450, 1000),
+
+      // 18
+      new Vector2(2450, 0),
+
+      // 19
+      new Vector2(2200, 1450),
+
+      // 20
+      new Vector2(2450, 1700),
+
+      // 21
+      new Vector2(0, 2950),
+    );
+
+    this.pg2 = [];
+    this.pg2.push(
+      // 0
+      new Vector2(0, 3050),
+
+      // 1 - 3
+      new Vector2(1200, 3050),
+      new Vector2(1250, 3000),
+      new Vector2(1300, 3050),
+
+      // 4 - 6
+      new Vector2(2500, 3050),
+      new Vector2(2550, 3000),
+      new Vector2(2600, 3050),
+
+      // 7 - 8
+      new Vector2(3700, 3050),
+      new Vector2(3750, 3000),
+
+      // 9 - 11
+      new Vector2(3750, 1400),
+      new Vector2(3700, 1350),
+      new Vector2(3750, 1300),
+
+      // 12
+      new Vector2(3750, 0),
+
+      // 13 - 16
+      new Vector2(2800, 1350),
+      new Vector2(2500, 1100),
+      new Vector2(2200, 1350),
+      new Vector2(2550, 1700),
+
+      // 17
+      new Vector2(2550, 0),
+
+      // 18 - 20
+      new Vector2(1250, 1400),
+      new Vector2(1200, 1350),
+      new Vector2(1250, 1300),
+
+      // 21
+      new Vector2(1250, 0),
+    );
+
+    this.rag1 = [];
+    this.rag1.push(
+
+      new Vector2(2550, 1580),
+
+      new Vector2(2680, 1450),
+      new Vector2(2680, 1350),
+
+      new Vector2(2550, 1220),
+      new Vector2(2450, 1220),
+
+      new Vector2(2320, 1350),
+      new Vector2(2320, 1450),
+
+      new Vector2(2450, 1580),
+    );
+
+    this.tg1 = [];
+    this.tg1.push(
+      new Vector2(4150, -10000),
+      new Vector2(4150, 10000),
+    );
+
+    this.tg2 = [];
+    this.tg2.push(
+      new Vector2(4350, 10000),
+      new Vector2(4350, -10000),
     );
 
     this.goal = new Goal('goal', new Vector2(700, 1350));
@@ -332,20 +473,20 @@ export default class Level1 extends Level {
 
     this.goal.getMesh().draw(this.game.ctx, this.goal.getTransform(), camera);
 
-    // TODO: This is not good.
-    this.game.ctx.drawImage(
-      // The Source Image of the Background
-      this.foreground.getMesh().getSourceImage(),
-      // The position of the frame within the Source Image
-      camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2,
-      camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2,
-      // The dimensions of the frame within the Source Image
-      camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
-      // The position of the frame on the Game Canvas
-      0, 0,
-      // The dimensions of the frame on the Game Canvas
-      camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
-    );
+    // // TODO: This is not good.
+    // this.game.ctx.drawImage(
+    //   // The Source Image of the Background
+    //   this.foreground.getMesh().getSourceImage(),
+    //   // The position of the frame within the Source Image
+    //   camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2,
+    //   camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2,
+    //   // The dimensions of the frame within the Source Image
+    //   camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
+    //   // The position of the frame on the Game Canvas
+    //   0, 0,
+    //   // The dimensions of the frame on the Game Canvas
+    //   camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
+    // );
 
     // Drawing the FovOverlay on the Game Canvas
     this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);

@@ -13,19 +13,32 @@ import Goal from '../../gameItems/Goal.js';
 import Start from '../screens/Start.js';
 export default class Level1 extends Level {
     background;
-    foreground;
     player;
     fov;
     cars;
+    pg1;
+    pg2;
+    rag1;
+    tg1;
+    tg2;
     path1;
     path2;
     goal;
     constructor(game) {
         super(game);
-        this.background = new GameItem('background', new Transform(), new Mesh('./assets/img/level/ra_bg.png', new Vector2(3000, 3000)));
-        this.foreground = new GameItem('foreground', new Transform(), new Mesh('./assets/img/level/ra_fg.png', new Vector2(3000, 3000)));
+        this.background = new GameItem('background', new Transform(), new Mesh('./assets/img/level/biglevel.png', new Vector2(3000, 3000)));
         this.player = new Player('player', new Transform(new Vector2(1634, 2500)), new Mesh('./assets/img/player/cyclist.png', new Vector2(28, 78)), new RectCollider(new Vector2(28, 78)));
         this.fov = new FovOverlay('fov', new Transform(), new Mesh('./assets/img/fov.png', new Vector2(6000, 6000)));
+        this.pg1 = [];
+        this.pg1.push(new Vector2(1150, 0), new Vector2(1150, 1400), new Vector2(1200, 1450), new Vector2(1150, 1500), new Vector2(1150, 2900), new Vector2(1100, 2950), new Vector2(1200, 2950), new Vector2(2400, 2950), new Vector2(2450, 2900), new Vector2(2500, 2950), new Vector2(3600, 2950), new Vector2(3650, 2900), new Vector2(3650, 1500), new Vector2(3600, 1450), new Vector2(3650, 1400), new Vector2(3650, 0), new Vector2(2800, 1450), new Vector2(2450, 1000), new Vector2(2450, 0), new Vector2(2200, 1450), new Vector2(2450, 1700), new Vector2(0, 2950));
+        this.pg2 = [];
+        this.pg2.push(new Vector2(0, 3050), new Vector2(1200, 3050), new Vector2(1250, 3000), new Vector2(1300, 3050), new Vector2(2500, 3050), new Vector2(2550, 3000), new Vector2(2600, 3050), new Vector2(3700, 3050), new Vector2(3750, 3000), new Vector2(3750, 1400), new Vector2(3700, 1350), new Vector2(3750, 1300), new Vector2(3750, 0), new Vector2(2800, 1350), new Vector2(2500, 1100), new Vector2(2200, 1350), new Vector2(2550, 1700), new Vector2(2550, 0), new Vector2(1250, 1400), new Vector2(1200, 1350), new Vector2(1250, 1300), new Vector2(1250, 0));
+        this.rag1 = [];
+        this.rag1.push(new Vector2(2550, 1580), new Vector2(2680, 1450), new Vector2(2680, 1350), new Vector2(2550, 1220), new Vector2(2450, 1220), new Vector2(2320, 1350), new Vector2(2320, 1450), new Vector2(2450, 1580));
+        this.tg1 = [];
+        this.tg1.push(new Vector2(4150, -10000), new Vector2(4150, 10000));
+        this.tg2 = [];
+        this.tg2.push(new Vector2(4350, 10000), new Vector2(4350, -10000));
         this.goal = new Goal('goal', new Vector2(700, 1350));
         this.path1 = new Path();
         const p1 = this.path1;
@@ -106,7 +119,6 @@ export default class Level1 extends Level {
         });
         this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
         this.goal.getMesh().draw(this.game.ctx, this.goal.getTransform(), camera);
-        this.game.ctx.drawImage(this.foreground.getMesh().getSourceImage(), camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2, camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2, camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(), 0, 0, camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY());
         this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);
     }
 }

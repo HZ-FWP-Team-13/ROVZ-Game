@@ -1,8 +1,8 @@
-import Mesh from "../../engine/ComponentsModule/Mesh.js";
-import RectCollider from "../../engine/ComponentsModule/RectCollider.js";
-import Transform from "../../engine/ComponentsModule/Transform.js";
-import Vector2 from "../../engine/MathModule/Vector2.js";
-import GamePawn from "../../engine/ObjectModule/GamePawn.js";
+import Mesh from '../../engine/ComponentsModule/Mesh.js';
+import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
+import Transform from '../../engine/ComponentsModule/Transform.js';
+import Vector2 from '../../engine/MathModule/Vector2.js';
+import GamePawn from '../../engine/ObjectModule/GamePawn.js';
 export default class Goal extends GamePawn {
     constructor(id, position) {
         const transform = new Transform(position);
