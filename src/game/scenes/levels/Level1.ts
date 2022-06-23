@@ -16,6 +16,8 @@ import Factory from '../../Factory.js';
 import GamePawn from '../../../engine/ObjectModule/GamePawn.js';
 import Goal from '../../gameItems/Goal.js';
 import Start from '../screens/Start.js';
+import PathedEntity from '../../gameItems/PathedEntity.js';
+import Train from '../../gameItems/Train.js';
 
 export default class Level1 extends Level {
   private background: GameItem;
@@ -32,7 +34,7 @@ export default class Level1 extends Level {
   // private buildings: Building[];
 
   // Car Array
-  private cars: Car[];
+  private vehicles: PathedEntity[];
 
   // Pathpoints
   // private pathPoints: Vector2[];
@@ -54,9 +56,11 @@ export default class Level1 extends Level {
 
   // Paths
   private path1: Path;
+
   private path2: Path;
 
   private trainpath1: Path;
+
   private trainpath2: Path;
 
   // Goal
@@ -318,11 +322,13 @@ export default class Level1 extends Level {
     // this.path2.setLastPointIndex(this.path1.getPoints().length - 1);
 
     // Create cars
-    this.cars = [];
-    this.cars.push(
+    this.vehicles = [];
+    this.vehicles.push(
       new Car('car1', this.path1, 0, 'RED'),
       new Car('car2', this.path1, 1, 'BLUE'),
       new Car('car3', this.path1, 7, 'GREEN'),
+      new Train('train1', this.trainpath1, 0),
+      new Train('train2', this.trainpath2, 0),
       // new Car('car3', this.path2, 2, 'GREEN'),
       // new Car('car4', this.path2, 6, 'RED'),
       // new Car('car2', this.path1, 2, new Mesh('assets/img/cars/car_blue.png', new Vector2(64, 128), 0), new RectCollider(new Vector2(64, 128))),
@@ -352,7 +358,7 @@ export default class Level1 extends Level {
     //   this.player.control(this.input, elapsed);
     // }
 
-    if (!this.isColliding(this.cars)) {
+    if (!this.isColliding(this.vehicles)) {
       this.player.control(this.input, elapsed);
     }
 
@@ -369,10 +375,10 @@ export default class Level1 extends Level {
     this.fov.getTransform().rotate(this.player.lastFrameRotationDifference);
 
     // Update all cars
-    this.cars.forEach((car) => {
-      car.update(elapsed);
+    this.vehicles.forEach((vehicle) => {
+      vehicle.update(elapsed);
 
-      Collider.checkCollision(car, this.player);
+      Collider.checkCollision(vehicle, this.player);
     });
 
     this.goal.getCollider().updatePoints(this.goal.getTransform());
@@ -464,8 +470,8 @@ export default class Level1 extends Level {
     );
 
     // Draw the car
-    this.cars.forEach((car) => {
-      car.getMesh().draw(this.game.ctx, car.getTransform(), camera);
+    this.vehicles.forEach((vehicle) => {
+      vehicle.getMesh().draw(this.game.ctx, vehicle.getTransform(), camera);
       // car.getCollider().draw(this.game.ctx, camera);
     });
 

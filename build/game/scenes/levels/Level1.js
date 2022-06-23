@@ -11,11 +11,12 @@ import Path from '../../../engine/AIModule/Path.js';
 import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
 import Goal from '../../gameItems/Goal.js';
 import Start from '../screens/Start.js';
+import Train from '../../gameItems/Train.js';
 export default class Level1 extends Level {
     background;
     player;
     fov;
-    cars;
+    vehicles;
     pg1;
     pg2;
     rag1;
@@ -65,13 +66,13 @@ export default class Level1 extends Level {
         this.trainpath2.addPoint(this.tg2[0]);
         this.trainpath2.addPoint(this.tg2[1]);
         this.trainpath2.setLastPointIndex(1);
-        this.cars = [];
-        this.cars.push(new Car('car1', this.path1, 0, 'RED'), new Car('car2', this.path1, 1, 'BLUE'), new Car('car3', this.path1, 7, 'GREEN'));
+        this.vehicles = [];
+        this.vehicles.push(new Car('car1', this.path1, 0, 'RED'), new Car('car2', this.path1, 1, 'BLUE'), new Car('car3', this.path1, 7, 'GREEN'), new Train('train1', this.trainpath1, 0), new Train('train2', this.trainpath2, 0));
     }
     update(elapsed) {
         this.player.setHitbox(this.player);
         this.player.getHitbox().getCollider().updatePoints(this.player.getHitbox().getTransform());
-        if (!this.isColliding(this.cars)) {
+        if (!this.isColliding(this.vehicles)) {
             this.player.control(this.input, elapsed);
         }
         this.player.control(this.input, elapsed);
@@ -79,9 +80,9 @@ export default class Level1 extends Level {
         this.getCamera().getTransform().setPosition(this.player.getTransform().getPosition());
         this.fov.getTransform().setPosition(this.player.getTransform().getPosition());
         this.fov.getTransform().rotate(this.player.lastFrameRotationDifference);
-        this.cars.forEach((car) => {
-            car.update(elapsed);
-            Collider.checkCollision(car, this.player);
+        this.vehicles.forEach((vehicle) => {
+            vehicle.update(elapsed);
+            Collider.checkCollision(vehicle, this.player);
         });
         this.goal.getCollider().updatePoints(this.goal.getTransform());
         if (Collider.checkCollision(this.goal, this.player)) {
@@ -117,8 +118,8 @@ export default class Level1 extends Level {
         const camera = this.getCamera();
         this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
         this.game.ctx.drawImage(this.background.getMesh().getSourceImage(), camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2, camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2, camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(), 0, 0, camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY());
-        this.cars.forEach((car) => {
-            car.getMesh().draw(this.game.ctx, car.getTransform(), camera);
+        this.vehicles.forEach((vehicle) => {
+            vehicle.getMesh().draw(this.game.ctx, vehicle.getTransform(), camera);
         });
         this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
         this.goal.getMesh().draw(this.game.ctx, this.goal.getTransform(), camera);

@@ -1,25 +1,11 @@
 import Vector2 from '../../engine/MathModule/Vector2.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
 import PathedEntity from './PathedEntity.js';
-export default class Car extends PathedEntity {
-    constructor(id, path, startPoint, skin) {
-        let sip = '';
-        switch (skin) {
-            case 'RED':
-                sip = 'assets/img/cars/car_red.png';
-                break;
-            case 'BLUE':
-                sip = 'assets/img/cars/car_blue.png';
-                break;
-            case 'GREEN':
-                sip = 'assets/img/cars/car_green.png';
-                break;
-            default:
-                sip = 'assets/img/cars/car_red.png';
-                break;
-        }
+export default class Train extends PathedEntity {
+    constructor(id, path, startPoint) {
+        const sip = 'assets/img/vehicles/trains/ns_intercity_train.png';
         const speed = 500;
-        const wh = new Vector2(64, 128);
+        const wh = new Vector2(86, 1536);
         super(id, path, startPoint, speed, sip, wh);
     }
     update(elapsed) {
@@ -50,4 +36,4 @@ export default class Car extends PathedEntity {
         console.log(this.lastPassedPointIndex);
     }
 }
-//# sourceMappingURL=Car%20copy.js.map
+//# sourceMappingURL=Train.js.map
