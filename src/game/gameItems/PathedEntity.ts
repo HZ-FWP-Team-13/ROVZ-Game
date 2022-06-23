@@ -17,12 +17,12 @@ export default class Car extends GamePawn {
   /**
    * Create a new instance
    *
-   * @param id The id of the GameObject
-   * @param path path to follow
-   * @param startPoint starting point on the path
-   * @param mesh The Mesh of the GameItem
-   * @param collider The Collider of the GamePawn
-   * @param skin
+   * @param id id
+   * @param path path
+   * @param startPoint starting point
+   * @param speed speed
+   * @param sip source image path
+   * @param wh width and height
    */
   public constructor(
     id: string,
