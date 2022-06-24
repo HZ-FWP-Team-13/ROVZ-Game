@@ -7,7 +7,7 @@ import Path from '../../engine/AIModule/Path.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
 import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
 
-export default class Car extends GamePawn {
+export default class PathedEntity extends GamePawn {
   public speed: number; // The current speed of the entity along the path
 
   public path: Path; // Path the entity follows
