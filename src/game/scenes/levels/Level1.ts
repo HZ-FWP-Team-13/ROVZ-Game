@@ -11,8 +11,6 @@ import Scene from '../../../engine/SceneModule/Scene.js';
 import Car from '../../gameItems/Car.js';
 import Path from '../../../engine/AIModule/Path.js';
 import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
-import Building from '../../gameItems/structures/Building.js';
-import Factory from '../../Factory.js';
 import GamePawn from '../../../engine/ObjectModule/GamePawn.js';
 import Goal from '../../gameItems/Goal.js';
 import Start from '../screens/Start.js';

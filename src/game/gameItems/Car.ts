@@ -1,13 +1,6 @@
-import GamePawn from '../../engine/ObjectModule/GamePawn.js';
-import Transform from '../../engine/ComponentsModule/Transform.js';
-import Mesh from '../../engine/ComponentsModule/Mesh.js';
-
 import Vector2 from '../../engine/MathModule/Vector2.js';
 import Path from '../../engine/AIModule/Path.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
-import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
-import Collider from '../../engine/ComponentsModule/Collider.js';
-import Graphics from '../../engine/GraphicsModule/Graphics.js';
 import PathedEntity from './PathedEntity.js';
 
 export default class Car extends PathedEntity {
@@ -17,8 +10,7 @@ export default class Car extends PathedEntity {
    * @param id The id of the GameObject
    * @param path path to follow
    * @param startPoint starting point on the path
-   * @param mesh The Mesh of the GameItem
-   * @param collider The Collider of the GamePawn
+   * @param skin Skin of the car
    */
   public constructor(
     id: string,
