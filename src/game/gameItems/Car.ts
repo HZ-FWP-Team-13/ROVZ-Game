@@ -1,9 +1,9 @@
 import Vector2 from '../../engine/MathModule/Vector2.js';
 import Path from '../../engine/AIModule/Path.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
-import PathedEntity from './PathedEntity.js';
+import Vehicle from './Vehicle.js';
 
-export default class Car extends PathedEntity {
+export default class Car extends Vehicle {
   /**
    * Create a new Player instance //TODO SOME OF THIS STUFF HAS BECOME OBSOLETE
    *

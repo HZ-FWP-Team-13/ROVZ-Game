@@ -1,4 +1,4 @@
-import Component from '../CoreModule/Component.js';
+import Component from './Component.js';
 import Vector2 from '../MathModule/Vector2.js';
 import Transform from './Transform.js';
 import Camera from '../GraphicsModule/Camera.js';

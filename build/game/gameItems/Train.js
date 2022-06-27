@@ -1,7 +1,7 @@
 import Vector2 from '../../engine/MathModule/Vector2.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
-import PathedEntity from './PathedEntity.js';
-export default class Train extends PathedEntity {
+import Vehicle from './Vehicle.js';
+export default class Train extends Vehicle {
     constructor(id, path, startPoint) {
         const sip = 'assets/img/vehicles/trains/ns_intercity_train.png';
         const speed = 500;

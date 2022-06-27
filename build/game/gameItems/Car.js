@@ -1,7 +1,7 @@
 import Vector2 from '../../engine/MathModule/Vector2.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
-import PathedEntity from './PathedEntity.js';
-export default class Car extends PathedEntity {
+import Vehicle from './Vehicle.js';
+export default class Car extends Vehicle {
     constructor(id, path, startPoint, skin) {
         let sip = '';
         switch (skin) {

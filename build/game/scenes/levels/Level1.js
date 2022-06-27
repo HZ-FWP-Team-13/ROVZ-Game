@@ -12,10 +12,12 @@ import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
 import Goal from '../../gameItems/Goal.js';
 import Start from '../screens/Start.js';
 import Train from '../../gameItems/Train.js';
+import Building from '../../gameItems/structures/Building.js';
 export default class Level1 extends Level {
     background;
     player;
     fov;
+    structures;
     vehicles;
     pg1;
     pg2;
@@ -68,6 +70,8 @@ export default class Level1 extends Level {
         this.trainpath2.setLastPointIndex(1);
         this.vehicles = [];
         this.vehicles.push(new Car('car1', this.path1, 0, 'RED'), new Car('car2', this.path1, 1, 'BLUE'), new Car('car3', this.path1, 7, 'GREEN'), new Train('train1', this.trainpath1, 0), new Train('train2', this.trainpath2, 0));
+        this.structures = [];
+        this.structures.push(new Building('wall_north', new Transform(new Vector2(2900, 0), 0), new Mesh('', new Vector2(5800, 200)), new RectCollider(new Vector2(5800, 200))), new Building('wall_east', new Transform(new Vector2(5800, 2110), 0), new Mesh('', new Vector2(200, 4220)), new RectCollider(new Vector2(200, 4220))), new Building('wall_south', new Transform(new Vector2(2900, 4220), 0), new Mesh('', new Vector2(5800, 200)), new RectCollider(new Vector2(5800, 200))), new Building('wall_west', new Transform(new Vector2(0, 2110), 0), new Mesh('', new Vector2(200, 4220)), new RectCollider(new Vector2(200, 4220))), new Building('forest1', new Transform(new Vector2(510, 360), 0), new Mesh('', new Vector2(1020, 720)), new RectCollider(new Vector2(1020, 720))));
     }
     update(elapsed) {
         this.player.setHitbox(this.player);
@@ -88,6 +92,7 @@ export default class Level1 extends Level {
         if (Collider.checkCollision(this.goal, this.player)) {
             return new Start(this.game);
         }
+        this.isColliding(this.structures);
         return null;
     }
     isColliding(objects) {
@@ -124,6 +129,9 @@ export default class Level1 extends Level {
         this.player.getMesh().draw(this.game.ctx, this.player.getTransform(), camera);
         this.goal.getMesh().draw(this.game.ctx, this.goal.getTransform(), camera);
         this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);
+        this.structures.forEach((structure) => {
+            structure.getCollider().draw(this.game.ctx, camera);
+        });
     }
 }
 //# sourceMappingURL=Level1.js.map

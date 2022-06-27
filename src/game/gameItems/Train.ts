@@ -8,9 +8,9 @@ import Mathematics from '../../engine/MathModule/Mathematics.js';
 import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
 import Collider from '../../engine/ComponentsModule/Collider.js';
 import Graphics from '../../engine/GraphicsModule/Graphics.js';
-import PathedEntity from './PathedEntity.js';
+import Vehicle from './Vehicle.js';
 
-export default class Train extends PathedEntity {
+export default class Train extends Vehicle {
   /**
    * Create a new Player instance //TODO SOME OF THIS STUFF HAS BECOME OBSOLETE
    *

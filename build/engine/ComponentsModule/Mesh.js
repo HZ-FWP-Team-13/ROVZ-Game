@@ -1,4 +1,4 @@
-import Component from '../CoreModule/Component.js';
+import Component from './Component.js';
 import Mathematics from '../MathModule/Mathematics.js';
 import Graphics from '../GraphicsModule/Graphics.js';
 export default class Mesh extends Component {
