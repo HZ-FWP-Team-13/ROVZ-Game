@@ -10,8 +10,7 @@ export default class Button extends GameItem {
     }
     draw(ctx) {
         this.getMesh().draw(ctx, this.getTransform());
-        const { width } = ctx.measureText(this.text);
-        ctx.fillText(this.text, this.getTransform().getPosition().getX() - width / 2, this.getTransform().getPosition().getY() + 5);
+        ctx.fillText(this.text, this.getTransform().getPosition().getX(), this.getTransform().getPosition().getY() + 5);
     }
     getText() {
         return this.text;

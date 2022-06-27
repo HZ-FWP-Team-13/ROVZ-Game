@@ -1,4 +1,4 @@
-import Component from '../CoreModule/Component.js';
+import Component from './Component.js';
 import GameItem from '../ObjectModule/GameItem.js';
 import Input from '../InputModule/Input.js';
 import Camera from '../GraphicsModule/Camera.js';

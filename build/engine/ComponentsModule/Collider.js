@@ -1,4 +1,4 @@
-import Component from '../CoreModule/Component.js';
+import Component from './Component.js';
 import Mathematics from '../MathModule/Mathematics.js';
 import Vector2 from '../MathModule/Vector2.js';
 export default class Collider extends Component {

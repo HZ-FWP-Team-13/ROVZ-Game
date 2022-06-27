@@ -91,6 +91,7 @@ export default class Start extends Screen {
     this.game.ctx.fillStyle = 'black';
     this.game.ctx.fillRect(0, 0, this.game.canvas.width, this.game.canvas.height);
 
+    this.game.ctx.textAlign = 'center';
     this.titleImage.getMesh().draw(this.game.ctx, this.titleImage.getTransform());
     this.menu.draw(this.game.ctx);
 

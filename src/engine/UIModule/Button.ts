@@ -34,10 +34,10 @@ export default class Button extends GameItem {
     this.getMesh().draw(ctx, this.getTransform());
 
     // Drawing the text of the Button on the Game Canvas
-    const { width } = ctx.measureText(this.text);
+    // const { width } = ctx.measureText(this.text);
     ctx.fillText(
       this.text,
-      this.getTransform().getPosition().getX() - width / 2,
+      this.getTransform().getPosition().getX(),
       this.getTransform().getPosition().getY() + 5,
     );
   }

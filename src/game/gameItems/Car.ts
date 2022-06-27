@@ -1,29 +1,16 @@
-import GamePawn from '../../engine/ObjectModule/GamePawn.js';
-import Transform from '../../engine/ComponentsModule/Transform.js';
-import Mesh from '../../engine/ComponentsModule/Mesh.js';
-
 import Vector2 from '../../engine/MathModule/Vector2.js';
 import Path from '../../engine/AIModule/Path.js';
 import Mathematics from '../../engine/MathModule/Mathematics.js';
-import RectCollider from '../../engine/ComponentsModule/RectCollider.js';
-import Collider from '../../engine/ComponentsModule/Collider.js';
-import Graphics from '../../engine/GraphicsModule/Graphics.js';
+import Vehicle from './Vehicle.js';
 
-export default class Car extends GamePawn {
-  public speed: number; // The current speed of the vehicle
-
-  public path: Path; // Path the car follows
-
-  private lastPassedPointIndex: number; // The last point the car has passed
-
+export default class Car extends Vehicle {
   /**
    * Create a new Player instance //TODO SOME OF THIS STUFF HAS BECOME OBSOLETE
    *
    * @param id The id of the GameObject
    * @param path path to follow
    * @param startPoint starting point on the path
-   * @param mesh The Mesh of the GameItem
-   * @param collider The Collider of the GamePawn
+   * @param skin Skin of the car
    */
   public constructor(
     id: string,
@@ -31,8 +18,6 @@ export default class Car extends GamePawn {
     startPoint: number,
     skin: string,
   ) {
-    const transform = new Transform(path.getPoints()[startPoint], 0, new Vector2(1, 1));
-
     // Source Image Path
     let sip = '';
     switch (skin) {
@@ -50,17 +35,12 @@ export default class Car extends GamePawn {
         break;
     }
 
+    const speed = 500;
+    const wh = new Vector2(64, 128);
     // TODO: Image loading is laggy sometimes and results in nothing being rendered.
     // We should wait for all images to load prior to rendering.
 
-    const mesh = new Mesh(sip, new Vector2(64, 128));
-    const collider = new RectCollider(new Vector2(64, 128));
-
-    super(id, transform, mesh, collider);
-
-    this.path = path;
-    this.speed = 300;
-    this.lastPassedPointIndex = startPoint;
+    super(id, path, startPoint, speed, sip, wh);
   }
 
   /**
