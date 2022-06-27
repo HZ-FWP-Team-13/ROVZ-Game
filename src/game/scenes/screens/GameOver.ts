@@ -3,50 +3,41 @@ import Game from '../../../engine/CoreModule/Game.js';
 import Transform from '../../../engine/ComponentsModule/Transform.js';
 import Scene from '../../../engine/SceneModule/Scene.js';
 import Level1 from '../levels/Level1.js';
-import Mesh from '../../../engine/ComponentsModule/Mesh.js';
 import Vector2 from '../../../engine/MathModule/Vector2.js';
-import GameItem from '../../../engine/ObjectModule/GameItem.js';
 import StartMenu from '../../gameItems/menus/StartMenu.js';
 import HowToPlay from './HowToPlay.js';
+import GameOverMenu from '../../gameItems/menus/GameOverMenu copy.js';
+import Start from './Start.js';
 
-export default class Start extends Screen {
-  private titleImage: GameItem;
-
+export default class GameOver extends Screen {
   // The Menu of the Start Screen
   private menu: StartMenu;
+
+  private state: string;
 
   /**
    * Create a new Start Screen instance
    *
    * @param game The Game namespace
+   * @param state Gamestate: 'WIN' or 'LOSS'
    */
-  public constructor(game: Game) {
+  public constructor(game: Game, state: string) {
     super(game);
+    this.state = state;
 
-    this.titleImage = new GameItem(
-      // The id of the GameObject
-      'titleImage',
-      // The Transform of the GameObject
-      new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2 - 100)),
-      // The Transform of the GameItem
-      new Mesh(
-        // The path to the Source Image of the GameItem Mesh
-        './assets/img/titleBike.png',
-        // The dimensions of the GameItem Mesh
-        new Vector2(574, 376),
-      ),
-    );
+    const textXPos = this.game.canvas.width / 2;
+    const textYPos = this.game.canvas.height / 2;
 
     // Spawning the Menu
-    this.menu = new StartMenu(
+    this.menu = new GameOverMenu(
       new Map<string, Transform>([
         [
           'play',
-          new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2 + 200)),
+          new Transform(new Vector2(textXPos, textYPos + 200)),
         ],
         [
-          'howToPlay',
-          new Transform(new Vector2(game.canvas.width / 2, game.canvas.height / 2 + 260)),
+          'returnToTitle',
+          new Transform(new Vector2(textXPos, textYPos + 260)),
         ],
       ]),
     );
@@ -75,8 +66,8 @@ export default class Start extends Screen {
       if (hoveredOption === 'play') {
         return new Level1(this.game);
       }
-      if (hoveredOption === 'howToPlay') {
-        return new HowToPlay(this.game);
+      if (hoveredOption === 'returnToTitle') {
+        return new Start(this.game);
       }
     }
     return null;
@@ -86,14 +77,37 @@ export default class Start extends Screen {
    * Render this Start Scene to the Game Canvas
    */
   public render(): void {
-    // Clearing the screen
-    this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-    this.game.ctx.fillStyle = 'black';
-    this.game.ctx.fillRect(0, 0, this.game.canvas.width, this.game.canvas.height);
+    const { ctx } = this.game;
 
-    this.game.ctx.textAlign = 'center';
-    this.titleImage.getMesh().draw(this.game.ctx, this.titleImage.getTransform());
+    // Clearing the screen
+    ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, this.game.canvas.width, this.game.canvas.height);
+
     this.menu.draw(this.game.ctx);
+
+    const textXPos = this.game.canvas.width / 2;
+    const textYPos = this.game.canvas.height / 2;
+
+    ctx.textAlign = 'center';
+
+    if (this.state === 'LOSS') {
+      ctx.fillStyle = 'red';
+      const text: string = 'GAME OVER!';
+      ctx.fillText(
+        text,
+        textXPos,
+        textYPos,
+      );
+    } else if (this.state === 'WIN') {
+      ctx.fillStyle = 'green';
+      const text: string = 'LEVEL VOLTOOD!';
+      ctx.fillText(
+        text,
+        textXPos,
+        textYPos,
+      );
+    }
 
     // this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/startscreen.png'),
     //   0, 0, this.game.canvas.width, this.game.canvas.height);

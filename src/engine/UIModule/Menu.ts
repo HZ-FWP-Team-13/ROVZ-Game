@@ -50,7 +50,7 @@ export default class Menu extends GameObject {
    * @param font The font of the text (optional)
    */
   public draw(ctx: CanvasRenderingContext2D, font?: string): void {
-
+    ctx.textAlign = 'center';
     ctx.fillStyle = 'black';
     // Setting custom font (if given)
     if (font === undefined) {

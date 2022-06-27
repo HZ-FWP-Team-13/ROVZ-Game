@@ -13,10 +13,10 @@ import Path from '../../../engine/AIModule/Path.js';
 import RectCollider from '../../../engine/ComponentsModule/RectCollider.js';
 import GamePawn from '../../../engine/ObjectModule/GamePawn.js';
 import Goal from '../../gameItems/Goal.js';
-import Start from '../screens/Start.js';
 import PathedEntity from '../../gameItems/Vehicle.js';
 import Train from '../../gameItems/Train.js';
 import Building from '../../gameItems/structures/Building.js';
+import GameOver from '../screens/GameOver.js';
 
 export default class Level1 extends Level {
   private background: GameItem;
@@ -644,7 +644,15 @@ export default class Level1 extends Level {
     this.goal.getCollider().updatePoints(this.goal.getTransform());
 
     if (Collider.checkCollision(this.goal, this.player)) {
-      return new Start(this.game);
+      return new GameOver(this.game, 'WIN');
+    }
+
+    // if (this.isColliding(this.vehicles)) {
+    //   return new GameOver(this.game, 'LOSS');
+    // }
+
+    if (this.isColliding(this.vehicles)) {
+      return new GameOver(this.game, 'LOSS');
     }
 
     this.isColliding(this.structures);
@@ -667,11 +675,11 @@ export default class Level1 extends Level {
     let collided: boolean = false;
 
     objects.forEach((object) => {
-      collided = true;
       object.getCollider().updatePoints(object.getTransform());
       // console.log(building);
       if (Collider.checkCollision(this.player.getHitbox(), object)) {
         console.log(object);
+        collided = true;
         // TODO: Gain control of the character after running into a building,
         // while not being able to move forward
         //
