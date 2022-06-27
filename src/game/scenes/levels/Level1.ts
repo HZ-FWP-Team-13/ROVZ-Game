@@ -21,7 +21,7 @@ import Building from '../../gameItems/structures/Building.js';
 export default class Level1 extends Level {
   private background: GameItem;
 
-  // private foreground: GameItem;
+  private foreground: GameItem;
 
   // Player Character
   private player: Player;
@@ -58,6 +58,8 @@ export default class Level1 extends Level {
 
   private path2: Path;
 
+  private path3: Path;
+
   private trainpath1: Path;
 
   private trainpath2: Path;
@@ -81,10 +83,20 @@ export default class Level1 extends Level {
       new Transform(),
       // The Transform of the GameItem
       new Mesh(
-        // The path11 to the Source Image of the GameItem Mesh
-        './assets/img/level/biglevel.png',
+        // The path to the Source Image of the GameItem Mesh
+        './assets/img/levels/1/bg.png',
         // The dimensions of the GameItem Mesh
-        new Vector2(3000, 3000),
+        new Vector2(5800, 4220),
+      ),
+    );
+
+    // Spawning the Foreground
+    this.foreground = new GameItem(
+      'foreground',
+      new Transform(),
+      new Mesh(
+        './assets/img/levels/1/fg.png',
+        new Vector2(5800, 4220),
       ),
     );
 
@@ -95,7 +107,7 @@ export default class Level1 extends Level {
       // The Transform of the GameObject
       new Transform(
         // The coordinates of the Player Transform
-        new Vector2(1634, 2500),
+        new Vector2(2500, 3700),
       ),
       // The Mesh of the GameItem
       new Mesh(
@@ -172,6 +184,9 @@ export default class Level1 extends Level {
 
       // 21
       new Vector2(0, 2950),
+
+      // 22
+      new Vector2(3650, 1300),
     );
 
     this.pg2 = [];
@@ -212,11 +227,14 @@ export default class Level1 extends Level {
 
       // 18 - 20
       new Vector2(1250, 1400),
-      new Vector2(1200, 1350),
+      new Vector2(1300, 1350),
       new Vector2(1250, 1300),
 
       // 21
       new Vector2(1250, 0),
+
+      // 22
+      new Vector2(3600, 1330),
     );
 
     this.rag1 = [];
@@ -238,17 +256,23 @@ export default class Level1 extends Level {
 
     this.tg1 = [];
     this.tg1.push(
-      new Vector2(4150, -10000),
-      new Vector2(4150, 10000),
+      new Vector2(4150, -2000),
+      new Vector2(4150, 5000),
     );
 
     this.tg2 = [];
     this.tg2.push(
-      new Vector2(4350, 10000),
-      new Vector2(4350, -10000),
+      new Vector2(4350, 5000),
+      new Vector2(4350, -2000),
     );
 
-    this.goal = new Goal('goal', new Vector2(700, 1350));
+    const goalpos = Math.random();
+
+    this.goal = new Goal('goal', new Vector2(0, 0));
+
+    if (goalpos >= 0.5) {
+      this.goal.getTransform().setPosition(new Vector2(600, 1400));
+    } else this.goal.getTransform().setPosition(new Vector2(5100, 600));
 
     // Initalize the array of buildings, then process the amount
     // this.buildings = Factory.buildingFactory(200, 1600, 4);
@@ -272,6 +296,42 @@ export default class Level1 extends Level {
 
     this.path1.setLastPointIndex(this.path1.getPoints().length - 1);
 
+    this.path2 = new Path();
+
+    // Car path2
+    const p2 = this.path2;
+    p2.addPoint(this.pg2[0]);
+    p2.addPoint(this.pg2[1]);
+    p2.addPoint(this.pg2[3]);
+    p2.addPoint(this.pg2[4]);
+    p2.addPoint(this.pg2[5]);
+    p2.addPoint(this.pg2[16]);
+    p2.addPoint(this.rag1[0]);
+    p2.addPoint(this.pg1[16]);
+    p2.addPoint(this.pg1[13]);
+    p2.addPoint(this.pg2[9]);
+    p2.addPoint(this.pg2[11]);
+    p2.addPoint(this.pg2[12]);
+
+    this.path2.setLastPointIndex(this.path2.getPoints().length - 1);
+
+    this.path3 = new Path();
+    const p3 = this.path3;
+    p3.addPoint(this.pg1[15]);
+    p3.addPoint(this.pg1[22]);
+    p3.addPoint(this.pg2[22]);
+    p3.addPoint(this.pg2[13]);
+    p3.addPoint(this.rag1[2]);
+    p3.addPoint(this.rag1[3]);
+    p3.addPoint(this.rag1[4]);
+    p3.addPoint(this.rag1[5]);
+    p3.addPoint(this.pg2[15]);
+    p3.addPoint(this.pg2[19]);
+    p3.addPoint(this.pg2[20]);
+    p3.addPoint(this.pg2[21]);
+
+    this.path3.setLastPointIndex(this.path2.getPoints().length - 1);
+
     // Train path 1
     this.trainpath1 = new Path();
     this.trainpath1.addPoint(this.tg1[0]);
@@ -290,6 +350,12 @@ export default class Level1 extends Level {
       new Car('car1', this.path1, 0, 'RED'),
       new Car('car2', this.path1, 1, 'BLUE'),
       new Car('car3', this.path1, 7, 'GREEN'),
+      new Car('car4', this.path2, 1, 'RED'),
+      new Car('car5', this.path2, 4, 'BLUE'),
+      new Car('car6', this.path2, 7, 'GREEN'),
+      new Car('car7', this.path3, 2, 'RED'),
+      new Car('car8', this.path3, 5, 'BLUE'),
+      new Car('car9', this.path3, 9, 'GREEN'),
       new Train('train1', this.trainpath1, 0),
       new Train('train2', this.trainpath2, 0),
     );
@@ -325,12 +391,165 @@ export default class Level1 extends Level {
       ),
 
       new Building(
-        'forest1',
-        new Transform(new Vector2(510, 360), 0),
-        new Mesh('', new Vector2(1020, 720)),
-        new RectCollider(new Vector2(1020, 720)),
+        'clip_1a',
+        new Transform(new Vector2(560, 510), 0),
+        new Mesh('', new Vector2(920, 820)),
+        new RectCollider(new Vector2(920, 820)),
       ),
 
+      new Building(
+        'clip_1b',
+        new Transform(new Vector2(160, 1420), 0),
+        new Mesh('', new Vector2(120, 1020)),
+        new RectCollider(new Vector2(120, 1020)),
+      ),
+
+      new Building(
+        'clip_1c',
+        new Transform(new Vector2(560, 2370), 0),
+        new Mesh('', new Vector2(920, 900)),
+        new RectCollider(new Vector2(920, 900)),
+      ),
+
+      new Building(
+        'clip_2a',
+        new Transform(new Vector2(1050, 3650), 0),
+        new Mesh('', new Vector2(1900, 940)),
+        new RectCollider(new Vector2(1900, 940)),
+      ),
+
+      new Building(
+        'clip_2b',
+        new Transform(new Vector2(2500, 4060), 0),
+        new Mesh('', new Vector2(1000, 120)),
+        new RectCollider(new Vector2(1000, 120)),
+      ),
+
+      new Building(
+        'clip_2c',
+        new Transform(new Vector2(3500, 3650), 0),
+        new Mesh('', new Vector2(1000, 940)),
+        new RectCollider(new Vector2(1000, 940)),
+      ),
+
+      new Building(
+        'clip_3a',
+        new Transform(new Vector2(1790, 660), 0),
+        new Mesh('', new Vector2(820, 1120)),
+        new RectCollider(new Vector2(820, 1120)),
+      ),
+
+      new Building(
+        'clip_3b',
+        new Transform(new Vector2(2260, 600), 0),
+        new Mesh('', new Vector2(120, 1000)),
+        new RectCollider(new Vector2(120, 1000)),
+      ),
+
+      new Building(
+        'clip_4a',
+        new Transform(new Vector2(2740, 600), 0),
+        new Mesh('', new Vector2(120, 1000)),
+        new RectCollider(new Vector2(120, 1000)),
+      ),
+
+      new Building(
+        'clip_4b',
+        new Transform(new Vector2(3160, 660), 0),
+        new Mesh('', new Vector2(720, 1120)),
+        new RectCollider(new Vector2(720, 1120)),
+      ),
+
+      new Building(
+        'clip_5',
+        new Transform(new Vector2(3940, 660), 0),
+        new Mesh('', new Vector2(120, 1120)),
+        new RectCollider(new Vector2(120, 1120)),
+      ),
+
+      new Building(
+        'clip_6',
+        new Transform(new Vector2(560, 2470), 0),
+        new Mesh('', new Vector2(920, 700)),
+        new RectCollider(new Vector2(920, 700)),
+      ),
+
+      new Building(
+        'clip_7a',
+        new Transform(new Vector2(1790, 2200), 0),
+        new Mesh('', new Vector2(820, 1240)),
+        new RectCollider(new Vector2(820, 1240)),
+      ),
+
+      new Building(
+        'clip_7b',
+        new Transform(new Vector2(2260, 2260), 0),
+        new Mesh('', new Vector2(120, 1120)),
+        new RectCollider(new Vector2(120, 1120)),
+      ),
+
+      new Building(
+        'clip_8a',
+        new Transform(new Vector2(2740, 2260), 0),
+        new Mesh('', new Vector2(120, 1120)),
+        new RectCollider(new Vector2(120, 1120)),
+      ),
+
+      new Building(
+        'clip_8b',
+        new Transform(new Vector2(3160, 2200), 0),
+        new Mesh('', new Vector2(720, 1240)),
+        new RectCollider(new Vector2(720, 1240)),
+      ),
+
+      new Building(
+        'clip_9a',
+        new Transform(new Vector2(3940, 2200), 0),
+        new Mesh('', new Vector2(120, 1240)),
+        new RectCollider(new Vector2(120, 1240)),
+      ),
+
+      new Building(
+        'clip_9b',
+        new Transform(new Vector2(4710, 2200), 0),
+        new Mesh('', new Vector2(420, 1240)),
+        new RectCollider(new Vector2(420, 1240)),
+      ),
+
+      new Building(
+        'clip_10a',
+        new Transform(new Vector2(4890, 3650), 0),
+        new Mesh('', new Vector2(780, 940)),
+        new RectCollider(new Vector2(780, 940)),
+      ),
+
+      new Building(
+        'clip_10b',
+        new Transform(new Vector2(5490, 2850), 0),
+        new Mesh('', new Vector2(420, 2540)),
+        new RectCollider(new Vector2(420, 2540)),
+      ),
+
+      new Building(
+        'clip_11a',
+        new Transform(new Vector2(4600, 660), 0),
+        new Mesh('', new Vector2(200, 1120)),
+        new RectCollider(new Vector2(200, 1120)),
+      ),
+
+      new Building(
+        'clip_11b',
+        new Transform(new Vector2(5100, 160), 0),
+        new Mesh('', new Vector2(800, 120)),
+        new RectCollider(new Vector2(800, 120)),
+      ),
+
+      new Building(
+        'clip_11c',
+        new Transform(new Vector2(5600, 660), 0),
+        new Mesh('', new Vector2(200, 1120)),
+        new RectCollider(new Vector2(200, 1120)),
+      ),
     );
   }
 
@@ -398,6 +617,9 @@ export default class Level1 extends Level {
    * @returns the state of the collission
    */
   public isColliding(objects: GamePawn[]): boolean {
+    // FIXME: Intersecting structures will cause the player to get
+    // pushed inside of the collider without a way to escape.
+
     // Check to see if the building and the player are colliding
     // And update the point on which the building is at
     let collided: boolean = false;
@@ -407,7 +629,7 @@ export default class Level1 extends Level {
       object.getCollider().updatePoints(object.getTransform());
       // console.log(building);
       if (Collider.checkCollision(this.player.getHitbox(), object)) {
-        console.log('You crashed into a building -_-');
+        console.log(object);
         // TODO: Gain control of the character after running into a building,
         // while not being able to move forward
         //
@@ -481,6 +703,9 @@ export default class Level1 extends Level {
     // this.player.getCollider().draw(this.game.ctx, camera);
 
     this.goal.getMesh().draw(this.game.ctx, this.goal.getTransform(), camera);
+
+    // Drawing the foreground
+    this.foreground.getMesh().draw(this.game.ctx, this.foreground.getTransform(), camera);
 
     // Drawing the FovOverlay on the Game Canvas
     this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);
