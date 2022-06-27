@@ -5,7 +5,6 @@ import Scene from '../../../engine/SceneModule/Scene.js';
 import Level1 from '../levels/Level1.js';
 import Vector2 from '../../../engine/MathModule/Vector2.js';
 import StartMenu from '../../gameItems/menus/StartMenu.js';
-import HowToPlay from './HowToPlay.js';
 import GameOverMenu from '../../gameItems/menus/GameOverMenu copy.js';
 import Start from './Start.js';
 
@@ -88,28 +87,43 @@ export default class GameOver extends Screen {
 
     const textXPos = this.game.canvas.width / 2;
     const textYPos = this.game.canvas.height / 2;
+    let text: string = '';
 
     ctx.textAlign = 'center';
+    const bigFont = '70px Arial';
+    const smallFont = '40px Arial';
+    ctx.font = bigFont;
 
     if (this.state === 'LOSS') {
       ctx.fillStyle = 'red';
-      const text: string = 'GAME OVER!';
+      text = 'GAME OVER!';
       ctx.fillText(
         text,
         textXPos,
         textYPos,
+      );
+      ctx.font = smallFont;
+      text = 'Je bent geraakt! Let tijdens het fietsen goed op voor andere weggebruikers!';
+      ctx.fillText(
+        text,
+        textXPos,
+        textYPos + 100,
       );
     } else if (this.state === 'WIN') {
       ctx.fillStyle = 'green';
-      const text: string = 'LEVEL VOLTOOD!';
+      text = 'LEVEL VOLTOOD!';
       ctx.fillText(
         text,
         textXPos,
         textYPos,
       );
+      ctx.font = smallFont;
+      text = 'Je hebt dit level voltooid. Goed gedaan!';
+      ctx.fillText(
+        text,
+        textXPos,
+        textYPos + 100,
+      );
     }
-
-    // this.game.ctx.drawImage(Graphics.loadNewImage('./assets/img/startscreen.png'),
-    //   0, 0, this.game.canvas.width, this.game.canvas.height);
   }
 }

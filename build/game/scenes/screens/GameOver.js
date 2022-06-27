@@ -45,16 +45,26 @@ export default class GameOver extends Screen {
         this.menu.draw(this.game.ctx);
         const textXPos = this.game.canvas.width / 2;
         const textYPos = this.game.canvas.height / 2;
+        let text = '';
         ctx.textAlign = 'center';
+        const bigFont = '70px Arial';
+        const smallFont = '40px Arial';
+        ctx.font = bigFont;
         if (this.state === 'LOSS') {
             ctx.fillStyle = 'red';
-            const text = 'GAME OVER!';
+            text = 'GAME OVER!';
             ctx.fillText(text, textXPos, textYPos);
+            ctx.font = smallFont;
+            text = 'Je bent geraakt! Let tijdens het fietsen goed op voor andere weggebruikers!';
+            ctx.fillText(text, textXPos, textYPos + 100);
         }
         else if (this.state === 'WIN') {
             ctx.fillStyle = 'green';
-            const text = 'LEVEL VOLTOOD!';
+            text = 'LEVEL VOLTOOD!';
             ctx.fillText(text, textXPos, textYPos);
+            ctx.font = smallFont;
+            text = 'Je hebt dit level voltooid. Goed gedaan!';
+            ctx.fillText(text, textXPos, textYPos + 100);
         }
     }
 }
