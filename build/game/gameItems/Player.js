@@ -8,7 +8,7 @@ export default class Player extends GamePawn {
     constructor(id, transform, mesh, collider) {
         super(id, transform, mesh, collider);
         this.createColliderPoints();
-        this.movementSpeed = 1750;
+        this.movementSpeed = 200;
         this.rotationSpeed = 100;
     }
     control(input, elapsed) {

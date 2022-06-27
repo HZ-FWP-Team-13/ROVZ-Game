@@ -7,7 +7,7 @@ import GamePawn from '../../engine/ObjectModule/GamePawn.js';
 export default class Goal extends GamePawn {
   public constructor(id: string, position: Vector2) {
     const transform = new Transform(position);
-    const mesh = new Mesh('assets/img/level/goal.png', new Vector2(64, 64), 0);
+    const mesh = new Mesh('assets/img/levels/goal.png', new Vector2(64, 64), 0);
     const collider = new RectCollider(new Vector2(64, 64));
     super(id, transform, mesh, collider);
   }

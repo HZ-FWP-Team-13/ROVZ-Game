@@ -399,7 +399,7 @@ export default class Level1 extends Level {
 
       new Building(
         'clip_1b',
-        new Transform(new Vector2(160, 1420), 0),
+        new Transform(new Vector2(150, 1420), 0),
         new Mesh('', new Vector2(120, 1020)),
         new RectCollider(new Vector2(120, 1020)),
       ),
@@ -409,6 +409,20 @@ export default class Level1 extends Level {
         new Transform(new Vector2(560, 2370), 0),
         new Mesh('', new Vector2(920, 900)),
         new RectCollider(new Vector2(920, 900)),
+      ),
+
+      new Building(
+        'clip_1d',
+        new Transform(new Vector2(920, 1060), 0),
+        new Mesh('', new Vector2(200, 330)),
+        new RectCollider(new Vector2(200, 330)),
+      ),
+
+      new Building(
+        'clip_1e',
+        new Transform(new Vector2(920, 1780), 0),
+        new Mesh('', new Vector2(200, 330)),
+        new RectCollider(new Vector2(200, 330)),
       ),
 
       new Building(
@@ -430,6 +444,20 @@ export default class Level1 extends Level {
         new Transform(new Vector2(3500, 3650), 0),
         new Mesh('', new Vector2(1000, 940)),
         new RectCollider(new Vector2(1000, 940)),
+      ),
+
+      new Building(
+        'clip_2d',
+        new Transform(new Vector2(2152, 3280), 0),
+        new Mesh('', new Vector2(300, 200)),
+        new RectCollider(new Vector2(300, 200)),
+      ),
+
+      new Building(
+        'clip_2e',
+        new Transform(new Vector2(2850, 3280), 0),
+        new Mesh('', new Vector2(300, 200)),
+        new RectCollider(new Vector2(300, 200)),
       ),
 
       new Building(
@@ -549,6 +577,20 @@ export default class Level1 extends Level {
         new Transform(new Vector2(5600, 660), 0),
         new Mesh('', new Vector2(200, 1120)),
         new RectCollider(new Vector2(200, 1120)),
+      ),
+
+      new Building(
+        'clip_11d',
+        new Transform(new Vector2(4848, 1125), 0),
+        new Mesh('', new Vector2(296, 190)),
+        new RectCollider(new Vector2(296, 190)),
+      ),
+
+      new Building(
+        'clip_11e',
+        new Transform(new Vector2(5350, 1125), 0),
+        new Mesh('', new Vector2(300, 190)),
+        new RectCollider(new Vector2(300, 190)),
       ),
     );
   }
@@ -704,15 +746,26 @@ export default class Level1 extends Level {
 
     this.goal.getMesh().draw(this.game.ctx, this.goal.getTransform(), camera);
 
-    // Drawing the foreground
-    this.foreground.getMesh().draw(this.game.ctx, this.foreground.getTransform(), camera);
+    this.game.ctx.drawImage(
+      // The Source Image of the Background
+      this.foreground.getMesh().getSourceImage(),
+      // The position of the frame within the Source Image
+      camera.getTransform().getPosition().getX() - camera.getFrameDimensions().getX() / 2,
+      camera.getTransform().getPosition().getY() - camera.getFrameDimensions().getY() / 2,
+      // The dimensions of the frame within the Source Image
+      camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
+      // The position of the frame on the Game Canvas
+      0, 0,
+      // The dimensions of the frame on the Game Canvas
+      camera.getFrameDimensions().getX(), camera.getFrameDimensions().getY(),
+    );
 
     // Drawing the FovOverlay on the Game Canvas
     this.fov.getMesh().draw(this.game.ctx, this.fov.getTransform(), camera);
 
-    // Drawing building colliders
-    this.structures.forEach((structure) => {
-      structure.getCollider().draw(this.game.ctx, camera);
-    });
+    // // Drawing building colliders
+    // this.structures.forEach((structure) => {
+    //   structure.getCollider().draw(this.game.ctx, camera);
+    // });
   }
 }
