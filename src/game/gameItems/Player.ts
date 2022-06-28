@@ -31,7 +31,7 @@ export default class Player extends GamePawn {
 
     this.createColliderPoints();
 
-    this.movementSpeed = 200;
+    this.movementSpeed = 120;
     this.rotationSpeed = 100;
   }
 
